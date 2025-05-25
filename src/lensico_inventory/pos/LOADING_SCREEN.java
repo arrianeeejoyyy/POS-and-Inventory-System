@@ -63,7 +63,6 @@ public class LOADING_SCREEN extends javax.swing.JFrame {
 
         loadingscreen.setBackground(new java.awt.Color(255, 255, 255));
         loadingscreen.setForeground(new java.awt.Color(178, 50, 50));
-        loadingscreen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\POS AND INVONTORY FINAL\\LOADING SCREEN.png")); // NOI18N
         jPanel1.add(loadingscreen);
         loadingscreen.setBounds(0, 0, 1200, 800);
 
