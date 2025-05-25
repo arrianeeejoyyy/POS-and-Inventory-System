@@ -35,6 +35,14 @@ public class ACCHISTORY extends javax.swing.JFrame {
         invoice = new javax.swing.JButton();
         product = new javax.swing.JButton();
         stockmanagement = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         creturn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -105,6 +113,23 @@ public class ACCHISTORY extends javax.swing.JFrame {
         });
         getContentPane().add(stockmanagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 270, 40));
 
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane1.setViewportView(jPanel2);
+
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 700));
+
+        jTabbedPane1.addTab("Customer", jPanel3);
+        jTabbedPane1.addTab("Employee", jPanel4);
+        jTabbedPane1.addTab("User Setting", jPanel5);
+        jTabbedPane1.addTab("Product", jPanel6);
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jTabbedPane1.addTab("Return Product", jPanel1);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 890, 740));
+        jTabbedPane1.getAccessibleContext().setAccessibleName("Customer");
+
         creturn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         creturn.setContentAreaFilled(false);
         creturn.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +139,7 @@ public class ACCHISTORY extends javax.swing.JFrame {
         });
         getContentPane().add(creturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 270, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\POS AND INVONTORY FINAL\\acc history.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\OneDrive\\Desktop\\POS AND INVONTORY FINAL\\acc history.png")); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
 
@@ -228,6 +253,14 @@ public class ACCHISTORY extends javax.swing.JFrame {
     private javax.swing.JButton employeee;
     private javax.swing.JButton invoice;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton logout;
     private javax.swing.JButton product;
     private javax.swing.JButton stockmanagement;

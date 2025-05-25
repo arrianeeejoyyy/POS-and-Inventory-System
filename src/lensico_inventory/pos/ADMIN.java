@@ -135,6 +135,8 @@ public class ADMIN extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jPanel2);
 
         PANEL_LOAD.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 890, 760));
+
+        administrator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/ADMIN.png"))); // NOI18N
         PANEL_LOAD.add(administrator, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(PANEL_LOAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 800));

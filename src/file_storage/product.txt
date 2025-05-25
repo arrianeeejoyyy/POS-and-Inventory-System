@@ -1,0 +1,48 @@
+Laptop%%L202501%%TUF Gaming A15 FA506NFR-HN005W%%13123245475790%%57594%%ASUS%%20%%Operating System : Windows 11 Home
+
+Processor : AMD Ryzen™ 7-7435HS
+Graphics : GeForce RTX™ 2050
+Display : 15.6” Full-HD 144Hz
+Memory : 8GB 5600MHz DDR5
+Storage : 512GB M.2 PCIe NVMe SSD
+Keyboard : Backlit Chiclet Keyboard, 1-Zone RGB
+Touchpad : Yes
+Webcam : 720P HD camera
+
+Laptop%%L202502%%Vivobook S15 OLED Snapdragon%%312455687%%79,999%%ASUS%%20%%Operating System: Windows 11 Home
+Model: S5507QA-MA032WSM (90NB14Q2-M009D0)
+Processor: Snapdragon® X Elite X1E 78 100
+Graphics: Qualcomm® Adreno™ Graphics
+Display: 15” 120Hz OLED
+Memory: 16GB LPDDR5X
+Storage: 1TB M.2 PCIe NVMe SSD
+Microsoft Office: MS Office Home and Student 2021
+Laptop%%L202503%%ASUS Vivobook Go 14%%234565553324%%33,599%%ASUS%%20%%Operating System: Windows 11 Home
+Processor: Intel® Core™ i3-N305
+Graphics: Intel® Iris® X Graphics
+Display: 14” Full-HD
+Memory: 8GB LDDR5
+Storage: 512GB M.2 PCIe NVMe SSD
+Microsoft Office: MS Office Home and Student 2021 + Microsoft 365 Basic
+Laptop%%L202504%%Thin A15 B7UCX-084PH %%9786543343%%45,995 %%MSI%%20%%CPU: AMD Ryzen™ 5 7535HS Processor; 6 cores, Max Boost Clock 4.55 GHz
+OPERATING SYSTEMS: Windows 11 Home (MSI recommends Windows 11 Pro for business.)
+DISPLAY: 15.6" FHD(1920x1080), 144Hz Refresh Rate, IPS-Level
+CHIPSET: Integrated So.
+DISCRETE GRAPHICS: NVIDIA® GeForce RTX™ 2050 Laptop GPU; Up to 1170MHz Boost Clock 45W Maximum Graphics Power with Dynamic Boost. *May vary by scenario
+VIDEO MEMORY: 4GB GDDR6
+MEMORY: 8GB*1, DDR5-4800
+MEMORY SLOT AND MAX CAPACITY: 2 Slots, Max 64GB
+Laptop%%L202505%%Sword 16 HX B14VFKG-491%%312546456546%%79,995%%MSI%%20%%CPU: Intel® Core™ i5 processor 14450HX, 10 cores (6 P-cores + 4 E-cores), Max Turbo Frequency 4.8 GHz
+Operating Systems: Windows 11 Home (MSI recommends Windows 11 Pro for business.)
+Display: 16" FHD+(1920x1200), 144Hz Refresh Rate, IPS-Level
+Chipset: Intel® HM770
+Discrete Graphics: NVIDIA® GeForce RTX™ 4060 Laptop GPU powers advanced AI with 233 AI TOPS. Up to 2340MHz Boost Clock 115W Maximum Graphics Power with Dynamic Boost. *May vary by scenario
+Video Memory: 8GB GDDR6
+KeyBoard %%K202506%%Zeus x Raiku Wired Rainbow LED Ligh Gaming Keyboard%%3122543778q%%699try%%Zeushtrhthtr%%20%%Beautiful multi-color lighting effects.
+Three color matching and mechanical feel for an immersive gaming experience.
+Perfect for gamers looking to elevate their gaming experience.
+Suitable for PC, laptop, or gaming console gaming.
+Durable plastic construction with luminous keys for longevity.
+98 key minimalist layout.
+Rainbow ribbon breathing light effect in the medium plate.
+Support for light brightness and respiratory rate adjustment.
