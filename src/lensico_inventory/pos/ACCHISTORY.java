@@ -139,7 +139,7 @@ public class ACCHISTORY extends javax.swing.JFrame {
         });
         getContentPane().add(creturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 270, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\OneDrive\\Desktop\\POS AND INVONTORY FINAL\\acc history.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/HISTORY.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
 

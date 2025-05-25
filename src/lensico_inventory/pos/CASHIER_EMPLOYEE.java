@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
 
-    private static final String FILE_PATH = "C:\\Users\\Airi\\Documents\\cashierproduct.txt";
+    private static final String FILE_PATH = "src/file_storage/cashierproduct.txt";
     
     
     public CASHIER_EMPLOYEE() {
@@ -214,15 +214,15 @@ discount.addActionListener(e -> applyDiscount());
         getContentPane().add(TAX, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 620, -1, -1));
 
         customerID.setText("jLabel2");
-        getContentPane().add(customerID, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 740, 260, 20));
+        getContentPane().add(customerID, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 730, 260, 20));
 
         CASHIER1.setText("jLabel2");
-        getContentPane().add(CASHIER1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 766, 190, 20));
+        getContentPane().add(CASHIER1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 770, 190, 20));
 
         customername.setText("jLabel2");
-        getContentPane().add(customername, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 760, 230, 20));
+        getContentPane().add(customername, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 760, 230, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\cashier employee.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/CASHIER EMPLOYEE.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
 
         pack();
@@ -393,7 +393,7 @@ discount.addActionListener(e -> applyDiscount());
             }
 
             // Save updated productlist to file
-            saveTableToTextFile(productlist, "C:\\Users\\Airi\\Documents\\cashierproduct.txt");
+            saveTableToTextFile(productlist, "src/file_storage/cashierproduct.txt");
 
             // Show receipt
             Reciept receiptFrame = new Reciept();
@@ -661,9 +661,9 @@ private void applyDiscount() {
 
 public void updateProductQuantity(String productId, int quantitySold) {
     // Read each file, find the product, subtract quantitySold, then save back
-    updateQuantityInFile("C:\\Users\\Airi\\Documents\\product.txt", productId, quantitySold);
-    updateQuantityInFile("C:\\Users\\Airi\\Documents\\productstatus.txt", productId, quantitySold);
-    updateQuantityInFile("C:\\Users\\Airi\\Documents\\cashierproduct.txt", productId, quantitySold);
+    updateQuantityInFile("src/file_storage/product.txt", productId, quantitySold);
+    updateQuantityInFile("src/file_storage/productstatus.txt", productId, quantitySold);
+    updateQuantityInFile("src/file_storage/cashierproduct.txt", productId, quantitySold);
 }
 
 private void updateQuantityInFile(String filePath, String productId, int quantitySold) {

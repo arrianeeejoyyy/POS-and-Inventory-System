@@ -505,7 +505,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Airi\Desktop\POS AND INVONTORY FINAL\PRODUCT STATUS.png"/>
+          <Image iconType="3" name="/imagesss/PRODUCT STATUS_1.png"/>
         </Property>
       </Properties>
       <Constraints>

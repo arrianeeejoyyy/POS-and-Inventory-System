@@ -207,7 +207,7 @@ public class USERSETTING extends javax.swing.JFrame {
         jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 610, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\POS AND INVONTORY FINAL\\User Settings.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/USER SETTING.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
 
         pack();
@@ -244,7 +244,7 @@ public class USERSETTING extends javax.swing.JFrame {
             CACC.AddRowToJTable(new Object[]{id, user, pass, true}); // FIXED
 
             try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Airi\\Documents\\usercashier.txt", true));
+                BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/usercashier.txt", true));
                 writer.write(id + "%%" + user + "%%" + pass + "%%" +  true); // Match the table's 3-column format
                 writer.newLine();
                 writer.close();
@@ -345,7 +345,7 @@ public class USERSETTING extends javax.swing.JFrame {
             // Method to check if the employee is valid
         private boolean isEmployeeValid(String eid) {
             // Load employee data from the file
-            try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Airi\\Documents\\employeee.txt"))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/employeee.txt"))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] rowData = line.split("%%");

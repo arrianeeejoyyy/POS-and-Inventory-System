@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class PRODUCT extends javax.swing.JFrame {
        
-    private static final String FILE_PATH = "C:\\Users\\Airi\\Documents\\product.txt";
+    private static final String FILE_PATH = "src/file_storage/product.txt";
         
     public PRODUCT() {
        
@@ -316,9 +316,9 @@ public class PRODUCT extends javax.swing.JFrame {
 
         public void updateProductQuantity(String productId, int quantitySold) {
     // Read each file, find the product, subtract quantitySold, then save back
-    updateQuantityInFile("C:\\Users\\Airi\\Documents\\product.txt", productId, quantitySold);
-    updateQuantityInFile("C:\\Users\\Airi\\Documents\\productstatus.txt", productId, quantitySold);
-    updateQuantityInFile("C:\\Users\\Airi\\Documents\\cashierproduct.txt", productId, quantitySold);
+    updateQuantityInFile("src/file_storage/product.txt", productId, quantitySold);
+    updateQuantityInFile("src/file_storage/productstatus.txt", productId, quantitySold);
+    updateQuantityInFile("src/file_storage/cashierproduct.txt", productId, quantitySold);
 }
 
 private void updateQuantityInFile(String filePath, String productId, int quantitySold) {

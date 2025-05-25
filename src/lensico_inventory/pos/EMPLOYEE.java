@@ -351,7 +351,7 @@ public class EMPLOYEE extends javax.swing.JFrame {
         getContentPane().add(eid, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 140, 330, 30));
         eid.setOpaque(false);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\POS AND INVONTORY FINAL\\employee.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/EMPLOYEE.png"))); // NOI18N
         jLabel1.setToolTipText("");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
 
@@ -488,7 +488,7 @@ public class EMPLOYEE extends javax.swing.JFrame {
             EMPLOYEEFULLD FULLD = new EMPLOYEEFULLD();
             FULLD.AddRowToJTable(new Object[]{id + "%%" + user + "%%" + poss + "%%" + num + "%%" + mail + "%%" + aa + "%%" + ge + "%%" + ba + "%%" + an + "%%" + cp + "%%" + cpn});
             
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Airi\\Documents\\employeee.txt", true))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/employeee.txt", true))) {
                 writer.write(id + "%%" + user + "%%" + poss + "%%" + num + "%%" + mail + "%%" + aa + "%%" + ge + "%%" + ba + "%%" + an + "%%" + cp + "%%" + cpn);
                 writer.newLine();
                 JOptionPane.showMessageDialog(null, "Successfully saved.");
@@ -545,7 +545,7 @@ public class EMPLOYEE extends javax.swing.JFrame {
     
     
    private void saveEmployeeCounter() {
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Airi\\Documents\\employee_counter.txt"))) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/employee_counter.txt"))) {
         writer.write(String.valueOf(EmployeeCounter));
     } catch (IOException e) {
         e.printStackTrace();
@@ -554,7 +554,7 @@ public class EMPLOYEE extends javax.swing.JFrame {
 
 private void loadEmployeeCounter() {
     try {
-        java.io.File file = new java.io.File("C:\\Users\\Airi\\Documents\\employee_counter.txt");
+        java.io.File file = new java.io.File("src/file_storage/employee_counter.txt");
         if (file.exists()) {
             java.util.Scanner scanner = new java.util.Scanner(file);
             if (scanner.hasNextInt()) {

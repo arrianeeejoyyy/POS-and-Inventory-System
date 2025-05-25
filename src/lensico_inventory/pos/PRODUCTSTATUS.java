@@ -292,7 +292,7 @@ private String editingProductId = null;       // Stores the Product ID currently
         jTextField1.setText("jTextField1");
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(281, 670, 120, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\POS AND INVONTORY FINAL\\PRODUCT STATUS.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/PRODUCT STATUS_1.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -475,7 +475,7 @@ private String editingProductId = null;       // Stores the Product ID currently
 
     String selectedModel = selectedPanel.model.getText();
 
-    try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Airi\\Documents\\product.txt"))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/product.txt"))) {
         String line;
         boolean found = false;
         while ((line = reader.readLine()) != null) {
@@ -557,7 +557,7 @@ private void generateProductId() {
 }
 
    private void saveProductCounter() {
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Airi\\Documents\\product_counter.txt"))) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/product_counter.txt"))) {
         writer.write(String.valueOf(ProductCounter));
     } catch (IOException e) {
         e.printStackTrace();
@@ -566,7 +566,7 @@ private void generateProductId() {
 
 private void loadProductCounter() {
     try {
-        java.io.File file = new java.io.File("C:\\Users\\Airi\\Documents\\product_counter.txt");
+        java.io.File file = new java.io.File("src/file_storage/product_counter.txt");
         if (file.exists()) {
             java.util.Scanner scanner = new java.util.Scanner(file);
             if (scanner.hasNextInt()) {
@@ -584,7 +584,7 @@ private PRODUCTSTATUSPPP selectedPanel = null;
 private void loadProductStatusPanels() {
     jPanel1.removeAll();
 
-    try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Airi\\Documents\\productstatus.txt"))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/productstatus.txt"))) {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split("%%");
@@ -641,7 +641,7 @@ private void loadProductStatusPanels() {
 
 
 private void loadIconPathToIcon(String modelToFind) {
-    try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Airi\\Documents\\productstatus.txt"))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/productstatus.txt"))) {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split("%%");
@@ -674,8 +674,8 @@ private void updateProductData(String targetProductId, String selectedtext, Stri
                                String uprice, String brandn, String quanti, String des, String iconpath) {
     try {
         // Update product.txt
-        File inputFile = new File("C:\\Users\\Airi\\Documents\\product.txt");
-        File tempFile = new File("C:\\Users\\Airi\\Documents\\product_temp.txt");
+        File inputFile = new File("src/file_storage/product.txt");
+        File tempFile = new File("src/file_storage/product_temp.txt");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
@@ -699,8 +699,8 @@ private void updateProductData(String targetProductId, String selectedtext, Stri
         }
 
         // Update productstatus.txt for icon info
-        inputFile = new File("C:\\Users\\Airi\\Documents\\productstatus.txt");
-        tempFile = new File("C:\\Users\\Airi\\Documents\\productstatus_temp.txt");
+        inputFile = new File("src/file_storage/productstatus.txt");
+        tempFile = new File("src/file_storage/productstatus_temp.txt");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
@@ -750,19 +750,19 @@ private void addNewProduct(String selectedtext, String pid, String pmodel, Strin
     quanti
 });
 
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Airi\\Documents\\product.txt", true))) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/product.txt", true))) {
         // Save full product info
         writer.write(selectedtext + "%%" + pid + "%%" + pmodel + "%%" + barcode + "%%" +
                 uprice + "%%" + brandn + "%%" + quanti + "%%" + des);
         writer.newLine();
 
-        try (BufferedWriter writer3 = new BufferedWriter(new FileWriter("C:\\Users\\Airi\\Documents\\productstatus.txt", true))) {
+        try (BufferedWriter writer3 = new BufferedWriter(new FileWriter("src/file_storage/productstatus.txt", true))) {
             // Save product status info
             writer3.write(iconpath + "%%" + pmodel + "%%" + uprice + "%%" + quanti);
             writer3.newLine();
         }
 
-        try (BufferedWriter writerCashier = new BufferedWriter(new FileWriter("C:\\Users\\Airi\\Documents\\cashierproduct.txt", true))) {
+        try (BufferedWriter writerCashier = new BufferedWriter(new FileWriter("src/file_storage/cashierproduct.txt", true))) {
             // Save limited info for cashierproduct.txt: ID, Model, Price, Quantity (separated by %%)
             writerCashier.write(pid + "%%" + pmodel + "%%" + uprice + "%%" + quanti);
             writerCashier.newLine();
@@ -801,9 +801,9 @@ private void clearForm() {
 
 public void updateProductQuantity(String productId, int quantitySold) {
     // Read each file, find the product, subtract quantitySold, then save back
-    updateQuantityInFile("C:\\Users\\Airi\\Documents\\product.txt", productId, quantitySold);
-    updateQuantityInFile("C:\\Users\\Airi\\Documents\\productstatus.txt", productId, quantitySold);
-    updateQuantityInFile("C:\\Users\\Airi\\Documents\\cashierproduct.txt", productId, quantitySold);
+    updateQuantityInFile("src/file_storage/product.txt", productId, quantitySold);
+    updateQuantityInFile("src/file_storage/productstatus.txt", productId, quantitySold);
+    updateQuantityInFile("src/file_storage/cashierproduct.txt", productId, quantitySold);
 }
 
 private void updateQuantityInFile(String filePath, String productId, int quantitySold) {

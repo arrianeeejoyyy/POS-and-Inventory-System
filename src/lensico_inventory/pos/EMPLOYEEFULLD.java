@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package lensico_inventory.pos;
 
 import java.io.BufferedReader;
@@ -19,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EMPLOYEEFULLD extends javax.swing.JFrame {
 
-     private static final String FILE_PATH = "C:\\Users\\Airi\\Documents\\employeee.txt";
+     private static final String FILE_PATH = "src/file_storage/employeee.txt";
      
     public EMPLOYEEFULLD() {
         initComponents();
@@ -95,7 +92,7 @@ public class EMPLOYEEFULLD extends javax.swing.JFrame {
         });
         getContentPane().add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 650, 40, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\List of employeee.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/List of employeee.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();

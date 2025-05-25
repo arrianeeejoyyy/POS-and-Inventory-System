@@ -146,9 +146,9 @@ public class CUSTOMERADD extends javax.swing.JFrame {
         jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\CUSTOMER REGISTRATION .png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/CUSTOMER REGISTRATION.png"))); // NOI18N
         jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -191,7 +191,7 @@ public class CUSTOMERADD extends javax.swing.JFrame {
                                     address.getText()
                                     });
                 
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Airi\\Documents\\txtxt.txt", true))) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/txtxt.txt", true))) {
                         writer.write(id.getText() + "%%" +
                                             name.getText() + "%%" +
                                             contactnumber.getText() + "%%" +

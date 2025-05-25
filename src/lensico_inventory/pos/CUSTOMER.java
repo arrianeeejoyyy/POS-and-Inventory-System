@@ -21,11 +21,11 @@ import javax.swing.table.TableModel;
 
 
 public class CUSTOMER extends javax.swing.JFrame {
-        private static final String FILE_PATH = "C:\\Users\\Airi\\Documents\\txtxt.txt"; // Path to your data file
+        private static final String FILE_PATH = "src/file_storage/txtxt.txt"; // Path to your data file
     
     public CUSTOMER() {
         initComponents();
-        loadTableFromTextFile(customerdetails, "C:\\Users\\Airi\\Documents\\txtxt.txt");
+        loadTableFromTextFile(customerdetails, "src/file_storage/txtxt.txt");
     }
 
     
@@ -189,7 +189,7 @@ public class CUSTOMER extends javax.swing.JFrame {
         });
         getContentPane().add(btn_deletecus, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 720, 130, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\POS AND INVONTORY FINAL\\CUSTOMER.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/CUSTOMER.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 800));
 
         pack();

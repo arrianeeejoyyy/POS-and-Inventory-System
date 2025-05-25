@@ -58,7 +58,7 @@ public class PRODUCTSTATUSPPP extends javax.swing.JPanel {
         jLabel2.setText("jLabel2");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 180, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\product status.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/PRODUCT STATUS.png"))); // NOI18N
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 130));
     }// </editor-fold>//GEN-END:initComponents

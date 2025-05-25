@@ -17,7 +17,7 @@ import java.util.List;
 
 public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
 
-      private static final String FILE_PATH = "C:\\Users\\Airi\\Documents\\usercashier.txt";
+      private static final String FILE_PATH = "src/file_storage/usercashier.txt";
        private ArrayList<UserAccount> userList = new ArrayList<>();
       
     public USERSETTINGCASHIERACC() {
@@ -104,7 +104,7 @@ public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
         });
         getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(675, 640, 100, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\cashier’ Account list .png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/cashier’ Account list.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
