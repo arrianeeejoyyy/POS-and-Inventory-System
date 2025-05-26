@@ -129,7 +129,7 @@ public class CRETURN extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Customer's ID", "Product Name", "Price", "Date of Purchased ", "Date of Return"
+                "Customer's ID", "Product Name", "Price", "Quantity", "Date of Purchased ", "Date of Return"
             }
         ));
         jScrollPane1.setViewportView(returnproducts);
@@ -148,7 +148,6 @@ public class CRETURN extends javax.swing.JFrame {
         save.setContentAreaFilled(false);
         getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 240, 100, 30));
 
-        price.setText("jTextField1");
         price.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 priceActionPerformed(evt);
@@ -156,7 +155,6 @@ public class CRETURN extends javax.swing.JFrame {
         });
         getContentPane().add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, 190, 20));
 
-        id.setText("jTextField1");
         id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idActionPerformed(evt);
@@ -164,7 +162,6 @@ public class CRETURN extends javax.swing.JFrame {
         });
         getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 190, 20));
 
-        pname.setText("jTextField1");
         pname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pnameActionPerformed(evt);
@@ -172,7 +169,6 @@ public class CRETURN extends javax.swing.JFrame {
         });
         getContentPane().add(pname, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 190, 20));
 
-        quanti.setText("jTextField1");
         quanti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quantiActionPerformed(evt);
@@ -180,7 +176,6 @@ public class CRETURN extends javax.swing.JFrame {
         });
         getContentPane().add(quanti, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 140, 190, 20));
 
-        pdate.setText("jTextField1");
         pdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pdateActionPerformed(evt);
@@ -188,7 +183,6 @@ public class CRETURN extends javax.swing.JFrame {
         });
         getContentPane().add(pdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 190, 190, 20));
 
-        amount.setText("jTextField1");
         amount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 amountActionPerformed(evt);
@@ -196,7 +190,6 @@ public class CRETURN extends javax.swing.JFrame {
         });
         getContentPane().add(amount, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 140, 190, 20));
 
-        rdate.setText("jTextField1");
         rdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdateActionPerformed(evt);
@@ -204,7 +197,6 @@ public class CRETURN extends javax.swing.JFrame {
         });
         getContentPane().add(rdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 190, 190, 20));
 
-        name.setText("jTextField1");
         name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameActionPerformed(evt);
