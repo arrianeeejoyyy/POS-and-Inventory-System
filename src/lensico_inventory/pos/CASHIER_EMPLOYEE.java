@@ -78,7 +78,7 @@ discount.addActionListener(e -> applyDiscount());
         TAX = new javax.swing.JLabel();
         CASHIER1 = new javax.swing.JLabel();
         customername = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        customerID = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -161,7 +161,7 @@ discount.addActionListener(e -> applyDiscount());
                 payandprintActionPerformed(evt);
             }
         });
-        getContentPane().add(payandprint, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 650, 140, 30));
+        getContentPane().add(payandprint, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 220, 140, 30));
 
         productid.setBackground(new java.awt.Color(102, 102, 102));
         productid.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
@@ -222,13 +222,13 @@ discount.addActionListener(e -> applyDiscount());
         customername.setText("jLabel2");
         getContentPane().add(customername, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 760, 230, 20));
 
-        jTextField1.setText("jTextField1");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        customerID.setText("jTextField1");
+        customerID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                customerIDActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 730, 160, -1));
+        getContentPane().add(customerID, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 730, 160, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/CASHIER EMPLOYEE.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
@@ -361,48 +361,43 @@ discount.addActionListener(e -> applyDiscount());
 
         DefaultTableModel checkoutModel = (DefaultTableModel) CHECKOUT.getModel();
 
-        double total = 0;
-        for (int i = 0; i < checkoutModel.getRowCount(); i++) {
-            Object val = checkoutModel.getValueAt(i, 4);
-            if (val != null) {
-                total += Double.parseDouble(val.toString());
-            }
+        // Use grandtotal (after discount) for payment calculations
+        double grandTotalValue = 0;
+        try {
+            grandTotalValue = Double.parseDouble(grandtotal.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid grand total amount.");
+            return;
         }
 
-        if (payment < total) {
+        if (payment < grandTotalValue) {
             JOptionPane.showMessageDialog(this, "Payment amount is less than total. Please enter a valid amount.");
             return;
         }
 
-        double change = payment - total;
+        double change = payment - grandTotalValue;
         String changeStr = JOptionPane.showInputDialog(this, "Change to give back:", String.format("%.2f", change));
         if (changeStr == null) return; // Cancel pressed
         change = Double.parseDouble(changeStr);
 
         double vatRate = 0.12;
-        double grandTotalValue = Double.parseDouble(grandtotal.getText());
         double vatAmount = grandTotalValue * vatRate;
         double vatSalesValue = grandTotalValue - vatAmount;
 
         int printConfirm = JOptionPane.showConfirmDialog(this, "Do you want to Save and Print your Receipt?", "Print", JOptionPane.YES_NO_OPTION);
 
         if (printConfirm == JOptionPane.YES_OPTION) {
-            // Loop through each sold product
+            // Loop through each sold product to update quantities
             for (int i = 0; i < checkoutModel.getRowCount(); i++) {
                 String productId = checkoutModel.getValueAt(i, 0).toString();
                 int quantitySold = Integer.parseInt(checkoutModel.getValueAt(i, 3).toString());
 
-                // Update files
                 updateProductQuantity(productId, quantitySold);
-
-                // Update cashier productlist JTable quantity
                 subtractQuantityInProductList(productId, quantitySold);
             }
 
-            // Save updated productlist to file
             saveTableToTextFile(productlist, "src/file_storage/cashierproduct.txt");
 
-            // Show receipt
             Reciept receiptFrame = new Reciept();
             receiptFrame.fillReceiptFromCheckout(CHECKOUT);
             receiptFrame.setFullReceiptSummary(
@@ -414,11 +409,12 @@ discount.addActionListener(e -> applyDiscount());
                 discount.getSelectedItem().toString(),
                 grandtotal.getText(),
                 CASHIER1.getText(),
-                customername.getText(),
+                customerID.getText(),     // customer ID input text
                 String.format("%.2f", payment),
                 String.format("%.2f", change),
                 String.format("%.2f", vatSalesValue),
-                String.format("%.2f", vatAmount)
+                String.format("%.2f", vatAmount),
+                customername.getText()     // customer name label text for time3
             );
             receiptFrame.setVisible(true);
 
@@ -482,8 +478,8 @@ discount.addActionListener(e -> applyDiscount());
         
     }//GEN-LAST:event_newtransactionActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-       String customerId = jTextField1.getText().trim();
+    private void customerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerIDActionPerformed
+       String customerId = customerID.getText().trim();
 
     if (customerId.isEmpty()) {
         JOptionPane.showMessageDialog(null, "Please enter a Customer ID.");
@@ -504,10 +500,10 @@ discount.addActionListener(e -> applyDiscount());
         } else {
             // User selected NO, cancel transaction or clear fields
             customername.setText("");
-            jTextField1.setText("");
+            customerID.setText("");
         }
     }
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_customerIDActionPerformed
 
     
       public void saveTableToTextFile(JTable table, String filePath) {
@@ -667,28 +663,24 @@ private void applyDiscount() {
 
         double subtotalValue = Double.parseDouble(subtotalText);
 
-        // Get selected discount string like "5%", "10%", etc.
         String discountStr = (String) discount.getSelectedItem();
         if (discountStr == null || discountStr.isEmpty()) {
             grandtotal.setText(String.format("%.2f", subtotalValue));
             return;
         }
 
-        // Remove % and parse discount percent
         double discountPercent = 0;
         if (discountStr.endsWith("%")) {
             discountPercent = Double.parseDouble(discountStr.substring(0, discountStr.length() - 1));
         }
 
-        // Calculate discounted total
         double discountAmount = subtotalValue * (discountPercent / 100.0);
         double grandTotalValue = subtotalValue - discountAmount;
 
-        // Display discounted total in grandtotal label
         grandtotal.setText(String.format("%.2f", grandTotalValue));
 
     } catch (NumberFormatException e) {
-        grandtotal.setText("0.00"); // fallback in case of error
+        grandtotal.setText("0.00");
     }
 }
     
@@ -803,6 +795,7 @@ public String searchCustomerNameById(String customerId) {
     private static javax.swing.JTable CHECKOUT;
     private javax.swing.JLabel TAX;
     private javax.swing.JButton add;
+    private javax.swing.JTextField customerID;
     private javax.swing.JLabel customername;
     private javax.swing.JLabel date;
     private javax.swing.JComboBox<String> discount;
@@ -812,7 +805,6 @@ public String searchCustomerNameById(String customerId) {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton newtransaction;
     private javax.swing.JButton payandprint;
     private javax.swing.JTextField productid;

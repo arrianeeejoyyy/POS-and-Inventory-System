@@ -38,14 +38,14 @@ public class CRETURN extends javax.swing.JFrame {
         update = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         save = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        price = new javax.swing.JTextField();
+        id = new javax.swing.JTextField();
+        pname = new javax.swing.JTextField();
+        quanti = new javax.swing.JTextField();
+        pdate = new javax.swing.JTextField();
+        amount = new javax.swing.JTextField();
+        rdate = new javax.swing.JTextField();
+        name = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -126,13 +126,10 @@ public class CRETURN extends javax.swing.JFrame {
 
         returnproducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Cusromer's ID", "Product Name", "Price", "Date of Purchased "
+                "Customer's ID", "Product Name", "Price", "Date of Purchased ", "Date of Return"
             }
         ));
         jScrollPane1.setViewportView(returnproducts);
@@ -151,69 +148,69 @@ public class CRETURN extends javax.swing.JFrame {
         save.setContentAreaFilled(false);
         getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 240, 100, 30));
 
-        jTextField1.setText("jTextField1");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        price.setText("jTextField1");
+        price.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                priceActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, 190, 20));
+        getContentPane().add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, 190, 20));
 
-        jTextField2.setText("jTextField1");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        id.setText("jTextField1");
+        id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                idActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 190, 20));
+        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 190, 20));
 
-        jTextField3.setText("jTextField1");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        pname.setText("jTextField1");
+        pname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                pnameActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 190, 20));
+        getContentPane().add(pname, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 190, 20));
 
-        jTextField4.setText("jTextField1");
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        quanti.setText("jTextField1");
+        quanti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                quantiActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 140, 190, 20));
+        getContentPane().add(quanti, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 140, 190, 20));
 
-        jTextField5.setText("jTextField1");
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        pdate.setText("jTextField1");
+        pdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                pdateActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 190, 190, 20));
+        getContentPane().add(pdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 190, 190, 20));
 
-        jTextField6.setText("jTextField1");
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        amount.setText("jTextField1");
+        amount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                amountActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 140, 190, 20));
+        getContentPane().add(amount, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 140, 190, 20));
 
-        jTextField7.setText("jTextField1");
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        rdate.setText("jTextField1");
+        rdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                rdateActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 190, 190, 20));
+        getContentPane().add(rdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 190, 190, 20));
 
-        jTextField8.setText("jTextField1");
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        name.setText("jTextField1");
+        name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                nameActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 190, 20));
+        getContentPane().add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 190, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/RETURN.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -286,37 +283,37 @@ public class CRETURN extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_logoutActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_priceActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_idActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void pnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_pnameActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void quantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_quantiActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void pdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_pdateActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_amountActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void rdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_rdateActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_nameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,22 +353,22 @@ public class CRETURN extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accounthistory;
+    private javax.swing.JTextField amount;
     private javax.swing.JButton customer;
     private javax.swing.JButton delete;
     private javax.swing.JButton employeee;
+    private javax.swing.JTextField id;
     private javax.swing.JButton invoice;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JButton logout;
+    private javax.swing.JTextField name;
+    private javax.swing.JTextField pdate;
+    private javax.swing.JTextField pname;
+    private javax.swing.JTextField price;
     private javax.swing.JButton product;
+    private javax.swing.JTextField quanti;
+    private javax.swing.JTextField rdate;
     private javax.swing.JTable returnproducts;
     private javax.swing.JButton save;
     private javax.swing.JButton stockmanagement;

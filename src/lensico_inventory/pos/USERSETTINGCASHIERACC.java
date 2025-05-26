@@ -119,8 +119,12 @@ public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-          int selectedRow = cashiersAccList.getSelectedRow();
+     int selectedRow = cashiersAccList.getSelectedRow();
     if (selectedRow != -1) {
+        if (selectedRow == 0) {
+            JOptionPane.showMessageDialog(null, "The first row cannot be deleted.");
+            return;
+        }
         int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this row?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             DefaultTableModel model = (DefaultTableModel) cashiersAccList.getModel();
@@ -131,6 +135,7 @@ public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
     } else {
         JOptionPane.showMessageDialog(null, "Please select a row to delete.");
     }
+
     }//GEN-LAST:event_deleteActionPerformed
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed

@@ -248,7 +248,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
 }
    
    
-  public void setFullReceiptSummary(
+ public void setFullReceiptSummary(
     String referenceNumber,
     String date,
     String time,
@@ -257,11 +257,12 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
     String discountAmount,
     String grandTotalAmount,
     String cashierName,
-    String customerName,
+    String customerIDText,
     String paymentAmount,
     String changeAmount,
     String vatSalesAmount,
-    String vatAmount
+    String vatAmount,
+    String customerNameLabelText   // NEW parameter for customername JLabel text
 ) {
     refnumber1.setText(referenceNumber);
     date1.setText(date);
@@ -272,11 +273,13 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
     grandtotal.setText(grandTotalAmount);
 
     cashier1.setText(cashierName);
-    customerID.setText(customerName); // per your design, customer name goes to time2 label
+    customerID.setText(customerIDText); // This is customer ID from jTextField1
     cash.setText(paymentAmount);
     change.setText(changeAmount);
     vatsales.setText(vatSalesAmount);
     vatamount.setText(vatAmount);
+
+    time3.setText(customerNameLabelText);  // SET customername JLabel text here
 }
     
     @SuppressWarnings("unchecked")
@@ -473,10 +476,10 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
         jPanel1.add(date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 130, 15));
         jPanel1.add(time1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 130, 15));
         jPanel1.add(customerID, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 695, 180, 15));
-        jPanel1.add(subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 590, 110, 15));
-        jPanel1.add(discount, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 610, 110, 15));
-        jPanel1.add(grandtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 630, 110, 15));
-        jPanel1.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 650, 110, 15));
+        jPanel1.add(subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 590, 110, 15));
+        jPanel1.add(discount, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 610, 110, 15));
+        jPanel1.add(grandtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 630, 110, 15));
+        jPanel1.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 650, 110, 15));
         jPanel1.add(change, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 670, 110, 15));
         jPanel1.add(vatsales, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 740, 110, 15));
         jPanel1.add(vatamount, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 780, 110, 15));
