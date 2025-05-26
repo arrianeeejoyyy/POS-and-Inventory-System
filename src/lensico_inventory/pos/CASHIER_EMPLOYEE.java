@@ -48,6 +48,9 @@ discount.addActionListener(e -> applyDiscount());
     }
 
    
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -220,6 +223,11 @@ discount.addActionListener(e -> applyDiscount());
         getContentPane().add(customername, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 760, 230, 20));
 
         jTextField1.setText("jTextField1");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 730, 160, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/CASHIER EMPLOYEE.png"))); // NOI18N
@@ -473,6 +481,33 @@ discount.addActionListener(e -> applyDiscount());
     quanti.setText("");
         
     }//GEN-LAST:event_newtransactionActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+       String customerId = jTextField1.getText().trim();
+
+    if (customerId.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter a Customer ID.");
+        return;
+    }
+
+    String customerName = searchCustomerNameById(customerId);
+
+    if (customerName == null) {
+        JOptionPane.showMessageDialog(null, "No customer found with that ID.");
+        customername.setText("");
+    } else {
+        int response = JOptionPane.showConfirmDialog(null, "Customer found: " + customerName + ".\nDo you want to continue?", "Confirm", JOptionPane.YES_NO_OPTION);
+
+        if (response == JOptionPane.YES_OPTION) {
+            customername.setText(customerName);
+            // Proceed with transaction here or enable buttons etc.
+        } else {
+            // User selected NO, cancel transaction or clear fields
+            customername.setText("");
+            jTextField1.setText("");
+        }
+    }
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     
       public void saveTableToTextFile(JTable table, String filePath) {
@@ -730,6 +765,27 @@ public void subtractQuantityInProductList(String productId, int quantitySold) {
         }
     }
 }
+
+
+public String searchCustomerNameById(String customerId) {
+    String filePath = "src/file_storage/txtxt.txt"; // path to your customer data file
+    
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split("%%");
+            // Assuming parts[0] = ID, parts[1] = Name
+            if (parts.length > 1 && parts[0].equals(customerId)) {
+                return parts[1]; // Return customer name
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    
+    return null; // Not found
+}
+
 
     public static void main(String args[]) {
       

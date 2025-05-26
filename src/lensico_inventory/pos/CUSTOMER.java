@@ -23,6 +23,8 @@ import javax.swing.table.TableModel;
 public class CUSTOMER extends javax.swing.JFrame {
         private static final String FILE_PATH = "src/file_storage/txtxt.txt"; // Path to your data file
     
+        private javax.swing.JTextField jTextField1; 
+        
     public CUSTOMER() {
         initComponents();
         loadTableFromTextFile(customerdetails, "src/file_storage/txtxt.txt");

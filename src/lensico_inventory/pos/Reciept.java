@@ -272,7 +272,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
     grandtotal.setText(grandTotalAmount);
 
     cashier1.setText(cashierName);
-    time2.setText(customerName); // per your design, customer name goes to time2 label
+    customerID.setText(customerName); // per your design, customer name goes to time2 label
     cash.setText(paymentAmount);
     change.setText(changeAmount);
     vatsales.setText(vatSalesAmount);
@@ -324,7 +324,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
         refnumber1 = new javax.swing.JLabel();
         date1 = new javax.swing.JLabel();
         time1 = new javax.swing.JLabel();
-        time2 = new javax.swing.JLabel();
+        customerID = new javax.swing.JLabel();
         subtotal = new javax.swing.JLabel();
         discount = new javax.swing.JLabel();
         grandtotal = new javax.swing.JLabel();
@@ -333,6 +333,8 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
         vatsales = new javax.swing.JLabel();
         vatamount = new javax.swing.JLabel();
         numberofitem = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        time3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 430, 100));
@@ -357,7 +359,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, -1, -1));
 
         jLabel7.setText("-----------------------------------------------------------------------------------------------------------------------------------------------------");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 700, 440, 10));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 685, 440, 10));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("WE LOVE TO HEAR YOU SACN THE QR CODE BELOW.");
@@ -395,7 +397,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
         });
         table_pane.setViewportView(table_content);
 
-        jPanel1.add(table_pane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 410, 350));
+        jPanel1.add(table_pane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 410, 340));
 
         jLabel17.setText("Product Name");
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
@@ -412,8 +414,8 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
         jLabel21.setText("Reference Number:");
         jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
-        jLabel22.setText("Customer Name:");
-        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 710, -1, -1));
+        jLabel22.setText("Customer ID :");
+        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 695, -1, -1));
 
         jLabel23.setText("Time:");
         jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
@@ -429,16 +431,16 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
         jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
         jLabel26.setText("Subtotal:");
-        jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 600, -1, -1));
+        jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 590, -1, -1));
 
         jLabel27.setText("Discount:");
-        jPanel1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 620, -1, -1));
+        jPanel1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 610, -1, -1));
 
         jLabel28.setText("Grand Total:");
-        jPanel1.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 640, -1, -1));
+        jPanel1.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 630, -1, -1));
 
         jLabel29.setText("Cash:");
-        jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 660, -1, -1));
+        jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 650, -1, -1));
 
         jLabel14.setText("------------------------------------------------------------------------------------------------------------------------------------------");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 440, 20));
@@ -447,7 +449,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
         jPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 800, -1, -1));
 
         jLabel31.setText("Change Due:");
-        jPanel1.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 680, -1, -1));
+        jPanel1.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 670, -1, -1));
 
         jLabel32.setText("Vatable Sales:");
         jPanel1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 740, -1, -1));
@@ -465,22 +467,24 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
         jLabel16.setText("THANKYOU AND PLEASE COME AGAIN.");
         jLabel16.setToolTipText("");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 830, -1, -1));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Airi\\Desktop\\QRCODE.png")); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 880, -1, 70));
         jPanel1.add(cashier1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 190, 15));
         jPanel1.add(refnumber1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 130, 15));
         jPanel1.add(date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 130, 15));
         jPanel1.add(time1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 130, 15));
-        jPanel1.add(time2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 710, 180, 15));
-        jPanel1.add(subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 600, 110, 15));
-        jPanel1.add(discount, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 620, 110, 15));
-        jPanel1.add(grandtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 640, 110, 15));
-        jPanel1.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 660, 110, 15));
-        jPanel1.add(change, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 680, 110, 15));
+        jPanel1.add(customerID, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 695, 180, 15));
+        jPanel1.add(subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 590, 110, 15));
+        jPanel1.add(discount, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 610, 110, 15));
+        jPanel1.add(grandtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 630, 110, 15));
+        jPanel1.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 650, 110, 15));
+        jPanel1.add(change, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 670, 110, 15));
         jPanel1.add(vatsales, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 740, 110, 15));
         jPanel1.add(vatamount, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 780, 110, 15));
         jPanel1.add(numberofitem, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 800, 110, 15));
+
+        jLabel35.setText("Customer Name :");
+        jPanel1.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 710, -1, -1));
+        jPanel1.add(time3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 710, 180, 15));
 
         jScrollPane1.setViewportView(jPanel1);
 
@@ -493,7 +497,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1001, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1007, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -514,6 +518,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
     private javax.swing.JLabel cash;
     private javax.swing.JLabel cashier1;
     private javax.swing.JLabel change;
+    private javax.swing.JLabel customerID;
     private javax.swing.JLabel date1;
     private javax.swing.JLabel discount;
     private javax.swing.JLabel grandtotal;
@@ -545,6 +550,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -558,7 +564,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
     private javax.swing.JTable table_content;
     private javax.swing.JScrollPane table_pane;
     private javax.swing.JLabel time1;
-    private javax.swing.JLabel time2;
+    private javax.swing.JLabel time3;
     private javax.swing.JLabel vatamount;
     private javax.swing.JLabel vatsales;
     // End of variables declaration//GEN-END:variables
