@@ -104,7 +104,7 @@ public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
         });
         getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(675, 640, 100, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/cashier’ Account list.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/cashier’ Account list.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();

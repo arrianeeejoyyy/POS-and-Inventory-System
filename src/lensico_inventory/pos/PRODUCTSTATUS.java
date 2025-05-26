@@ -78,9 +78,8 @@ private String editingProductId = null;       // Stores the Product ID currently
         jPanel1 = new javax.swing.JPanel();
         imagepath = new javax.swing.JTextField();
         edit = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -233,13 +232,14 @@ private String editingProductId = null;       // Stores the Product ID currently
         });
         getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 180, 20));
 
-        jButton5.setText("jButton5");
+        jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton5.setContentAreaFilled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 560, -1, -1));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 603, 80, 20));
 
         description.setColumns(20);
         description.setRows(5);
@@ -248,13 +248,18 @@ private String editingProductId = null;       // Stores the Product ID currently
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 290, 150));
         getContentPane().add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 545, 155, 95));
 
+        save.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        save.setContentAreaFilled(false);
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveActionPerformed(evt);
             }
         });
-        getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 760, 100, 20));
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(502, 750, 120, 20));
+        getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 750, 130, 30));
+
+        jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton2.setContentAreaFilled(false);
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 750, 120, 30));
 
         jPanel1.setAlignmentY(0.0F);
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
@@ -268,31 +273,31 @@ private String editingProductId = null;       // Stores the Product ID currently
                 imagepathActionPerformed(evt);
             }
         });
-        getContentPane().add(imagepath, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 610, 110, -1));
+        getContentPane().add(imagepath, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 560, 120, 20));
 
-        edit.setText("jButton3");
+        edit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        edit.setContentAreaFilled(false);
         edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editActionPerformed(evt);
             }
         });
-        getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 720, -1, -1));
+        getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 720, 130, 30));
 
-        jButton4.setText("jButton4");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        delete.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        delete.setContentAreaFilled(false);
+        delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                deleteActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 720, -1, -1));
+        getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 720, 130, 30));
 
-        jButton6.setText("jButton6");
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 690, -1, -1));
+        jButton6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton6.setContentAreaFilled(false);
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 688, 130, 20));
 
-        jTextField1.setText("jTextField1");
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(281, 670, 120, -1));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/PRODUCT STATUS_1.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/PRODUCT STATUS_1.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -516,11 +521,10 @@ private String editingProductId = null;       // Stores the Product ID currently
 
     }//GEN-LAST:event_editActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       String removeValue = jTextField1.getText();
-       type.removeItem(removeValue);
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
        
-    }//GEN-LAST:event_jButton4ActionPerformed
+       
+    }//GEN-LAST:event_deleteActionPerformed
 
    
 private void generateProductId() {
@@ -870,6 +874,7 @@ private void updateQuantityInFile(String filePath, String productId, int quantit
     private javax.swing.JTextField code;
     private javax.swing.JButton creturn;
     private javax.swing.JButton customer;
+    private javax.swing.JButton delete;
     private javax.swing.JTextArea description;
     private javax.swing.JButton edit;
     private javax.swing.JButton employeee;
@@ -877,14 +882,12 @@ private void updateQuantityInFile(String filePath, String productId, int quantit
     private javax.swing.JTextField id;
     private javax.swing.JTextField imagepath;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton logout;
     private javax.swing.JTextField model;
     private javax.swing.JTextField price;

@@ -146,7 +146,7 @@ public class CUSTOMERADD extends javax.swing.JFrame {
         jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/CUSTOMER REGISTRATION.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/CUSTOMER REGISTRATION.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
 

@@ -80,7 +80,7 @@ public class USERSETTINGCHANGEPASS extends javax.swing.JFrame {
         jButton6.setContentAreaFilled(false);
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, 40, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/CHANGE ADMIN  PASSWORD.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/CHANGE ADMIN  PASSWORD.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 500));
 
         pack();

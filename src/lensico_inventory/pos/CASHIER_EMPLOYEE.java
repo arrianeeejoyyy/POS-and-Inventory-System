@@ -73,9 +73,9 @@ discount.addActionListener(e -> applyDiscount());
         discount = new javax.swing.JComboBox<>();
         newtransaction = new javax.swing.JButton();
         TAX = new javax.swing.JLabel();
-        customerID = new javax.swing.JLabel();
         CASHIER1 = new javax.swing.JLabel();
         customername = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -213,16 +213,16 @@ discount.addActionListener(e -> applyDiscount());
         TAX.setText("12%");
         getContentPane().add(TAX, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 620, -1, -1));
 
-        customerID.setText("jLabel2");
-        getContentPane().add(customerID, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 730, 260, 20));
-
         CASHIER1.setText("jLabel2");
         getContentPane().add(CASHIER1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 770, 190, 20));
 
         customername.setText("jLabel2");
         getContentPane().add(customername, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 760, 230, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/CASHIER EMPLOYEE.png"))); // NOI18N
+        jTextField1.setText("jTextField1");
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 730, 160, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/CASHIER EMPLOYEE.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
 
         pack();
@@ -339,7 +339,6 @@ discount.addActionListener(e -> applyDiscount());
     }
     subtotal.setText(String.format("%.2f", grandTotal));
 
-    // Update item count and apply discount again
     updateItemsCount();
     applyDiscount();
 
@@ -748,7 +747,6 @@ public void subtractQuantityInProductList(String productId, int quantitySold) {
     private static javax.swing.JTable CHECKOUT;
     private javax.swing.JLabel TAX;
     private javax.swing.JButton add;
-    private javax.swing.JLabel customerID;
     private javax.swing.JLabel customername;
     private javax.swing.JLabel date;
     private javax.swing.JComboBox<String> discount;
@@ -758,6 +756,7 @@ public void subtractQuantityInProductList(String productId, int quantitySold) {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton newtransaction;
     private javax.swing.JButton payandprint;
     private javax.swing.JTextField productid;

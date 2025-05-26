@@ -189,7 +189,7 @@ public class CUSTOMER extends javax.swing.JFrame {
         });
         getContentPane().add(btn_deletecus, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 720, 130, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/CUSTOMER.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/CUSTOMER.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 800));
 
         pack();

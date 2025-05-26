@@ -160,7 +160,7 @@
       </AccessibilityProperties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="290" y="40" width="890" height="740"/>
+          <AbsoluteConstraints x="290" y="40" width="900" height="740"/>
         </Constraint>
       </Constraints>
 
@@ -182,7 +182,7 @@
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="0" y="0" width="890" height="700"/>
+                  <AbsoluteConstraints x="10" y="10" width="880" height="680"/>
                 </Constraint>
               </Constraints>
 
@@ -195,17 +195,6 @@
               </SubComponents>
             </Container>
           </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="jPanel4">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Employee">
-                <Property name="tabTitle" type="java.lang.String" value="Employee"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel5">
           <Constraints>
@@ -242,6 +231,17 @@
             <Property name="useNullLayout" type="boolean" value="false"/>
           </Layout>
         </Container>
+        <Container class="javax.swing.JPanel" name="jPanel4">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Employee">
+                <Property name="tabTitle" type="java.lang.String" value="Employee"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+        </Container>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JButton" name="creturn">
@@ -265,7 +265,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagesss/HISTORY.png"/>
+          <Image iconType="3" name="/imagesss_panel/HISTORY.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="jLabel1"/>
       </Properties>

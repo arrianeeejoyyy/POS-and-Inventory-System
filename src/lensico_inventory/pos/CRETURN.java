@@ -33,6 +33,19 @@ public class CRETURN extends javax.swing.JFrame {
         employeee = new javax.swing.JButton();
         accounthistory = new javax.swing.JButton();
         logout = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        returnproducts = new javax.swing.JTable();
+        update = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
+        save = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -111,7 +124,98 @@ public class CRETURN extends javax.swing.JFrame {
         });
         getContentPane().add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 270, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/RETURN.png"))); // NOI18N
+        returnproducts.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Cusromer's ID", "Product Name", "Price", "Date of Purchased "
+            }
+        ));
+        jScrollPane1.setViewportView(returnproducts);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 850, 460));
+
+        update.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        update.setContentAreaFilled(false);
+        getContentPane().add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 240, 100, 30));
+
+        delete.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        delete.setContentAreaFilled(false);
+        getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 240, 100, 30));
+
+        save.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        save.setContentAreaFilled(false);
+        getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 240, 100, 30));
+
+        jTextField1.setText("jTextField1");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, 190, 20));
+
+        jTextField2.setText("jTextField1");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 190, 20));
+
+        jTextField3.setText("jTextField1");
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 190, 20));
+
+        jTextField4.setText("jTextField1");
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 140, 190, 20));
+
+        jTextField5.setText("jTextField1");
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 190, 190, 20));
+
+        jTextField6.setText("jTextField1");
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 140, 190, 20));
+
+        jTextField7.setText("jTextField1");
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 190, 190, 20));
+
+        jTextField8.setText("jTextField1");
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField8ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 190, 20));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/RETURN.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -182,6 +286,38 @@ public class CRETURN extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_logoutActionPerformed
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -221,12 +357,25 @@ public class CRETURN extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accounthistory;
     private javax.swing.JButton customer;
+    private javax.swing.JButton delete;
     private javax.swing.JButton employeee;
     private javax.swing.JButton invoice;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
     private javax.swing.JButton logout;
     private javax.swing.JButton product;
+    private javax.swing.JTable returnproducts;
+    private javax.swing.JButton save;
     private javax.swing.JButton stockmanagement;
+    private javax.swing.JButton update;
     private javax.swing.JButton usersetting;
     // End of variables declaration//GEN-END:variables
 }

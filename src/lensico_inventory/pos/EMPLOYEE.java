@@ -351,7 +351,7 @@ public class EMPLOYEE extends javax.swing.JFrame {
         getContentPane().add(eid, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 140, 330, 30));
         eid.setOpaque(false);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/EMPLOYEE.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/EMPLOYEE.png"))); // NOI18N
         jLabel1.setToolTipText("");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
 
