@@ -168,7 +168,7 @@ public class PRODUCT extends javax.swing.JFrame {
         });
         getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 750, 100, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/PRODUCT.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/PRODUCT.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -368,6 +368,61 @@ private void updateQuantityInFile(String filePath, String productId, int quantit
         JOptionPane.showMessageDialog(null, "Failed to update file: " + filePath);
     }
 }
+
+
+public void addReturnedQuantityToProduct(String productId, int returnQty) {
+    // Update product.txt
+    updateQuantityInFileAdd("src/file_storage/product.txt", productId, returnQty);
+
+    // Update productstatus.txt
+    updateQuantityInFileAdd("src/file_storage/productstatus.txt", productId, returnQty);
+
+    // Update cashierproduct.txt
+    updateQuantityInFileAdd("src/file_storage/cashierproduct.txt", productId, returnQty);
+
+    // Also update the UI tables accordingly here or call reload methods
+    // For example, reload the product JTable in PRODUCT and productlist in CASHIER_EMPLOYEE
+}
+
+private void updateQuantityInFileAdd(String filePath, String productId, int qtyToAdd) {
+    File inputFile = new File(filePath);
+    File tempFile = new File(filePath + "_temp.txt");
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split("%%");
+
+            // Quantity is usually at index 6 (adjust if your file format differs)
+            if (parts.length > 6 && parts[1].equals(productId)) {
+                int currentQty = 0;
+                try {
+                    currentQty = Integer.parseInt(parts[6]);
+                } catch (NumberFormatException e) {
+                    currentQty = 0;
+                }
+
+                int newQty = currentQty + qtyToAdd;
+                parts[6] = String.valueOf(newQty);
+
+                String updatedLine = String.join("%%", parts);
+                writer.write(updatedLine);
+            } else {
+                writer.write(line);
+            }
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error updating quantity in file: " + filePath);
+    }
+
+    if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
+        JOptionPane.showMessageDialog(null, "Failed to update file: " + filePath);
+    }
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accounthistory;
