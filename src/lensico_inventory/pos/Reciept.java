@@ -25,12 +25,7 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import java.io.IOException;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import java.awt.Desktop;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 
 
@@ -253,28 +248,6 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
 }
    
    
-public void saveTransactionToFile(
-    String customerId,
-    String customerName,
-    String productName,
-    String price,
-    String quantity,
-    String amount,
-    String purchaseDate
-) {
-    String filename = "src/file_storage/receipt.txt";
-    String record = String.join("%%", customerId, customerName, productName, price, quantity, amount, purchaseDate);
-    
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
-        writer.write(record);
-        writer.newLine();
-        JOptionPane.showMessageDialog(null, "Transaction saved to receipt.txt");
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(null, "Error saving transaction: " + e.getMessage());
-    }
-}
-
-
  public void setFullReceiptSummary(
     String referenceNumber,
     String date,
