@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class CRETURN extends javax.swing.JFrame {
 
   private static final String RETURN_PRODUCT_FILE = "src/file_storage/returnproduct.txt";
+  
   private PRODUCTSTATUS productStatusInstance;
   
   
@@ -421,11 +422,12 @@ public class CRETURN extends javax.swing.JFrame {
         }
 
         // Step 9: Update PRODUCTSTATUS
-        if (productStatusInstance != null) {
-            productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
-        } else {
-            JOptionPane.showMessageDialog(this, "Product status instance not found. Unable to update UI.");
-        }
+       if (productStatusInstance != null) {
+    productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
+    productStatusInstance.loadProductStatusPanels();  // THIS WILL NOW WORK
+} else {
+    JOptionPane.showMessageDialog(this, "Product status instance not found. Unable to update UI.");
+}
 
         // Step 10: Clear form and notify
         JOptionPane.showMessageDialog(this, "Return transaction saved and quantities updated.");
@@ -568,12 +570,83 @@ public class CRETURN extends javax.swing.JFrame {
         }
     }
 
+    
+    private void updateQuantityInFileAdd(String filePath, String productId, int qtyToAdd, int quantityIndex) {
+    File inputFile = new File(filePath);
+    File tempFile = new File(filePath + "_temp.txt");
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split("%%");
+
+            if (parts.length > quantityIndex) {
+                boolean matches = false;
+
+                // Check if productId matches depending on your file structure
+                // For example, assume productId is at index 1 in product.txt and cashierproduct.txt
+                if (filePath.contains("product.txt") || filePath.contains("cashierproduct.txt")) {
+                    matches = parts[1].equals(productId);
+                } else if (filePath.contains("productstatus.txt")) {
+                    // In productstatus.txt, productId might be at different index (like model name at index 1)
+                    matches = parts[1].equals(productId);
+                }
+
+                if (matches) {
+                    int currentQty = 0;
+                    try {
+                        currentQty = Integer.parseInt(parts[quantityIndex]);
+                    } catch (NumberFormatException e) {
+                        currentQty = 0;
+                    }
+                    int newQty = currentQty + qtyToAdd;
+                    parts[quantityIndex] = String.valueOf(newQty);
+
+                    String updatedLine = String.join("%%", parts);
+                    writer.write(updatedLine);
+                    writer.newLine();
+                    continue;
+                }
+            }
+
+            // Write original line if no match
+            writer.write(line);
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error updating quantity in file: " + filePath);
+    }
+
+    // Replace original file with updated file
+    if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
+        JOptionPane.showMessageDialog(null, "Failed to update file: " + filePath);
+    }
+}
+    
+    public void addReturnedQuantityToProduct(String productId, int returnQty) {
+    // Update quantity in product.txt (assume quantity at index 6)
+    updateQuantityInFileAdd("src/file_storage/product.txt", productId, returnQty, 6);
+
+    // Update quantity in productstatus.txt (assume quantity at index 3)
+    updateQuantityInFileAdd("src/file_storage/productstatus.txt", productId, returnQty, 3);
+
+    // Update quantity in cashierproduct.txt (assume quantity at index 3)
+    updateQuantityInFileAdd("src/file_storage/cashierproduct.txt", productId, returnQty, 3);
+
+    // Reload UI to show updated quantities (implement this as needed)
+    loadProductStatusPanels();
+}
    
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CRETURN().setVisible(true);
+                
+                
             }
         });
     }
