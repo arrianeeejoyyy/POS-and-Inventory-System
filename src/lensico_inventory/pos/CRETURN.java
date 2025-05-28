@@ -3,6 +3,7 @@ package lensico_inventory.pos;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,12 +16,20 @@ import javax.swing.table.DefaultTableModel;
 public class CRETURN extends javax.swing.JFrame {
 
   private static final String RETURN_PRODUCT_FILE = "src/file_storage/returnproduct.txt";
+  private PRODUCTSTATUS productStatusInstance;
   
     public CRETURN() {
         initComponents();
-        
         setReturnDateToToday();
-    loadReturnProductsFromFile();  // Load existing returns
+    loadReturnProductsFromFile();
+    
+     this.productStatusInstance = productStatusInstance;
+
+    this.addWindowListener(new java.awt.event.WindowAdapter() {
+        public void windowClosing(java.awt.event.WindowEvent evt) {
+            saveReturnProductsToFile();
+        }
+    });
     }
 
    private void setReturnDateToToday() {
@@ -320,7 +329,7 @@ public class CRETURN extends javax.swing.JFrame {
     }//GEN-LAST:event_nameActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-      // Step 1: Get input values from your text fields
+     // Step 1: Get input values from your text fields
     String customerId = id.getText().trim();
     String customerName = name.getText().trim();
     String productName = pname.getText().trim();
@@ -339,20 +348,32 @@ public class CRETURN extends javax.swing.JFrame {
         return;
     }
 
-    // Step 3: Validate customer ID exists in customer.txt (reuse your method)
+    // Step 3: Validate customer ID exists in customer.txt
     if (!isCustomerIdValid(customerId)) {
         JOptionPane.showMessageDialog(this, "Customer ID not found.");
         return;
     }
 
-    // Step 4: Validate product purchased by customer (reuse your method)
+    // Step 4: Validate product purchased by customer
     ReturnTransaction matchedTransaction = findMatchingTransactionInReceipt(customerId, productName, priceText, quantityText, amountText, purchaseDate);
     if (matchedTransaction == null) {
         JOptionPane.showMessageDialog(this, "No matching transaction found in receipts.");
         return;
     }
 
-    // Step 5: Save return transaction to returnproduct.txt
+    // Step 5: Confirm before saving
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Are you sure you want to save this return transaction?",
+        "Confirm",
+        JOptionPane.YES_NO_OPTION
+    );
+    if (confirm != JOptionPane.YES_OPTION) {
+        JOptionPane.showMessageDialog(this, "Operation cancelled.");
+        return;
+    }
+
+    // Step 6: Save return transaction to returnproduct.txt
     try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/returnproduct.txt", true))) {
         String returnLine = String.join("%%",
             customerId,
@@ -371,7 +392,7 @@ public class CRETURN extends javax.swing.JFrame {
         return;
     }
 
-    // Step 6: Add return data to ReturnProducts JTable
+    // Step 7: Add return data to JTable in CRETURN
     DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
     model.addRow(new Object[] {
         customerId,
@@ -383,8 +404,8 @@ public class CRETURN extends javax.swing.JFrame {
         returnDate
     });
 
-    // Step 7: Update product quantities in all files by adding returned quantity
-    String productId = getProductIdByName(productName);  // Your helper method to get product ID by name
+    // Step 8: Update product quantities by adding returned quantity
+    String productId = getProductIdByName(productName);
     if (productId == null) {
         JOptionPane.showMessageDialog(this, "Product ID not found for product: " + productName);
         return;
@@ -398,14 +419,16 @@ public class CRETURN extends javax.swing.JFrame {
         return;
     }
 
-    // Get instances of related classes (implement these getter methods or singletons accordingly)
-    PRODUCTSTATUS productStatus = getProductStatusInstance();
-    PRODUCT product = getProductInstance();
-    CASHIER_EMPLOYEE cashier = getCashierEmployeeInstance();
+    // Step 9: Update quantity in PRODUCTSTATUS and refresh its UI
+    if (productStatusInstance != null) {
+        productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
+        productStatusInstance.loadProductStatusPanels();
+    } else {
+        JOptionPane.showMessageDialog(this, "Product status instance not found. Unable to update UI.");
+    }
 
-   
+    // Step 10: Clear form and notify user
     JOptionPane.showMessageDialog(this, "Return transaction saved and quantities updated.");
-
     clearReturnForm();
     }//GEN-LAST:event_saveActionPerformed
 
@@ -607,6 +630,95 @@ private void clearReturnForm() {
     }
 }
   
+   private void saveReturnProductsToFile() {
+    DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(RETURN_PRODUCT_FILE))) {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            // Construct a line with all columns separated by %%
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                sb.append(model.getValueAt(i, j));
+                if (j < model.getColumnCount() - 1) {
+                    sb.append("%%");
+                }
+            }
+            writer.write(sb.toString());
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error saving return products: " + e.getMessage());
+    }
+}
+   
+   private void updateQuantityInFileAdd(String filePath, String productId, int qtyToAdd, int quantityIndex) {
+    File inputFile = new File(filePath);
+    File tempFile = new File(filePath + "_temp.txt");
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split("%%");
+
+            if (parts.length > quantityIndex) {
+                // Check productId at expected position (index 1 except productstatus.txt where it's model at index 1)
+                boolean matches = false;
+
+                if (filePath.contains("product.txt") || filePath.contains("cashierproduct.txt")) {
+                    matches = parts[1].equals(productId);
+                } else if (filePath.contains("productstatus.txt")) {
+                    // productstatus.txt uses model at index 1, so you need to map productId to model or accept model as argument
+                    // For now, assume productId is actually the model name for this file (adjust if needed)
+                    matches = parts[1].equals(productId);
+                }
+
+                if (matches) {
+                    int currentQty = 0;
+                    try {
+                        currentQty = Integer.parseInt(parts[quantityIndex]);
+                    } catch (NumberFormatException e) {
+                        currentQty = 0;
+                    }
+
+                    int newQty = currentQty + qtyToAdd;
+                    parts[quantityIndex] = String.valueOf(newQty);
+
+                    String updatedLine = String.join("%%", parts);
+                    writer.write(updatedLine);
+                    writer.newLine();
+                    continue;
+                }
+            }
+
+            // Write the original line if no match
+            writer.write(line);
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error updating quantity in file: " + filePath);
+    }
+
+    if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
+        JOptionPane.showMessageDialog(null, "Failed to update file: " + filePath);
+    }
+   }
+   
+   public void addReturnedQuantityToProduct(String productId, int returnQty) {
+    // product.txt quantity is at index 6
+    updateQuantityInFileAdd("src/file_storage/product.txt", productId, returnQty, 6);
+
+    // productstatus.txt quantity is at index 3, productId is actually model here
+    updateQuantityInFileAdd("src/file_storage/productstatus.txt", productId, returnQty, 3);
+
+    // cashierproduct.txt quantity is at index 3
+    updateQuantityInFileAdd("src/file_storage/cashierproduct.txt", productId, returnQty, 3);
+
+    // Reload the UI panels after update
+    loadProductStatusPanels();
+}
+
+   
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {

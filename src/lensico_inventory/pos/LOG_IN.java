@@ -132,7 +132,7 @@ public class LOG_IN extends javax.swing.JFrame {
         jPanel1.add(exit);
         exit.setBounds(1065, 743, 110, 40);
 
-        EXIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss/LOG IN.png"))); // NOI18N
+        EXIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/LOG IN.png"))); // NOI18N
         EXIT.setText("jLabel1");
         jPanel1.add(EXIT);
         EXIT.setBounds(0, 0, 1200, 800);
