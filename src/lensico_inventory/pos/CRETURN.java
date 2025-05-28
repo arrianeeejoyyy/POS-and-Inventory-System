@@ -18,6 +18,8 @@ public class CRETURN extends javax.swing.JFrame {
   private static final String RETURN_PRODUCT_FILE = "src/file_storage/returnproduct.txt";
   private PRODUCTSTATUS productStatusInstance;
   
+  
+  
     public CRETURN() {
         initComponents();
         setReturnDateToToday();
@@ -329,394 +331,242 @@ public class CRETURN extends javax.swing.JFrame {
     }//GEN-LAST:event_nameActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-     // Step 1: Get input values from your text fields
-    String customerId = id.getText().trim();
-    String customerName = name.getText().trim();
-    String productName = pname.getText().trim();
-    String priceText = price.getText().trim();
-    String quantityText = quanti.getText().trim();
-    String amountText = amount.getText().trim();
-    String purchaseDate = pdate.getText().trim();
+      // Step 1: Get input values
+        String customerId = id.getText().trim();
+        String customerName = name.getText().trim();
+        String productName = pname.getText().trim();
+        String priceText = price.getText().trim();
+        String quantityText = quanti.getText().trim();
+        String amountText = amount.getText().trim();
+        String purchaseDate = pdate.getText().trim();
 
-    // Get current date for return date
-    String returnDate = java.time.LocalDate.now().toString();
+        // Current return date
+        String returnDate = java.time.LocalDate.now().toString();
 
-    // Step 2: Basic input validation
-    if (customerId.isEmpty() || customerName.isEmpty() || productName.isEmpty() ||
-        priceText.isEmpty() || quantityText.isEmpty() || amountText.isEmpty() || purchaseDate.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "All fields must be filled.");
-        return;
-    }
+        // Step 2: Validate fields not empty
+        if (customerId.isEmpty() || customerName.isEmpty() || productName.isEmpty() ||
+                priceText.isEmpty() || quantityText.isEmpty() || amountText.isEmpty() || purchaseDate.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields must be filled.");
+            return;
+        }
 
-    // Step 3: Validate customer ID exists in customer.txt
-    if (!isCustomerIdValid(customerId)) {
-        JOptionPane.showMessageDialog(this, "Customer ID not found.");
-        return;
-    }
+        // Step 3: Validate customer ID exists
+        if (!isCustomerIdValid(customerId)) {
+            JOptionPane.showMessageDialog(this, "Customer ID not found.");
+            return;
+        }
 
-    // Step 4: Validate product purchased by customer
-    ReturnTransaction matchedTransaction = findMatchingTransactionInReceipt(customerId, productName, priceText, quantityText, amountText, purchaseDate);
-    if (matchedTransaction == null) {
-        JOptionPane.showMessageDialog(this, "No matching transaction found in receipts.");
-        return;
-    }
+        // Step 4: Validate transaction matches receipt
+        if (findMatchingTransactionInReceipt(customerId, productName, priceText, quantityText, amountText, purchaseDate) == null) {
+            JOptionPane.showMessageDialog(this, "No matching transaction found in receipts.");
+            return;
+        }
 
-    // Step 5: Confirm before saving
-    int confirm = JOptionPane.showConfirmDialog(
-        this,
-        "Are you sure you want to save this return transaction?",
-        "Confirm",
-        JOptionPane.YES_NO_OPTION
-    );
-    if (confirm != JOptionPane.YES_OPTION) {
-        JOptionPane.showMessageDialog(this, "Operation cancelled.");
-        return;
-    }
-
-    // Step 6: Save return transaction to returnproduct.txt
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/returnproduct.txt", true))) {
-        String returnLine = String.join("%%",
-            customerId,
-            customerName,
-            productName,
-            priceText,
-            quantityText,
-            amountText,
-            purchaseDate,
-            returnDate
+        // Step 5: Confirm before saving
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to save this return transaction?",
+                "Confirm",
+                JOptionPane.YES_NO_OPTION
         );
-        writer.write(returnLine);
-        writer.newLine();
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Error saving return transaction: " + e.getMessage());
-        return;
-    }
+        if (confirm != JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Operation cancelled.");
+            return;
+        }
 
-    // Step 7: Add return data to JTable in CRETURN
-    DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
-    model.addRow(new Object[] {
-        customerId,
-        productName,
-        priceText,
-        quantityText,
-        amountText,
-        purchaseDate,
-        returnDate
-    });
+        // Step 6: Save to returnproduct.txt
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RETURN_PRODUCT_FILE, true))) {
+            String returnLine = String.join("%%",
+                    customerId,
+                    customerName,
+                    productName,
+                    priceText,
+                    quantityText,
+                    amountText,
+                    purchaseDate,
+                    returnDate
+            );
+            writer.write(returnLine);
+            writer.newLine();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving return transaction: " + e.getMessage());
+            return;
+        }
 
-    // Step 8: Update product quantities by adding returned quantity
-    String productId = getProductIdByName(productName);
-    if (productId == null) {
-        JOptionPane.showMessageDialog(this, "Product ID not found for product: " + productName);
-        return;
-    }
+        // Step 7: Add to JTable
+        DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
+        model.addRow(new Object[]{
+                customerId,
+                productName,
+                priceText,
+                quantityText,
+                amountText,
+                purchaseDate,
+                returnDate
+        });
 
-    int returnQty;
-    try {
-        returnQty = Integer.parseInt(quantityText);
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Invalid quantity.");
-        return;
-    }
+        // Step 8: Update product quantities
+        String productId = getProductIdByName(productName);
+        if (productId == null) {
+            JOptionPane.showMessageDialog(this, "Product ID not found for product: " + productName);
+            return;
+        }
 
-    // Step 9: Update quantity in PRODUCTSTATUS and refresh its UI
-    if (productStatusInstance != null) {
-        productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
-        productStatusInstance.loadProductStatusPanels();
-    } else {
-        JOptionPane.showMessageDialog(this, "Product status instance not found. Unable to update UI.");
-    }
+        int returnQty;
+        try {
+            returnQty = Integer.parseInt(quantityText);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid quantity.");
+            return;
+        }
 
-    // Step 10: Clear form and notify user
-    JOptionPane.showMessageDialog(this, "Return transaction saved and quantities updated.");
-    clearReturnForm();
+        // Step 9: Update PRODUCTSTATUS
+        if (productStatusInstance != null) {
+            productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
+        } else {
+            JOptionPane.showMessageDialog(this, "Product status instance not found. Unable to update UI.");
+        }
+
+        // Step 10: Clear form and notify
+        JOptionPane.showMessageDialog(this, "Return transaction saved and quantities updated.");
+        clearReturnForm();
     }//GEN-LAST:event_saveActionPerformed
 
     
-    // Check if customer ID exists in customer.txt
-public boolean customerExists(String customerId) {
-    String filename = "src/file_storage/customer.txt"; // adjust path to your customer file
-    try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split("%%");
-            if (parts.length > 0 && parts[0].equals(customerId)) {
-                return true;
+    private boolean isCustomerIdValid(String customerId) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/file_storage/customer.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("%%");
+                if (parts.length > 0 && parts[0].equals(customerId)) {
+                    return true;
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+        return false;
     }
-    return false;
-}
 
-// Check if transaction exists in receipt.txt and all fields match
-public boolean validateReturnTransaction(
-    String customerId, 
-    String productName, 
-    String price, 
-    String quantity, 
-    String amount, 
-    String purchaseDate,
-    String customerNameInput
-) {
-    String filename = "src/file_storage/receipt.txt";
-    try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split("%%");
-            // parts: customerId, customerName, productName, price, quantity, amount, purchaseDate
-            if (parts.length == 7) {
-                String cid = parts[0];
-                String cname = parts[1];
-                String pname = parts[2];
-                String pprice = parts[3];
-                String pquantity = parts[4];
-                String pamount = parts[5];
-                String pdate = parts[6];
+    // Find matching receipt transaction or return null if not found
+    private ReturnTransaction findMatchingTransactionInReceipt(String customerId, String productName, String price,
+                                                              String quantity, String amount, String purchaseDate) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/file_storage/receipt.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("%%");
+                if (parts.length >= 7) {
+                    String rCustomerId = parts[0];
+                    String rProductName = parts[2];
+                    String rPrice = parts[3];
+                    String rQuantity = parts[4];
+                    String rAmount = parts[5];
+                    String rPurchaseDate = parts[6];
 
-                if (cid.equals(customerId)) {
-                    if (!cname.equals(customerNameInput)) {
-                        JOptionPane.showMessageDialog(null, "Customer name does not match record.");
-                        return false;
-                    }
-                    if (pname.equals(productName) && 
-                        pprice.equals(price) && 
-                        pquantity.equals(quantity) && 
-                        pamount.equals(amount) && 
-                        pdate.equals(purchaseDate)) {
-                        return true; // valid transaction found
+                    if (rCustomerId.equals(customerId) &&
+                            rProductName.equals(productName) &&
+                            rPrice.equals(price) &&
+                            rQuantity.equals(quantity) &&
+                            rAmount.equals(amount) &&
+                            rPurchaseDate.equals(purchaseDate)) {
+                        return new ReturnTransaction(rCustomerId, productName, price, quantity, amount, purchaseDate);
                     }
                 }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+        return null;
     }
-    return false;
-}
-    
-    
-    // Helper to check if customerId exists in customer.txt
-private boolean isCustomerIdValid(String customerId) {
-    try (BufferedReader br = new BufferedReader(new FileReader("src/file_storage/customer.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split("%%");
-            if (parts.length > 0 && parts[0].equals(customerId)) {
-                return true;
-            }
+
+    private static class ReturnTransaction {
+        String customerId, productName, price, quantity, amount, purchaseDate;
+
+        ReturnTransaction(String cId, String pName, String p, String q, String a, String pDate) {
+            customerId = cId;
+            productName = pName;
+            price = p;
+            quantity = q;
+            amount = a;
+            purchaseDate = pDate;
         }
-    } catch (IOException e) {
-        e.printStackTrace();
     }
-    return false;
-}
 
-// Helper to find matching transaction in receipt.txt matching all details
-private ReturnTransaction findMatchingTransactionInReceipt(String customerId, String productName, String price,
-                                                          String quantity, String amount, String purchaseDate) {
-    try (BufferedReader br = new BufferedReader(new FileReader("src/file_storage/receipt.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            // Assuming receipt.txt format: id%%name%%productname%%price%%quantity%%amount%%pdate
-            String[] parts = line.split("%%");
-            if (parts.length >= 7) {
-                String rCustomerId = parts[0];
-                String rProductName = parts[2];
-                String rPrice = parts[3];
-                String rQuantity = parts[4];
-                String rAmount = parts[5];
-                String rPurchaseDate = parts[6];
-
-                if (rCustomerId.equals(customerId) &&
-                    rProductName.equals(productName) &&
-                    rPrice.equals(price) &&
-                    rQuantity.equals(quantity) &&
-                    rAmount.equals(amount) &&
-                    rPurchaseDate.equals(purchaseDate)) {
-                    return new ReturnTransaction(rCustomerId, productName, price, quantity, amount, purchaseDate);
-                }
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
+    // Clear input fields
+    private void clearReturnForm() {
+        id.setText("");
+        name.setText("");
+        pname.setText("");
+        price.setText("");
+        quanti.setText("");
+        amount.setText("");
+        pdate.setText("");
+        rdate.setText(java.time.LocalDate.now().toString());
     }
-    return null; // Not found
-}
 
-// A simple helper class to hold transaction details
-private static class ReturnTransaction {
-    String customerId, productName, price, quantity, amount, purchaseDate;
-    ReturnTransaction(String cId, String pName, String p, String q, String a, String pDate) {
-        customerId = cId;
-        productName = pName;
-        price = p;
-        quantity = q;
-        amount = a;
-        purchaseDate = pDate;
-    }
-}
-
-// Implement or link these helpers to your existing instances or singletons
-private PRODUCTSTATUS getProductStatusInstance() {
-    // TODO: return existing instance or create properly
-    return new PRODUCTSTATUS();
-}
-
-private PRODUCT getProductInstance() {
-    // TODO: return existing instance or create properly
-    return new PRODUCT();
-}
-
-private CASHIER_EMPLOYEE getCashierEmployeeInstance() {
-    // TODO: return existing instance or create properly
-    return new CASHIER_EMPLOYEE();
-}
-
-// Clear return form fields after save
-private void clearReturnForm() {
-    id.setText("");
-    name.setText("");
-    pname.setText("");
-    price.setText("");
-    quanti.setText("");
-    amount.setText("");
-    pdate.setText("");
-}
-    
-   private String getProductIdByName(String productName) {
-    String filePath = "src/file_storage/product.txt"; // Make sure path is correct
-
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split("%%");
-            if (parts.length >= 3) {
-                String productModel = parts[2]; // ProductModel
-                if (productModel.equals(productName)) {
-                    return parts[1]; // ProductID
-                }
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    return null; // Return null if not found
-}
-    
-   public void loadReturnProductsFromFile() {
-    DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
-    model.setRowCount(0); // clear existing rows
-
-    try (BufferedReader reader = new BufferedReader(new FileReader(RETURN_PRODUCT_FILE))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split("%%");
-            if (parts.length == 8) {
-                model.addRow(new Object[]{
-                    parts[0], // Customer ID
-                    parts[2], // Product Name
-                    parts[3], // Price
-                    parts[4], // Quantity
-                    parts[5], // Amount
-                    parts[6], // Purchase Date
-                    parts[7]  // Return Date
-                });
-            }
-        }
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Error loading return products: " + e.getMessage());
-    }
-}
-  
-   private void saveReturnProductsToFile() {
-    DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(RETURN_PRODUCT_FILE))) {
-        for (int i = 0; i < model.getRowCount(); i++) {
-            // Construct a line with all columns separated by %%
-            StringBuilder sb = new StringBuilder();
-            for (int j = 0; j < model.getColumnCount(); j++) {
-                sb.append(model.getValueAt(i, j));
-                if (j < model.getColumnCount() - 1) {
-                    sb.append("%%");
-                }
-            }
-            writer.write(sb.toString());
-            writer.newLine();
-        }
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Error saving return products: " + e.getMessage());
-    }
-}
-   
-   private void updateQuantityInFileAdd(String filePath, String productId, int qtyToAdd, int quantityIndex) {
-    File inputFile = new File(filePath);
-    File tempFile = new File(filePath + "_temp.txt");
-
-    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split("%%");
-
-            if (parts.length > quantityIndex) {
-                // Check productId at expected position (index 1 except productstatus.txt where it's model at index 1)
-                boolean matches = false;
-
-                if (filePath.contains("product.txt") || filePath.contains("cashierproduct.txt")) {
-                    matches = parts[1].equals(productId);
-                } else if (filePath.contains("productstatus.txt")) {
-                    // productstatus.txt uses model at index 1, so you need to map productId to model or accept model as argument
-                    // For now, assume productId is actually the model name for this file (adjust if needed)
-                    matches = parts[1].equals(productId);
-                }
-
-                if (matches) {
-                    int currentQty = 0;
-                    try {
-                        currentQty = Integer.parseInt(parts[quantityIndex]);
-                    } catch (NumberFormatException e) {
-                        currentQty = 0;
+    // Get product ID by product name from product.txt
+    private String getProductIdByName(String productName) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/file_storage/product.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("%%");
+                if (parts.length >= 3) {
+                    String model = parts[2];
+                    if (model.equals(productName)) {
+                        return parts[1]; // productId at index 1
                     }
-
-                    int newQty = currentQty + qtyToAdd;
-                    parts[quantityIndex] = String.valueOf(newQty);
-
-                    String updatedLine = String.join("%%", parts);
-                    writer.write(updatedLine);
-                    writer.newLine();
-                    continue;
                 }
             }
-
-            // Write the original line if no match
-            writer.write(line);
-            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error updating quantity in file: " + filePath);
+        return null;
     }
 
-    if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
-        JOptionPane.showMessageDialog(null, "Failed to update file: " + filePath);
+    // Load return transactions from file to JTable
+    private void loadReturnProductsFromFile() {
+        DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
+        model.setRowCount(0);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(RETURN_PRODUCT_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("%%");
+                if (parts.length == 8) {
+                    model.addRow(new Object[]{
+                            parts[0], // customerId
+                            parts[2], // productName
+                            parts[3], // price
+                            parts[4], // quantity
+                            parts[5], // amount
+                            parts[6], // purchaseDate
+                            parts[7]  // returnDate
+                    });
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error loading return products: " + e.getMessage());
+        }
     }
-   }
-   
-   public void addReturnedQuantityToProduct(String productId, int returnQty) {
-    // product.txt quantity is at index 6
-    updateQuantityInFileAdd("src/file_storage/product.txt", productId, returnQty, 6);
 
-    // productstatus.txt quantity is at index 3, productId is actually model here
-    updateQuantityInFileAdd("src/file_storage/productstatus.txt", productId, returnQty, 3);
+    // Save JTable return transactions back to file
+    private void saveReturnProductsToFile() {
+        DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
 
-    // cashierproduct.txt quantity is at index 3
-    updateQuantityInFileAdd("src/file_storage/cashierproduct.txt", productId, returnQty, 3);
-
-    // Reload the UI panels after update
-    loadProductStatusPanels();
-}
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RETURN_PRODUCT_FILE))) {
+            for (int i = 0; i < model.getRowCount(); i++) {
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    sb.append(model.getValueAt(i, j));
+                    if (j < model.getColumnCount() - 1) sb.append("%%");
+                }
+                writer.write(sb.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving return products: " + e.getMessage());
+        }
+    }
 
    
     public static void main(String args[]) {
