@@ -403,17 +403,7 @@ public class CRETURN extends javax.swing.JFrame {
     PRODUCT product = getProductInstance();
     CASHIER_EMPLOYEE cashier = getCashierEmployeeInstance();
 
-    // Update quantities in each related class / file
-    productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
-    productInstance.addReturnedQuantityToProduct(productId, returnQty);
-    cashierInstance.addReturnedQuantityToProduct(productId, returnQty);
-
-    // ======= ADD THESE LINES TO RELOAD UIs =======
-    productStatusInstance.loadProductStatusPanels(); // Reload PRODUCTSTATUS UI panels
-    productInstance.loadTableFromTextFile(productInstance.getProductTable(), "src/file_storage/product.txt"); // Reload PRODUCT JTable
-    cashierInstance.loadTableFromTextFile(cashierInstance.getProductListTable(), "src/file_storage/cashierproduct.txt"); // Reload CASHIER_EMPLOYEE JTable
-
-    // Continue with clearing form or showing messages
+   
     JOptionPane.showMessageDialog(this, "Return transaction saved and quantities updated.");
 
     clearReturnForm();
@@ -616,103 +606,7 @@ private void clearReturnForm() {
         JOptionPane.showMessageDialog(this, "Error loading return products: " + e.getMessage());
     }
 }
-   
-    
-   // Helper method: Check if customer ID exists in customer.txt
-private boolean isCustomerIdValid(String customerId) {
-    try (BufferedReader br = new BufferedReader(new FileReader("src/file_storage/customer.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split("%%");
-            if (parts.length > 0 && parts[0].equals(customerId)) {
-                return true;
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    return false;
-}
-
-// Helper method: Find matching transaction in receipt.txt based on all details
-private ReturnTransaction findMatchingTransactionInReceipt(String customerId, String productName, String price,
-                                                          String quantity, String amount, String purchaseDate) {
-    try (BufferedReader br = new BufferedReader(new FileReader("src/file_storage/receipt.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split("%%");
-            // Format expected: customerId%%customerName%%productName%%price%%quantity%%amount%%purchaseDate
-            if (parts.length == 7) {
-                if (parts[0].equals(customerId) && parts[2].equals(productName) &&
-                    parts[3].equals(price) && parts[4].equals(quantity) &&
-                    parts[5].equals(amount) && parts[6].equals(purchaseDate)) {
-                    return new ReturnTransaction(customerId, productName, price, quantity, amount, purchaseDate);
-                }
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    return null;
-}
-
-// Simple container class to hold return transaction details
-private static class ReturnTransaction {
-    String customerId, productName, price, quantity, amount, purchaseDate;
-    public ReturnTransaction(String cId, String pName, String p, String q, String a, String pDate) {
-        customerId = cId;
-        productName = pName;
-        price = p;
-        quantity = q;
-        amount = a;
-        purchaseDate = pDate;
-    }
-}
-
-// Get product ID from product.txt by matching product name
-private String getProductIdByName(String productName) {
-    try (BufferedReader br = new BufferedReader(new FileReader("src/file_storage/product.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split("%%");
-            // Format: type%%productId%%productModel%%barcode%%price%%brand%%quantity%%description
-            if (parts.length >= 3 && parts[2].equals(productName)) {
-                return parts[1]; // Return productId
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    return null;
-}
-
-// Instance getters - replace with your actual instance retrieval if using singleton or global instances
-private PRODUCTSTATUS getProductStatusInstance() {
-    return new PRODUCTSTATUS();  // Or return your existing instance
-}
-
-private PRODUCT getProductInstance() {
-    return new PRODUCT();  // Or return your existing instance
-}
-
-private CASHIER_EMPLOYEE getCashierEmployeeInstance() {
-    return new CASHIER_EMPLOYEE();  // Or return your existing instance
-}
-
-// Clear form input fields in CRETURN after save
-private void clearReturnForm() {
-    id.setText("");
-    name.setText("");
-    pname.setText("");
-    price.setText("");
-    quanti.setText("");
-    amount.setText("");
-    pdate.setText("");
-    rdate.setText("");
-}
-   
-
-
+  
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
