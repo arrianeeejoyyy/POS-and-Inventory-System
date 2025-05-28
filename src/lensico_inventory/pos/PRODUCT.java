@@ -289,13 +289,10 @@ public class PRODUCT extends javax.swing.JFrame {
         }
     }
 
-        public void loadTableFromTextFile(JTable table, String filePath) {
-    // Set the correct table model before loading data
+    public void loadTableFromTextFile(javax.swing.JTable table, String filePath) {
     table.setModel(new javax.swing.table.DefaultTableModel(
         new Object[][] {},
-        new String[] {
-            "Product ID", "Barcode", "Unit Price", "Type", "Brand Name", "Product Model" , "Quantity" , "Description"
-        }
+        new String[] {"Type", "Product ID", "Product Model", "Barcode", "Unit Price", "Brand Name", "Quantity", "Description"}
     ));
 
     DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -304,14 +301,14 @@ public class PRODUCT extends javax.swing.JFrame {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] rowData = line.split("%%");
-            if (rowData.length == 8) {  // Make sure you expect 7 fields
+            if (rowData.length == 8) {
                 model.addRow(rowData);
             }
         }
     } catch (IOException e) {
         JOptionPane.showMessageDialog(null, "Error loading data: " + e.getMessage());
     }
-        }
+}
     
 
         public void updateProductQuantity(String productId, int quantitySold) {
@@ -422,6 +419,8 @@ private void updateQuantityInFileAdd(String filePath, String productId, int qtyT
         JOptionPane.showMessageDialog(null, "Failed to update file: " + filePath);
     }
 }
+
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

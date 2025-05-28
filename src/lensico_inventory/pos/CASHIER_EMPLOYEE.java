@@ -522,7 +522,8 @@ discount.addActionListener(e -> applyDiscount());
         }
     }
 
-    public void loadTableFromTextFile(JTable table, String filePath) {
+  // Reload the JTable productlist from cashierproduct.txt file
+public void loadTableFromTextFile(javax.swing.JTable table, String filePath) {
     table.setModel(new javax.swing.table.DefaultTableModel(
         new Object[][] {},
         new String[] {"Product ID", "Product Model", "Unit Price", "Quantity"}
@@ -542,6 +543,7 @@ discount.addActionListener(e -> applyDiscount());
         JOptionPane.showMessageDialog(null, "Error loading data: " + e.getMessage());
     }
 }
+
     
     public void AddRowToJTable(Object[] rowData) {
     DefaultTableModel model = (DefaultTableModel) productlist.getModel();

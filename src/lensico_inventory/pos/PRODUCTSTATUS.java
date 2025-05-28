@@ -633,7 +633,7 @@ private void loadProductCounter() {
 
 private PRODUCTSTATUSPPP selectedPanel = null; 
 
-private void loadProductStatusPanels() {
+public void loadProductStatusPanels() {
     jPanel1.removeAll();
 
     try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/productstatus.txt"))) {
@@ -660,39 +660,25 @@ private void loadProductStatusPanels() {
                     panel.image.setIcon(null);
                 }
 
-                // Set the text labels
                 panel.model.setText(modelText);
                 panel.price.setText(priceText);
                 panel.quantity.setText(quantityText);
 
-                // Set background color of jLabel1 based on quantity
+                // Color coding stock level
                 try {
                     int qty = Integer.parseInt(quantityText.trim());
-
                     if (qty >= 1 && qty <= 7) {
-                        panel.setStockLevelColor(Color.RED);  // Low stock
+                        panel.setStockLevelColor(Color.RED);
                     } else if (qty >= 8 && qty <= 14) {
-                        panel.setStockLevelColor(Color.YELLOW);  // Medium stock
+                        panel.setStockLevelColor(Color.YELLOW);
                     } else if (qty >= 15) {
-                        panel.setStockLevelColor(Color.GREEN);  // High stock
+                        panel.setStockLevelColor(Color.GREEN);
                     } else {
-                        panel.setStockLevelColor(null);  // Default/no color
+                        panel.setStockLevelColor(null);
                     }
                 } catch (NumberFormatException e) {
-                    panel.setStockLevelColor(null);  // Reset if parsing fails
+                    panel.setStockLevelColor(null);
                 }
-
-                // Add mouse listener to select panel
-                panel.addMouseListener(new java.awt.event.MouseAdapter() {
-                    @Override
-                    public void mouseClicked(java.awt.event.MouseEvent e) {
-                        if (selectedPanel != null) {
-                            selectedPanel.setBorder(null);
-                        }
-                        selectedPanel = panel;
-                        selectedPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-                    }
-                });
 
                 jPanel1.add(panel);
                 jPanel1.add(Box.createVerticalStrut(10));
