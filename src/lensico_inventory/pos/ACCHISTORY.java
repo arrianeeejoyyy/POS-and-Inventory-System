@@ -34,8 +34,8 @@ public class ACCHISTORY extends javax.swing.JFrame {
         stockmanagement = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        historyC = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -112,9 +112,25 @@ public class ACCHISTORY extends javax.swing.JFrame {
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setViewportView(jPanel2);
+        historyC.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 880, 680));
+            },
+            new String [] {
+                "Customer Name", "Date", "Time", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(historyC);
+
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 880, 680));
 
         jTabbedPane1.addTab("Customer", jPanel3);
         jTabbedPane1.addTab("User Setting", jPanel5);
@@ -248,15 +264,15 @@ public class ACCHISTORY extends javax.swing.JFrame {
     private javax.swing.JButton creturn;
     private javax.swing.JButton customer;
     private javax.swing.JButton employeee;
+    private javax.swing.JTable historyC;
     private javax.swing.JButton invoice;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton logout;
     private javax.swing.JButton product;

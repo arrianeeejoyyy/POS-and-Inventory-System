@@ -42,7 +42,10 @@ public class SALESREPORT extends javax.swing.JFrame {
         employeee = new javax.swing.JButton();
         accounthistory = new javax.swing.JButton();
         logout = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        salesreport = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        icon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(400, 100, 1215, 838));
@@ -120,8 +123,23 @@ public class SALESREPORT extends javax.swing.JFrame {
         });
         getContentPane().add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 270, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/SALES REPORT.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        salesreport.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cashier Name", "Product ID", "Price", "Quantity", "Total", "Date", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(salesreport);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 870, -1));
+
+        jLabel2.setText("total sales of tye day ");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1007, 510, 120, 30));
+
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/SALES REPORT.png"))); // NOI18N
+        getContentPane().add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -238,10 +256,13 @@ public class SALESREPORT extends javax.swing.JFrame {
     private javax.swing.JButton creturn;
     private javax.swing.JButton customer;
     private javax.swing.JButton employeee;
+    private javax.swing.JLabel icon;
     private javax.swing.JButton invoice;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logout;
     private javax.swing.JButton product;
+    private javax.swing.JTable salesreport;
     private javax.swing.JButton usersetting;
     // End of variables declaration//GEN-END:variables
 }

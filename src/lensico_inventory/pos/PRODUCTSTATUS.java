@@ -43,6 +43,32 @@ private String editingProductId = null;       // Stores the Product ID currently
         
         description.setOpaque(false);
         description.setBackground(new Color (0,0,0,0));
+        
+        imagepath.setOpaque(false);
+        imagepath.setBackground(new Color (0,0,0,0));
+        
+        addtype.setOpaque(false);
+        addtype.setBackground(new Color (0,0,0,0));
+        
+        id.setOpaque(false);
+        id.setBackground(new Color (0,0,0,0));
+        
+        model.setOpaque(false);
+        model.setBackground(new Color (0,0,0,0));
+        
+        code.setOpaque(false);
+        code.setBackground(new Color (0,0,0,0));
+        
+        price.setOpaque(false);
+        price.setBackground(new Color (0,0,0,0));
+        
+        brand.setOpaque(false);
+        brand.setBackground(new Color (0,0,0,0));
+        
+        quantity.setOpaque(false);
+        quantity.setBackground(new Color (0,0,0,0));
+        
+        
  
     loadProductStatusPanels(); 
     
@@ -80,6 +106,9 @@ private String editingProductId = null;       // Stores the Product ID currently
         edit = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        savetype = new javax.swing.JButton();
+        deletetype = new javax.swing.JButton();
+        addtype = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -167,15 +196,15 @@ private String editingProductId = null;       // Stores the Product ID currently
                 modelActionPerformed(evt);
             }
         });
-        getContentPane().add(model, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, 180, 20));
+        getContentPane().add(model, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 145, 180, 20));
 
-        type.setBackground(new java.awt.Color(102, 102, 102));
+        type.setBackground(new java.awt.Color(0, 0, 0));
         type.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         type.setForeground(new java.awt.Color(255, 255, 255));
         type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laptop", "Tablet", "Screen Monitor", "KeyBoard ", "Mouse " }));
         type.setSelectedIndex(-1);
         type.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 80, 180, -1));
+        getContentPane().add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 74, 180, -1));
 
         price.setBackground(new java.awt.Color(102, 102, 102));
         price.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -186,7 +215,7 @@ private String editingProductId = null;       // Stores the Product ID currently
                 priceActionPerformed(evt);
             }
         });
-        getContentPane().add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 180, 20));
+        getContentPane().add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 218, 180, 20));
 
         code.setBackground(new java.awt.Color(102, 102, 102));
         code.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -197,7 +226,7 @@ private String editingProductId = null;       // Stores the Product ID currently
                 codeActionPerformed(evt);
             }
         });
-        getContentPane().add(code, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, 180, 20));
+        getContentPane().add(code, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 183, 180, 20));
 
         brand.setBackground(new java.awt.Color(102, 102, 102));
         brand.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -208,7 +237,7 @@ private String editingProductId = null;       // Stores the Product ID currently
                 brandActionPerformed(evt);
             }
         });
-        getContentPane().add(brand, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 180, 20));
+        getContentPane().add(brand, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 255, 180, 20));
 
         quantity.setBackground(new java.awt.Color(102, 102, 102));
         quantity.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -219,7 +248,7 @@ private String editingProductId = null;       // Stores the Product ID currently
                 quantityActionPerformed(evt);
             }
         });
-        getContentPane().add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 180, 20));
+        getContentPane().add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 292, 180, 20));
 
         id.setBackground(new java.awt.Color(102, 102, 102));
         id.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -230,7 +259,7 @@ private String editingProductId = null;       // Stores the Product ID currently
                 idActionPerformed(evt);
             }
         });
-        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 180, 20));
+        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 110, 180, 20));
 
         jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton5.setContentAreaFilled(false);
@@ -241,11 +270,17 @@ private String editingProductId = null;       // Stores the Product ID currently
         });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 603, 80, 20));
 
+        jScrollPane1.setBackground(new java.awt.Color(0, 0, 0));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        description.setBackground(new java.awt.Color(0, 0, 0));
         description.setColumns(20);
+        description.setForeground(new java.awt.Color(255, 255, 255));
         description.setRows(5);
         jScrollPane1.setViewportView(description);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 290, 150));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, 320, 170));
         getContentPane().add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 545, 155, 95));
 
         save.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -265,15 +300,15 @@ private String editingProductId = null;       // Stores the Product ID currently
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane2.setViewportView(jPanel1);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 30, 510, 760));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 130, 480, 660));
 
-        imagepath.setText("jTextField1");
+        imagepath.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         imagepath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 imagepathActionPerformed(evt);
             }
         });
-        getContentPane().add(imagepath, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 560, 120, 20));
+        getContentPane().add(imagepath, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 555, 110, 20));
 
         edit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         edit.setContentAreaFilled(false);
@@ -296,6 +331,19 @@ private String editingProductId = null;       // Stores the Product ID currently
         jButton6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton6.setContentAreaFilled(false);
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 688, 130, 20));
+
+        savetype.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        savetype.setContentAreaFilled(false);
+        getContentPane().add(savetype, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 50, 100, 20));
+
+        deletetype.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        deletetype.setContentAreaFilled(false);
+        getContentPane().add(deletetype, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 90, 100, 20));
+
+        addtype.setForeground(new java.awt.Color(255, 255, 255));
+        addtype.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        addtype.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(addtype, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 80, 170, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/PRODUCT STATUS_1.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -595,38 +643,54 @@ private void loadProductStatusPanels() {
             if (parts.length >= 4) {
                 String iconPath = parts[0];
                 String modelText = parts[1];
-                String PriceText = parts[2];
+                String priceText = parts[2];
                 String quantityText = parts[3];
 
                 PRODUCTSTATUSPPP panel = new PRODUCTSTATUSPPP();
 
+                // Load and scale image icon if file exists
                 File imgFile = new File(iconPath);
                 if (imgFile.exists()) {
                     ImageIcon icon = new ImageIcon(iconPath);
-                    int fixedWidth = 140;
-                    int fixedHeight = 130;
+                    int fixedWidth = 155;
+                    int fixedHeight = 95;
                     Image img = icon.getImage().getScaledInstance(fixedWidth, fixedHeight, Image.SCALE_SMOOTH);
                     panel.image.setIcon(new ImageIcon(img));
                 } else {
                     panel.image.setIcon(null);
                 }
 
+                // Set the text labels
                 panel.model.setText(modelText);
-
-                
-                panel.price.setText(PriceText);  
-
+                panel.price.setText(priceText);
                 panel.quantity.setText(quantityText);
 
-                
+                // Set background color of jLabel1 based on quantity
+                try {
+                    int qty = Integer.parseInt(quantityText.trim());
+
+                    if (qty >= 1 && qty <= 7) {
+                        panel.setStockLevelColor(Color.RED);  // Low stock
+                    } else if (qty >= 8 && qty <= 14) {
+                        panel.setStockLevelColor(Color.YELLOW);  // Medium stock
+                    } else if (qty >= 15) {
+                        panel.setStockLevelColor(Color.GREEN);  // High stock
+                    } else {
+                        panel.setStockLevelColor(null);  // Default/no color
+                    }
+                } catch (NumberFormatException e) {
+                    panel.setStockLevelColor(null);  // Reset if parsing fails
+                }
+
+                // Add mouse listener to select panel
                 panel.addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent e) {
                         if (selectedPanel != null) {
-                            selectedPanel.setBorder(null);  
+                            selectedPanel.setBorder(null);
                         }
                         selectedPanel = panel;
-                        selectedPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));  
+                        selectedPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
                     }
                 });
 
@@ -929,11 +993,13 @@ private void updateQuantityInFileAdd(String filePath, String productId, int qtyT
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accounthistory;
+    private javax.swing.JTextField addtype;
     private javax.swing.JTextField brand;
     private javax.swing.JTextField code;
     private javax.swing.JButton creturn;
     private javax.swing.JButton customer;
     private javax.swing.JButton delete;
+    private javax.swing.JButton deletetype;
     private javax.swing.JTextArea description;
     private javax.swing.JButton edit;
     private javax.swing.JButton employeee;
@@ -953,6 +1019,7 @@ private void updateQuantityInFileAdd(String filePath, String productId, int qtyT
     private javax.swing.JButton product;
     private javax.swing.JTextField quantity;
     private javax.swing.JButton save;
+    private javax.swing.JButton savetype;
     private javax.swing.JButton stockmanagement;
     private javax.swing.JComboBox<String> type;
     private javax.swing.JButton usersetting;

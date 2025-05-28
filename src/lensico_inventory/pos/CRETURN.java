@@ -319,15 +319,15 @@ public class CRETURN extends javax.swing.JFrame {
     }//GEN-LAST:event_nameActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-    // Step 1: Get input values from your text fields
-    String customerId = idTextField.getText().trim();
-    String customerName = nameTextField.getText().trim();
-    String productName = pnameTextField.getText().trim();
-    String priceText = priceTextField.getText().trim();
-    String quantityText = quantiTextField.getText().trim();
-    String amountText = amountTextField.getText().trim();
-    String purchaseDate = pdateTextField.getText().trim();
-    
+     // Step 1: Get input values from your text fields
+     String customerId = id.getText().trim();
+    String customerName = name.getText().trim();
+    String productName = pname.getText().trim();
+    String priceText = price.getText().trim();
+    String quantityText = quanti.getText().trim();
+    String amountText = amount.getText().trim();
+    String purchaseDate = pdate.getText().trim();
+
     // Get current date for return date
     String returnDate = java.time.LocalDate.now().toString();
 
@@ -350,7 +350,7 @@ public class CRETURN extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "No matching transaction found in receipts. Check product or other details.");
         return;
     }
-    
+
     // Step 5: Save return transaction to return_receipt.txt
     try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/return_receipt.txt", true))) {
         String returnLine = String.join("%%",
@@ -371,7 +371,7 @@ public class CRETURN extends javax.swing.JFrame {
     }
 
     // Step 6: Add return data to ReturnProducts JTable
-    DefaultTableModel model = (DefaultTableModel) returnProductsTable.getModel();
+    DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
     model.addRow(new Object[] {
         customerId,
         productName,
@@ -384,9 +384,12 @@ public class CRETURN extends javax.swing.JFrame {
 
     // Step 7: Update product quantities in other classes
     String productId = getProductIdByName(productName); // Implement this helper yourself
+    if(productId == null) {
+        JOptionPane.showMessageDialog(this, "Product ID not found for product: " + productName);
+        return;
+    }
     int returnQty = Integer.parseInt(quantityText);
 
-    // Get existing instances if possible or create (avoid creating new UI windows)
     PRODUCTSTATUS productStatus = getProductStatusInstance();
     PRODUCT product = getProductInstance();
     CASHIER_EMPLOYEE cashier = getCashierEmployeeInstance();
@@ -396,8 +399,8 @@ public class CRETURN extends javax.swing.JFrame {
     cashier.addReturnedQuantityToProduct(productId, returnQty);
 
     JOptionPane.showMessageDialog(this, "Return transaction saved and quantities updated.");
-    
-    clearReturnForm(); // Optional: clear input fields after save
+
+    clearReturnForm();
     }//GEN-LAST:event_saveActionPerformed
 
     
@@ -553,7 +556,25 @@ private void clearReturnForm() {
     pdate.setText("");
 }
     
-    
+   private String getProductIdByName(String productName) {
+    String filePath = "src/file_storage/product.txt"; // Make sure path is correct
+
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split("%%");
+            if (parts.length >= 3) {
+                String productModel = parts[2]; // ProductModel
+                if (productModel.equals(productName)) {
+                    return parts[1]; // ProductID
+                }
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return null; // Return null if not found
+}
     
     
     public static void main(String args[]) {
