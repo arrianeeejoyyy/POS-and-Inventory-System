@@ -18,22 +18,19 @@ public class CRETURN extends javax.swing.JFrame {
   private static final String RETURN_PRODUCT_FILE = "src/file_storage/returnproduct.txt";
   
   private PRODUCTSTATUS productStatusInstance;
+ 
   
-  
-  
-    public CRETURN() {
-        initComponents();
-        setReturnDateToToday();
+public CRETURN() {
+    this.productStatusInstance = new PRODUCTSTATUS();  // Initialize productStatusInstance
+    initComponents();
+    setReturnDateToToday();
     loadReturnProductsFromFile();
-    
-     this.productStatusInstance = productStatusInstance;
-
     this.addWindowListener(new java.awt.event.WindowAdapter() {
         public void windowClosing(java.awt.event.WindowEvent evt) {
             saveReturnProductsToFile();
         }
     });
-    }
+}
 
    private void setReturnDateToToday() {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // or your desired format
@@ -421,17 +418,21 @@ public class CRETURN extends javax.swing.JFrame {
             return;
         }
 
-        // Step 9: Update PRODUCTSTATUS
        if (productStatusInstance != null) {
+    // Call method to update product quantity
     productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
-    productStatusInstance.loadProductStatusPanels();  // THIS WILL NOW WORK
+    // Call to reload product status panels and reflect updated data
+    productStatusInstance.loadProductStatusPanels();
 } else {
     JOptionPane.showMessageDialog(this, "Product status instance not found. Unable to update UI.");
 }
 
+
         // Step 10: Clear form and notify
         JOptionPane.showMessageDialog(this, "Return transaction saved and quantities updated.");
+         loadProductStatusPanels();
         clearReturnForm();
+       
     }//GEN-LAST:event_saveActionPerformed
 
     
@@ -636,8 +637,6 @@ public class CRETURN extends javax.swing.JFrame {
     // Update quantity in cashierproduct.txt (assume quantity at index 3)
     updateQuantityInFileAdd("src/file_storage/cashierproduct.txt", productId, returnQty, 3);
 
-    // Reload UI to show updated quantities (implement this as needed)
-    loadProductStatusPanels();
 }
    
     public static void main(String args[]) {

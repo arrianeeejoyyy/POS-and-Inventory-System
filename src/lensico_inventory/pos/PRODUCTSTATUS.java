@@ -634,7 +634,7 @@ private void loadProductCounter() {
 private PRODUCTSTATUSPPP selectedPanel = null; 
 
 public void loadProductStatusPanels() {
-    jPanel1.removeAll();
+    jPanel1.removeAll();  // Clear existing panels
 
     try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/productstatus.txt"))) {
         String line;
@@ -647,8 +647,6 @@ public void loadProductStatusPanels() {
                 String quantityText = parts[3];
 
                 PRODUCTSTATUSPPP panel = new PRODUCTSTATUSPPP();
-
-                // Load and scale image icon if file exists
                 File imgFile = new File(iconPath);
                 if (imgFile.exists()) {
                     ImageIcon icon = new ImageIcon(iconPath);
@@ -664,24 +662,18 @@ public void loadProductStatusPanels() {
                 panel.price.setText(priceText);
                 panel.quantity.setText(quantityText);
 
-                // Color coding stock level
-                try {
-                    int qty = Integer.parseInt(quantityText.trim());
-                    if (qty >= 1 && qty <= 7) {
-                        panel.setStockLevelColor(Color.RED);
-                    } else if (qty >= 8 && qty <= 14) {
-                        panel.setStockLevelColor(Color.YELLOW);
-                    } else if (qty >= 15) {
-                        panel.setStockLevelColor(Color.GREEN);
-                    } else {
-                        panel.setStockLevelColor(null);
-                    }
-                } catch (NumberFormatException e) {
-                    panel.setStockLevelColor(null);
+                // Add color coding based on quantity
+                int qty = Integer.parseInt(quantityText.trim());
+                if (qty >= 1 && qty <= 7) {
+                    panel.setStockLevelColor(Color.RED);
+                } else if (qty >= 8 && qty <= 14) {
+                    panel.setStockLevelColor(Color.YELLOW);
+                } else if (qty >= 15) {
+                    panel.setStockLevelColor(Color.GREEN);
                 }
 
                 jPanel1.add(panel);
-                jPanel1.add(Box.createVerticalStrut(10));
+                jPanel1.add(Box.createVerticalStrut(10));  // Space between panels
             }
         }
     } catch (IOException e) {
@@ -692,7 +684,6 @@ public void loadProductStatusPanels() {
     jPanel1.revalidate();
     jPanel1.repaint();
 }
-
 
 private void loadIconPathToIcon(String modelToFind) {
     try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/productstatus.txt"))) {
