@@ -356,7 +356,6 @@ public CRETURN() {
         return;
     }
 
-    // 4. Validate against salesreport.txt
     File file = new File("src/file_storage/salesreport.txt");
     boolean matchFound = false;
 
