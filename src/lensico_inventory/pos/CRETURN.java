@@ -327,7 +327,7 @@ public CRETURN() {
     }//GEN-LAST:event_nameActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-          // 1. Read input values from text fields
+    // 1. Read input values from text fields
     String customerId = id.getText().trim();
     String customerName = name.getText().trim();
     String productName = pname.getText().trim();
@@ -337,7 +337,7 @@ public CRETURN() {
     String purchaseDate = pdate.getText().trim();
     String returnDate = rdate.getText().trim();
 
-    // 2. Basic validation
+    // 2. Basic validation for empty fields
     if (customerId.isEmpty() || customerName.isEmpty() || productName.isEmpty() || 
         priceStr.isEmpty() || quantityStr.isEmpty() || amountStr.isEmpty() || 
         purchaseDate.isEmpty() || returnDate.isEmpty()) {
@@ -346,7 +346,7 @@ public CRETURN() {
         return;
     }
 
-    // 3. Optionally, validate numeric fields
+    // 3. Validate numeric fields
     try {
         Double.parseDouble(priceStr);
         Integer.parseInt(quantityStr);
@@ -356,7 +356,53 @@ public CRETURN() {
         return;
     }
 
-    // 4. Add a new row to the JTable
+    // 4. Validate against salesreport.txt
+    File file = new File("src/file_storage/salesreport.txt");
+    boolean matchFound = false;
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] data = line.split("%%");
+            if (data.length >= 8) {
+                String fileCustomerId = data[2].trim();
+                String fileName = data[1].trim();
+                String fileProductName = data[3].trim();
+                String filePrice = data[4].trim();
+                String fileQuantity = data[5].trim();
+                String fileAmount = data[6].trim();
+                String filePurchaseDate = data[7].trim();
+
+                if (!fileCustomerId.equalsIgnoreCase(customerId)) {
+                    JOptionPane.showMessageDialog(this, "Customer ID does not match with sales record.");
+                } else if (!fileName.equalsIgnoreCase(customerName)) {
+                    JOptionPane.showMessageDialog(this, "Customer Name does not match with sales record.");
+                } else if (!fileProductName.equalsIgnoreCase(productName)) {
+                    JOptionPane.showMessageDialog(this, "Product Name does not match with sales record.");
+                } else if (!filePrice.equalsIgnoreCase(priceStr)) {
+                    JOptionPane.showMessageDialog(this, "Price does not match with sales record.");
+                } else if (!fileQuantity.equalsIgnoreCase(quantityStr)) {
+                    JOptionPane.showMessageDialog(this, "Quantity does not match with sales record.");
+                } else if (!fileAmount.equalsIgnoreCase(amountStr)) {
+                    JOptionPane.showMessageDialog(this, "Amount does not match with sales record.");
+                } else if (!filePurchaseDate.equalsIgnoreCase(purchaseDate)) {
+                    JOptionPane.showMessageDialog(this, "Purchase Date does not match with sales record.");
+                } else {
+                    matchFound = true;
+                    break;
+                }
+            }
+        }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error reading sales report: " + e.getMessage());
+        return;
+    }
+
+    if (!matchFound) {
+        return; // Do not proceed if no match was found
+    }
+
+    // 5. Add row to JTable
     DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
     Object[] newRow = new Object[] {
         customerId,
@@ -369,10 +415,10 @@ public CRETURN() {
     };
     model.addRow(newRow);
 
-    // 5. Save updated JTable to the file
+    // 6. Save table to file
     saveReturnProductsToFile();
 
-    // 6. Optional: Clear input fields after saving
+    // 7. Clear inputs
     id.setText("");
     name.setText("");
     pname.setText("");
@@ -383,6 +429,7 @@ public CRETURN() {
     rdate.setText("");
 
     JOptionPane.showMessageDialog(this, "Return product saved successfully.");
+
   
     }//GEN-LAST:event_saveActionPerformed
 
