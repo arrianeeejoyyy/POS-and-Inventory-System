@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.table.DefaultTableModel;
 import lensico_inventory.pos.ADMIN;
 import lensico_inventory.pos.CASHIER_EMPLOYEE;
 import lensico_inventory.pos.Lensico_InventoryPOS;
@@ -15,11 +16,13 @@ import lensico_inventory.pos.UserManager;
 
 public class LOG_IN extends javax.swing.JFrame {
 
+     private USERSETTINGCASHIERACC cashierSettingsFrame;
+    
     private int loginAttempts = 0;
     
     public LOG_IN() {
         initComponents();
-          
+          cashierSettingsFrame = new USERSETTINGCASHIERACC();
          defaultusername.add("admin");
          defaultpassword.add("123456");
  // Enter key on password field submits the login
@@ -144,38 +147,53 @@ public class LOG_IN extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void enterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterActionPerformed
-        String username = jTextField1.getText();
-        String password = pin.getText();
+      String username = jTextField1.getText().trim();
+        String password = new String(pin.getPassword());
 
-        for (UserAccount user : UserManager.users) {
-            if (user.getUsername().equals(username)) {
-                if (user.getPassword().equals(password)) {
-                    loginAttempts = 0;
-                    JOptionPane.showMessageDialog(null, "LOGIN SUCCESSFUL!");
-                    this.setVisible(false);
-                    if (username.equals("admin")&& password.equals("123456")) {
-                        this.setVisible(false);
-                        new ADMIN().setVisible(true);
-                    } else {
-                        this.setVisible(false);
-                        new CASHIER_EMPLOYEE().setVisible(true);
-                    }
-                    return;
-                } else {
-                    loginAttempts++;
-                    pin.setText("");
-                    JOptionPane.showMessageDialog(null, "Incorrect password.");
-                    if (loginAttempts >= 3) {
-                        JOptionPane.showMessageDialog(null, "Too many failed attempts.");
-                        System.exit(0);
-                    }
-                    return;
+        DefaultTableModel model = (DefaultTableModel) cashierSettingsFrame.cashiersAccList.getModel();
+
+        boolean userFound = false;
+        boolean passwordCorrect = false;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String tableUsername = model.getValueAt(i, 1).toString();
+            String tablePassword = model.getValueAt(i, 2).toString();
+
+            if (tableUsername.equals(username)) {
+                userFound = true;
+                if (tablePassword.equals(password)) {
+                    passwordCorrect = true;
                 }
+                break;
             }
         }
 
-        JOptionPane.showMessageDialog(null, "Username not found.");
+        if (!userFound) {
+            JOptionPane.showMessageDialog(null, "Username not found.");
+            pin.setText("");
+            return;
+        }
 
+        if (!passwordCorrect) {
+            loginAttempts++;
+            JOptionPane.showMessageDialog(null, "Incorrect password. Attempt " + loginAttempts + " of 3.");
+            pin.setText("");
+            if (loginAttempts >= 3) {
+                JOptionPane.showMessageDialog(null, "Too many failed attempts. System will exit.");
+                System.exit(0);
+            }
+            return;
+        }
+
+        loginAttempts = 0;
+        JOptionPane.showMessageDialog(null, "LOGIN SUCCESSFUL!");
+        this.setVisible(false);
+        if (username.equals("admin") && password.equals("123456")) {
+            new ADMIN().setVisible(true);
+        } else {
+            new CASHIER_EMPLOYEE().setVisible(true);
+        }
+    
     }//GEN-LAST:event_enterActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
