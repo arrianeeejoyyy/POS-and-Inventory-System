@@ -24,7 +24,6 @@ public CRETURN() {
     initComponents();
     setReturnDateToToday();
     loadReturnProductsFromFile();
-    productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
 
     this.addWindowListener(new java.awt.event.WindowAdapter() {
         public void windowClosing(java.awt.event.WindowEvent evt) {
