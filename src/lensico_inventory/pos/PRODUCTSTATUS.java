@@ -671,7 +671,6 @@ public void loadProductStatusPanels() {
                 } else if (qty >= 15) {
                     panel.setStockLevelColor(Color.GREEN);
                 }
-
                 jPanel1.add(panel);
                 jPanel1.add(Box.createVerticalStrut(10));  // Space between panels
             }

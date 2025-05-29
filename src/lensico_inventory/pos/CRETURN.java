@@ -636,7 +636,6 @@ public CRETURN() {
 
     // Update quantity in cashierproduct.txt (assume quantity at index 3)
     updateQuantityInFileAdd("src/file_storage/cashierproduct.txt", productId, returnQty, 3);
-
 }
    
     public static void main(String args[]) {
