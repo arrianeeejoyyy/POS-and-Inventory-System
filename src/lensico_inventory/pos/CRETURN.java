@@ -18,13 +18,14 @@ public class CRETURN extends javax.swing.JFrame {
   private static final String RETURN_PRODUCT_FILE = "src/file_storage/returnproduct.txt";
   
   private PRODUCTSTATUS productStatusInstance;
- 
-  
+
 public CRETURN() {
     this.productStatusInstance = new PRODUCTSTATUS();  // Initialize productStatusInstance
     initComponents();
     setReturnDateToToday();
     loadReturnProductsFromFile();
+    productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
+
     this.addWindowListener(new java.awt.event.WindowAdapter() {
         public void windowClosing(java.awt.event.WindowEvent evt) {
             saveReturnProductsToFile();
@@ -329,110 +330,108 @@ public CRETURN() {
     }//GEN-LAST:event_nameActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-      // Step 1: Get input values
-        String customerId = id.getText().trim();
-        String customerName = name.getText().trim();
-        String productName = pname.getText().trim();
-        String priceText = price.getText().trim();
-        String quantityText = quanti.getText().trim();
-        String amountText = amount.getText().trim();
-        String purchaseDate = pdate.getText().trim();
+     
+    // Step 1: Get input values
+    String customerId = id.getText().trim();
+    String customerName = name.getText().trim();
+    String productName = pname.getText().trim();
+    String priceText = price.getText().trim();
+    String quantityText = quanti.getText().trim();
+    String amountText = amount.getText().trim();
+    String purchaseDate = pdate.getText().trim();
 
-        // Current return date
-        String returnDate = java.time.LocalDate.now().toString();
+    // Current return date
+    String returnDate = java.time.LocalDate.now().toString();
 
-        // Step 2: Validate fields not empty
-        if (customerId.isEmpty() || customerName.isEmpty() || productName.isEmpty() ||
-                priceText.isEmpty() || quantityText.isEmpty() || amountText.isEmpty() || purchaseDate.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "All fields must be filled.");
-            return;
-        }
+    // Step 2: Validate fields not empty
+    if (customerId.isEmpty() || customerName.isEmpty() || productName.isEmpty() ||
+            priceText.isEmpty() || quantityText.isEmpty() || amountText.isEmpty() || purchaseDate.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields must be filled.");
+        return;
+    }
 
-        // Step 3: Validate customer ID exists
-        if (!isCustomerIdValid(customerId)) {
-            JOptionPane.showMessageDialog(this, "Customer ID not found.");
-            return;
-        }
+    // Step 3: Validate customer ID exists
+    if (!isCustomerIdValid(customerId)) {
+        JOptionPane.showMessageDialog(this, "Customer ID not found.");
+        return;
+    }
 
-        // Step 4: Validate transaction matches receipt
-        if (findMatchingTransactionInReceipt(customerId, productName, priceText, quantityText, amountText, purchaseDate) == null) {
-            JOptionPane.showMessageDialog(this, "No matching transaction found in receipts.");
-            return;
-        }
+    // Step 4: Validate transaction matches receipt
+    if (findMatchingTransactionInReceipt(customerId, productName, priceText, quantityText, amountText, purchaseDate) == null) {
+        JOptionPane.showMessageDialog(this, "No matching transaction found in receipts.");
+        return;
+    }
 
-        // Step 5: Confirm before saving
-        int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "Are you sure you want to save this return transaction?",
-                "Confirm",
-                JOptionPane.YES_NO_OPTION
-        );
-        if (confirm != JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(this, "Operation cancelled.");
-            return;
-        }
+    // Step 5: Confirm before saving
+    int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to save this return transaction?",
+            "Confirm",
+            JOptionPane.YES_NO_OPTION
+    );
+    if (confirm != JOptionPane.YES_OPTION) {
+        JOptionPane.showMessageDialog(this, "Operation cancelled.");
+        return;
+    }
 
-        // Step 6: Save to returnproduct.txt
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RETURN_PRODUCT_FILE, true))) {
-            String returnLine = String.join("%%",
-                    customerId,
-                    customerName,
-                    productName,
-                    priceText,
-                    quantityText,
-                    amountText,
-                    purchaseDate,
-                    returnDate
-            );
-            writer.write(returnLine);
-            writer.newLine();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error saving return transaction: " + e.getMessage());
-            return;
-        }
-
-        // Step 7: Add to JTable
-        DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
-        model.addRow(new Object[]{
+    // Step 6: Save to returnproduct.txt
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(RETURN_PRODUCT_FILE, true))) {
+        String returnLine = String.join("%%",
                 customerId,
+                customerName,
                 productName,
                 priceText,
                 quantityText,
                 amountText,
                 purchaseDate,
                 returnDate
-        });
+        );
+        writer.write(returnLine);
+        writer.newLine();
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error saving return transaction: " + e.getMessage());
+        return;
+    }
 
-        // Step 8: Update product quantities
-        String productId = getProductIdByName(productName);
-        if (productId == null) {
-            JOptionPane.showMessageDialog(this, "Product ID not found for product: " + productName);
-            return;
-        }
+    // Step 7: Add to JTable
+    DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
+    model.addRow(new Object[]{
+            customerId,
+            productName,
+            priceText,
+            quantityText,
+            amountText,
+            purchaseDate,
+            returnDate
+    });
 
-        int returnQty;
-        try {
-            returnQty = Integer.parseInt(quantityText);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid quantity.");
-            return;
-        }
+    // Step 8: Update product quantities
+    String productId = getProductIdByName(productName);
+    if (productId == null) {
+        JOptionPane.showMessageDialog(this, "Product ID not found for product: " + productName);
+        return;
+    }
 
-       if (productStatusInstance != null) {
-    // Call method to update product quantity
-    productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
-    // Call to reload product status panels and reflect updated data
-    productStatusInstance.loadProductStatusPanels();
-} else {
-    JOptionPane.showMessageDialog(this, "Product status instance not found. Unable to update UI.");
-}
+    int returnQty;
+    try {
+        returnQty = Integer.parseInt(quantityText);
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Invalid quantity.");
+        return;
+    }
 
+    if (productStatusInstance != null) {
+        // Update product quantity and refresh UI inside PRODUCTSTATUS frame
+        productStatusInstance.addReturnedQuantityToProduct(productId, returnQty);
+        productStatusInstance.loadProductStatusPanels();
+    } else {
+        JOptionPane.showMessageDialog(this, "Product status instance not found. Unable to update UI.");
+    }
 
-        // Step 10: Clear form and notify
-        JOptionPane.showMessageDialog(this, "Return transaction saved and quantities updated.");
-         loadProductStatusPanels();
-        clearReturnForm();
-       
+    // Step 10: Clear form and notify
+    JOptionPane.showMessageDialog(this, "Return transaction saved and quantities updated.");
+    clearReturnForm();
+
     }//GEN-LAST:event_saveActionPerformed
 
     
