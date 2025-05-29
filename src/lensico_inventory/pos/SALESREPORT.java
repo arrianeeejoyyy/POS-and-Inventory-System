@@ -128,12 +128,12 @@ public class SALESREPORT extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Cashier Name", "Product ID", "Price", "Quantity", "Total", "Date", "Status"
+                "Cashier Name", "Transaction Number", "Customer ID", "Product ID", "Price", "Quantity", "Total", "Date"
             }
         ));
         jScrollPane1.setViewportView(salesreport);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 870, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 910, 440));
 
         jLabel2.setText("total sales of tye day ");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1007, 510, 120, 30));
