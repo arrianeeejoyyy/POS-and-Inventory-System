@@ -409,13 +409,17 @@ discount.addActionListener(e -> applyDiscount());
                 discount.getSelectedItem().toString(),
                 grandtotal.getText(),
                 CASHIER1.getText(),
-                customerID.getText(),     // customer ID input text
+                customerID.getText(),
                 String.format("%.2f", payment),
                 String.format("%.2f", change),
                 String.format("%.2f", vatSalesValue),
                 String.format("%.2f", vatAmount),
-                customername.getText()     // customer name label text for time3
+                customername.getText()
             );
+
+            // *** Here is where you call the saveReceiptToTextFile method ***
+            receiptFrame.saveReceiptToTextFile();
+
             receiptFrame.setVisible(true);
 
             boolean opened = receiptFrame.savePanelImageAsPDFWithCustomNameAndAutoClose();

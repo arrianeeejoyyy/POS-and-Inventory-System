@@ -1,0 +1,8 @@
+Reference Number: 1853853302
+Date: May 29, 2025
+Customer ID: 111205001
+Customer Name: arriane
+Grand Total: 699.00
+----- Products -----
+ProductName          Price      Quantity   Total     
+Zeus x Raiku Wired Rainbow LED Ligh Gaming Keyboard 699.00     1          699.00    

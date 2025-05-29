@@ -297,35 +297,35 @@ public CRETURN() {
     }//GEN-LAST:event_logoutActionPerformed
 
     private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_priceActionPerformed
 
     private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_idActionPerformed
 
     private void pnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pnameActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_pnameActionPerformed
 
     private void quantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantiActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_quantiActionPerformed
 
     private void pdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdateActionPerformed
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_pdateActionPerformed
 
     private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_amountActionPerformed
 
     private void rdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdateActionPerformed
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_rdateActionPerformed
 
     private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
-        // TODO add your handling code here:
+    
     }//GEN-LAST:event_nameActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed

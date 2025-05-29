@@ -25,7 +25,10 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import java.io.IOException;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import java.awt.Desktop;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 
 
@@ -282,6 +285,51 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
     time3.setText(customerNameLabelText);  // SET customername JLabel text here
 }
     
+public void saveReceiptToTextFile() {
+    File file = new File("src/file_storage/receipt.txt");
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+        // Write header data
+        writer.write("Reference Number: " + refnumber1.getText());
+        writer.newLine();
+        writer.write("Date: " + date1.getText());
+        writer.newLine();
+        writer.write("Customer ID: " + customerID.getText());
+        writer.newLine();
+        writer.write("Customer Name: " + time3.getText());
+        writer.newLine();
+        writer.write("Grand Total: " + grandtotal.getText());
+        writer.newLine();
+        writer.write("----- Products -----");
+        writer.newLine();
+
+        DefaultTableModel model = (DefaultTableModel) table_content.getModel();
+
+        // Write table header
+        writer.write(String.format("%-20s %-10s %-10s %-10s", "ProductName", "Price", "Quantity", "Total"));
+        writer.newLine();
+
+        // Write each row from the table
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String productName = model.getValueAt(i, 0).toString();
+            String price = model.getValueAt(i, 1).toString();
+            String quantity = model.getValueAt(i, 2).toString();
+            String total = model.getValueAt(i, 3).toString();
+
+            String line = String.format("%-20s %-10s %-10s %-10s", productName, price, quantity, total);
+            writer.write(line);
+            writer.newLine();
+        }
+
+        writer.flush();
+        JOptionPane.showMessageDialog(this, "Receipt saved to receipt.txt successfully.");
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error saving receipt: " + e.getMessage());
+    }
+}
+
+ 
+ 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -519,7 +567,7 @@ private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cash;
-    private javax.swing.JLabel cashier1;
+    public javax.swing.JLabel cashier1;
     private javax.swing.JLabel change;
     private javax.swing.JLabel customerID;
     private javax.swing.JLabel date1;

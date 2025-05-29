@@ -521,7 +521,7 @@ private String editingProductId = null;       // Stores the Product ID currently
     }//GEN-LAST:event_imagepathActionPerformed
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-          if (selectedPanel == null) {
+    if (selectedPanel == null) {
         JOptionPane.showMessageDialog(this, "Please select a product panel first.");
         return;
     }
@@ -534,7 +534,7 @@ private String editingProductId = null;       // Stores the Product ID currently
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split("%%");
             if (parts.length >= 8 && parts[2].equals(selectedModel)) {
-                // Populate form fields
+                // Populate form fields with data for editing
                 type.setSelectedItem(parts[0]);
                 id.setText(parts[1]);
                 model.setText(parts[2]);
@@ -566,7 +566,6 @@ private String editingProductId = null;       // Stores the Product ID currently
         ex.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error reading product file.");
     }
-
     }//GEN-LAST:event_editActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
@@ -633,6 +632,14 @@ private void loadProductCounter() {
 
 private PRODUCTSTATUSPPP selectedPanel = null; 
 
+private void selectPanel(PRODUCTSTATUSPPP panel) {
+    if (selectedPanel != null) {
+        selectedPanel.setBorder(null);  // Remove previous selection border
+    }
+    selectedPanel = panel;
+    selectedPanel.setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLUE, 2));  // Highlight selected panel
+}
+
 public void loadProductStatusPanels() {
     jPanel1.removeAll();  // Clear existing panels
 
@@ -671,6 +678,15 @@ public void loadProductStatusPanels() {
                 } else if (qty >= 15) {
                     panel.setStockLevelColor(Color.GREEN);
                 }
+
+                // Add mouse listener for selecting the panel
+                panel.addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        selectPanel(panel);
+                    }
+                });
+
                 jPanel1.add(panel);
                 jPanel1.add(Box.createVerticalStrut(10));  // Space between panels
             }
@@ -683,7 +699,6 @@ public void loadProductStatusPanels() {
     jPanel1.revalidate();
     jPanel1.repaint();
 }
-
 private void loadIconPathToIcon(String modelToFind) {
     try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/productstatus.txt"))) {
         String line;
