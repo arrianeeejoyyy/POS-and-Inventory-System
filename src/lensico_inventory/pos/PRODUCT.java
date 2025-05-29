@@ -420,7 +420,9 @@ private void updateQuantityInFileAdd(String filePath, String productId, int qtyT
     }
 }
 
-
+public JTable getProductTable() {
+    return product;
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

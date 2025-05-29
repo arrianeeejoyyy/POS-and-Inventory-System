@@ -28,13 +28,46 @@ public CRETURN() {
     
 }
 
-
-
    private void setReturnDateToToday() {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // or your desired format
     String today = sdf.format(new Date());
     rdate.setText(today);
 }
+   
+   
+   private void updateReturnedQuantityInCashierAndProduct() {
+    DefaultTableModel returnModel = (DefaultTableModel) returnproducts.getModel();
+
+    for (int i = 0; i < returnModel.getRowCount(); i++) {
+        String returnedProductId = returnModel.getValueAt(i, 1).toString(); // Column 2 (Product ID)
+        int returnedQuantity = Integer.parseInt(returnModel.getValueAt(i, 3).toString()); // Column 4 (Quantity)
+
+        // Update in CASHIER_EMPLOYEE.productlist JTable
+        CASHIER_EMPLOYEE cashier = new CASHIER_EMPLOYEE();
+        DefaultTableModel cashierModel = (DefaultTableModel) cashier.CHECKOUT.getModel();  // Modify to productlist if declared public
+        for (int j = 0; j < cashierModel.getRowCount(); j++) {
+            String cashierProductId = cashierModel.getValueAt(j, 0).toString(); // Column 1 (Product ID)
+            if (cashierProductId.equals(returnedProductId)) {
+                int currentQty = Integer.parseInt(cashierModel.getValueAt(j, 3).toString()); // Quantity column
+                cashierModel.setValueAt(currentQty + returnedQuantity, j, 3);
+                break;
+            }
+        }
+
+        // Update in PRODUCT.product JTable
+        PRODUCT productPanel = new PRODUCT();
+        DefaultTableModel productModel = (DefaultTableModel) productPanel.getProductTable().getModel();  // you need to create a getter if product is private
+        for (int k = 0; k < productModel.getRowCount(); k++) {
+            String productProductId = productModel.getValueAt(k, 1).toString(); // Column 2 (Product ID)
+            if (productProductId.equals(returnedProductId)) {
+                int currentQty = Integer.parseInt(productModel.getValueAt(k, 6).toString()); // Column 7 = index 6
+                productModel.setValueAt(currentQty + returnedQuantity, k, 6);
+                break;
+            }
+        }
+    }
+}
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -416,6 +449,7 @@ public CRETURN() {
 
     // 6. Save table to file
     saveReturnProductsToFile();
+    updateReturnedQuantitiesToInventory();
 
     // 7. Clear inputs
     id.setText("");
@@ -468,6 +502,68 @@ public CRETURN() {
     }
 }
     
+       private void updateReturnedQuantitiesToInventory() {
+    DefaultTableModel returnModel = (DefaultTableModel) returnproducts.getModel();
+
+    for (int i = 0; i < returnModel.getRowCount(); i++) {
+        String returnProductId = returnModel.getValueAt(i, 1).toString(); // Column 2
+        int returnedQty = Integer.parseInt(returnModel.getValueAt(i, 3).toString()); // Column 4
+
+        // --- Update cashierproduct.txt directly ---
+        try {
+            File file = new File("src/file_storage/cashierproduct.txt");
+            ArrayList<String> updatedLines = new ArrayList<>();
+
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("%%");
+                if (parts.length >= 4 && parts[0].equals(returnProductId)) {
+                    int currentQty = Integer.parseInt(parts[3]);
+                    parts[3] = String.valueOf(currentQty + returnedQty); // Update Quantity
+                }
+                updatedLines.add(String.join("%%", parts));
+            }
+            reader.close();
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine);
+                writer.newLine();
+            }
+            writer.close();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error updating cashierproduct.txt: " + e.getMessage());
+        }
+
+        // --- Update product.txt directly ---
+        try {
+            File file = new File("src/file_storage/product.txt");
+            ArrayList<String> updatedLines = new ArrayList<>();
+
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("%%");
+                if (parts.length >= 7 && parts[1].equals(returnProductId)) {
+                    int currentQty = Integer.parseInt(parts[6]);
+                    parts[6] = String.valueOf(currentQty + returnedQty); // Update Quantity
+                }
+                updatedLines.add(String.join("%%", parts));
+            }
+            reader.close();
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine);
+                writer.newLine();
+            }
+            writer.close();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error updating product.txt: " + e.getMessage());
+        }
+    }
+}
     
     public static void main(String args[]) {
         

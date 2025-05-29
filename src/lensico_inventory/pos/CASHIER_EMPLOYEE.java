@@ -798,6 +798,10 @@ public String searchCustomerNameById(String customerId) {
 }
 
 
+public JTable getProductListTable() {
+    return productlist;
+}
+
     public static void main(String args[]) {
       
         java.awt.EventQueue.invokeLater(new Runnable() {
