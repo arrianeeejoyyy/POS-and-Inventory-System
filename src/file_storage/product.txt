@@ -32,13 +32,13 @@ DISCRETE GRAPHICS: NVIDIA® GeForce RTX™ 2050 Laptop GPU; Up to 1170MHz Boost 
 VIDEO MEMORY: 4GB GDDR6
 MEMORY: 8GB*1, DDR5-4800
 MEMORY SLOT AND MAX CAPACITY: 2 Slots, Max 64GB
-Laptop%%L202505%%Sword 16 HX B14VFKG-491%%312546456546%%79,995%%MSI%%20%%CPU: Intel® Core™ i5 processor 14450HX, 10 cores (6 P-cores + 4 E-cores), Max Turbo Frequency 4.8 GHz
+Laptop%%L202505%%Sword 16 HX B14VFKG-491%%312546456546%%79,995%%MSI%%19%%CPU: Intel® Core™ i5 processor 14450HX, 10 cores (6 P-cores + 4 E-cores), Max Turbo Frequency 4.8 GHz
 Operating Systems: Windows 11 Home (MSI recommends Windows 11 Pro for business.)
 Display: 16" FHD+(1920x1200), 144Hz Refresh Rate, IPS-Level
 Chipset: Intel® HM770
 Discrete Graphics: NVIDIA® GeForce RTX™ 4060 Laptop GPU powers advanced AI with 233 AI TOPS. Up to 2340MHz Boost Clock 115W Maximum Graphics Power with Dynamic Boost. *May vary by scenario
 Video Memory: 8GB GDDR6
-KeyBoard %%K202506%%Zeus x Raiku Keyboard%%3122543778q%%699try%%Zeushtrhthtr%%12%%Beautiful multi-color lighting effects.
+KeyBoard %%K202506%%Zeus x Raiku Keyboard%%3122543778q%%699try%%Zeushtrhthtr%%11%%Beautiful multi-color lighting effects.
 Three color matching and mechanical feel for an immersive gaming experience.
 Perfect for gamers looking to elevate their gaming experience.
 Suitable for PC, laptop, or gaming console gaming.

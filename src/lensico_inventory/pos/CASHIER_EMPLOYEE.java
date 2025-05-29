@@ -353,7 +353,7 @@ discount.addActionListener(e -> applyDiscount());
     }//GEN-LAST:event_removeActionPerformed
 
     private void payandprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payandprintActionPerformed
-      try {
+       try {
         String paymentStr = JOptionPane.showInputDialog(this, "Enter payment amount:");
         if (paymentStr == null) return; // Cancel pressed
 
@@ -361,7 +361,6 @@ discount.addActionListener(e -> applyDiscount());
 
         DefaultTableModel checkoutModel = (DefaultTableModel) CHECKOUT.getModel();
 
-        // Use grandtotal (after discount) for payment calculations
         double grandTotalValue = 0;
         try {
             grandTotalValue = Double.parseDouble(grandtotal.getText());
@@ -376,10 +375,6 @@ discount.addActionListener(e -> applyDiscount());
         }
 
         double change = payment - grandTotalValue;
-        String changeStr = JOptionPane.showInputDialog(this, "Change to give back:", String.format("%.2f", change));
-        if (changeStr == null) return; // Cancel pressed
-        change = Double.parseDouble(changeStr);
-
         double vatRate = 0.12;
         double vatAmount = grandTotalValue * vatRate;
         double vatSalesValue = grandTotalValue - vatAmount;
@@ -387,7 +382,7 @@ discount.addActionListener(e -> applyDiscount());
         int printConfirm = JOptionPane.showConfirmDialog(this, "Do you want to Save and Print your Receipt?", "Print", JOptionPane.YES_NO_OPTION);
 
         if (printConfirm == JOptionPane.YES_OPTION) {
-            // Loop through each sold product to update quantities
+            // Update product quantities
             for (int i = 0; i < checkoutModel.getRowCount(); i++) {
                 String productId = checkoutModel.getValueAt(i, 0).toString();
                 int quantitySold = Integer.parseInt(checkoutModel.getValueAt(i, 3).toString());
@@ -417,8 +412,38 @@ discount.addActionListener(e -> applyDiscount());
                 customername.getText()
             );
 
-            // *** Here is where you call the saveReceiptToTextFile method ***
-            receiptFrame.saveReceiptToTextFile();
+            // ✅ Save to SALESREPORT table and text file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/salesreport.txt", true))) {
+                for (int i = 0; i < checkoutModel.getRowCount(); i++) {
+                    String productID = checkoutModel.getValueAt(i, 0).toString();
+                    String price = checkoutModel.getValueAt(i, 2).toString();
+                    String quantity = checkoutModel.getValueAt(i, 3).toString();
+                    String total = checkoutModel.getValueAt(i, 4).toString();
+
+                    Object[] row = {
+                        CASHIER1.getText(),
+                        referencenumber.getText(),
+                        customerID.getText(),
+                        productID,
+                        price,
+                        quantity,
+                        total,
+                        date.getText()
+                    };
+
+                    // Append row to the salesreport table
+                    SALESREPORT reportFrame = new SALESREPORT(); // new frame instance (could be changed to singleton)
+                    DefaultTableModel salesModel = (DefaultTableModel) reportFrame.salesreport.getModel();
+                    salesModel.addRow(row);
+
+                    // Save to file
+                    writer.write(String.join("%%", row[0].toString(), row[1].toString(), row[2].toString(),
+                            row[3].toString(), row[4].toString(), row[5].toString(), row[6].toString(), row[7].toString()));
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error saving to salesreport.txt: " + e.getMessage());
+            }
 
             receiptFrame.setVisible(true);
 
@@ -432,27 +457,15 @@ discount.addActionListener(e -> applyDiscount());
 
             JOptionPane.showMessageDialog(this, "Receipt Saved and Printed.");
 
-        } else if (printConfirm == JOptionPane.NO_OPTION) {
-            JOptionPane.showMessageDialog(this, "Transaction cancelled. Receipt was not saved or printed.");
-            for (java.awt.Window w : java.awt.Window.getWindows()) {
-                if (w instanceof Reciept) {
-                    w.setVisible(false);
-                    w.dispose();
-                }
-            }
-            DefaultTableModel model = (DefaultTableModel) CHECKOUT.getModel();
-            model.setRowCount(0);
-            this.setVisible(true);
-            return;
         } else {
             JOptionPane.showMessageDialog(this, "Transaction cancelled.");
-            return;
         }
 
     } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(this, "Invalid number entered.");
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        ex.printStackTrace();
     }
     }//GEN-LAST:event_payandprintActionPerformed
 
@@ -798,7 +811,7 @@ public String searchCustomerNameById(String customerId) {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CASHIER1;
-    private static javax.swing.JTable CHECKOUT;
+    public javax.swing.JTable CHECKOUT;
     private javax.swing.JLabel TAX;
     private javax.swing.JButton add;
     private javax.swing.JTextField customerID;
