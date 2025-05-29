@@ -24,8 +24,11 @@ public CRETURN() {
     this.productStatusInstance = new PRODUCTSTATUS();  // Initialize productStatusInstance
     initComponents();
     setReturnDateToToday();
+     loadReturnProductsFromFile();
     
 }
+
+
 
    private void setReturnDateToToday() {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // or your desired format
@@ -324,10 +327,102 @@ public CRETURN() {
     }//GEN-LAST:event_nameActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-     
+          // 1. Read input values from text fields
+    String customerId = id.getText().trim();
+    String customerName = name.getText().trim();
+    String productName = pname.getText().trim();
+    String priceStr = price.getText().trim();
+    String quantityStr = quanti.getText().trim();
+    String amountStr = amount.getText().trim();
+    String purchaseDate = pdate.getText().trim();
+    String returnDate = rdate.getText().trim();
+
+    // 2. Basic validation
+    if (customerId.isEmpty() || customerName.isEmpty() || productName.isEmpty() || 
+        priceStr.isEmpty() || quantityStr.isEmpty() || amountStr.isEmpty() || 
+        purchaseDate.isEmpty() || returnDate.isEmpty()) {
+        
+        JOptionPane.showMessageDialog(this, "Please fill in all fields.");
+        return;
+    }
+
+    // 3. Optionally, validate numeric fields
+    try {
+        Double.parseDouble(priceStr);
+        Integer.parseInt(quantityStr);
+        Double.parseDouble(amountStr);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Please enter valid numbers for price, quantity, and amount.");
+        return;
+    }
+
+    // 4. Add a new row to the JTable
+    DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
+    Object[] newRow = new Object[] {
+        customerId,
+        productName,
+        priceStr,
+        quantityStr,
+        amountStr,
+        purchaseDate,
+        returnDate
+    };
+    model.addRow(newRow);
+
+    // 5. Save updated JTable to the file
+    saveReturnProductsToFile();
+
+    // 6. Optional: Clear input fields after saving
+    id.setText("");
+    name.setText("");
+    pname.setText("");
+    price.setText("");
+    quanti.setText("");
+    amount.setText("");
+    pdate.setText("");
+    rdate.setText("");
+
+    JOptionPane.showMessageDialog(this, "Return product saved successfully.");
   
     }//GEN-LAST:event_saveActionPerformed
 
+       public void saveReturnProductsToFile() {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(RETURN_PRODUCT_FILE))) {
+        DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                Object value = model.getValueAt(i, j);
+                writer.write(value == null ? "" : value.toString());
+                if (j < model.getColumnCount() - 1) {
+                    writer.write("%%");  // your delimiter
+                }
+            }
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error saving return products: " + e.getMessage());
+    }
+}
+
+        public void loadReturnProductsFromFile() {
+    DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
+    model.setRowCount(0); // clear existing data
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(RETURN_PRODUCT_FILE))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] data = line.split("%%");
+            if (data.length == model.getColumnCount()) {
+                model.addRow(data);
+            }
+        }
+    } catch (IOException e) {
+        // file might not exist at first run - ignore or show message
+        // JOptionPane.showMessageDialog(this, "Error loading return products: " + e.getMessage());
+    }
+}
+    
+    
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
