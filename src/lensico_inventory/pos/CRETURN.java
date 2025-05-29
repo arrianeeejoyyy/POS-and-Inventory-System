@@ -24,13 +24,7 @@ public CRETURN() {
     this.productStatusInstance = new PRODUCTSTATUS();  // Initialize productStatusInstance
     initComponents();
     setReturnDateToToday();
-    loadReturnProductsFromFile();
-
-    this.addWindowListener(new java.awt.event.WindowAdapter() {
-        public void windowClosing(java.awt.event.WindowEvent evt) {
-            saveReturnProductsToFile();
-        }
-    });
+    
 }
 
    private void setReturnDateToToday() {
