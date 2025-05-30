@@ -416,6 +416,8 @@ public class CUSTOMER extends javax.swing.JFrame {
         
     }
     
+
+    
    //load edit dasgdqiudoweo 
     public void saveTableToTextFile(JTable table, String filePath) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {

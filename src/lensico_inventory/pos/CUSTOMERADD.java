@@ -19,6 +19,15 @@ public class CUSTOMERADD extends javax.swing.JFrame {
         private static final int baseCustomerId = 1112050;
         private static int customerCounter = 1;
         
+        private CUSTOMER customerInstance;
+
+public CUSTOMERADD(CUSTOMER customer) {
+    initComponents();
+    this.customerInstance = customer;
+    // your other initialization...
+}
+        
+        
     public CUSTOMERADD() {
         initComponents();
         
@@ -183,42 +192,72 @@ public class CUSTOMERADD extends javax.swing.JFrame {
 
             if (confirm == JOptionPane.YES_OPTION) {
                 
-                CUSTOMER.AddRowToJTable(new Object[]{
-                                    id.getText(),
-                                    name.getText(),
-                                    contactnumber.getText(),
-                                    email.getText(),
-                                    address.getText()
-                                    });
+                // Add to CUSTOMER JTable
+                if (customerInstance != null) {
+            customerInstance.AddRowToJTable(new Object[]{
+                id.getText(),
+                name.getText(),
+                contactnumber.getText(),
+                email.getText(),
+                address.getText()
+            });
+        };
                 
+                // Save to file
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/txtxt.txt", true))) {
-                        writer.write(id.getText() + "%%" +
-                                            name.getText() + "%%" +
-                                            contactnumber.getText() + "%%" +
-                                            email.getText() + "%%" +
-                                            address.getText());
-                        writer.newLine();
-                        JOptionPane.showMessageDialog(null, "Information saved to text file.");
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(null, "Error saving to file: " + ex.getMessage());
-                    }
+                    writer.write(id.getText() + "%%" +
+                                 name.getText() + "%%" +
+                                 contactnumber.getText() + "%%" +
+                                 email.getText() + "%%" +
+                                 address.getText());
+                    writer.newLine();
+                    JOptionPane.showMessageDialog(null, "Information saved to text file.");
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Error saving to file: " + ex.getMessage());
+                }
                 
-            customerCounter++;
-            generateCustomerId();
-            name.setText("");
-            contactnumber.setText("");
-            email.setText("");
-            address.setText("");
-            jCheckBox1.setSelected(false);
-            JOptionPane.showMessageDialog(null, "Information saved successfully!");    
+                // --- Add to ACCHISTORY.historyC JTable ---
+                try {
+                    java.time.ZoneId phZoneId = java.time.ZoneId.of("Asia/Manila");
+                    java.time.ZonedDateTime now = java.time.ZonedDateTime.now(phZoneId);
+                    String currentDate = now.toLocalDate().toString(); // yyyy-MM-dd
+                    String currentTime = now.toLocalTime().withNano(0).toString(); // HH:mm:ss
+                    
+                    // Access the ACCHISTORY JFrame and its historyC JTable
+                    ACCHISTORY accHistoryFrame = new ACCHISTORY();
+                    javax.swing.JTable historyCTable = accHistoryFrame.historyC;
+                    javax.swing.table.DefaultTableModel historyModel = (javax.swing.table.DefaultTableModel) historyCTable.getModel();
+                    
+                    // Add new row: ID, Date, Time, "Active"
+                    historyModel.addRow(new Object[]{
+                        id.getText(),
+                        currentDate,
+                        currentTime,
+                        "Active"
+                    });
+                    
+                    // Optionally, if you want to save this data to a file, implement saving here.
+                    
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error updating account history: " + ex.getMessage());
+                }
                 
+                
+                
+                customerCounter++;
+                generateCustomerId();
+                name.setText("");
+                contactnumber.setText("");
+                email.setText("");
+                address.setText("");
+                jCheckBox1.setSelected(false);
+                JOptionPane.showMessageDialog(null, "Information saved successfully!");    
                 
             } else {
                 JOptionPane.showMessageDialog(null, "Operation cancelled.");
             }
         }
     }
-
     }//GEN-LAST:event_SAVEActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
