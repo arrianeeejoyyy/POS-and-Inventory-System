@@ -43,6 +43,10 @@ private String editingProductId = null;       // Stores the Product ID currently
     }
     
     
+   
+    
+    
+    
     public PRODUCTSTATUS() {
         initComponents();
  
@@ -119,8 +123,88 @@ private String editingProductId = null;       // Stores the Product ID currently
         }
     }
 }
+ 
+    public void addQuantityToPanelByProductId(String productId, int quantityToAdd) {
+    if (!this.isVisible()) {
+        // Skip UI update if the window is not visible
+        return;
+    }
+
+    boolean updated = false;
+
+    for (int i = 0; i < jPanel1.getComponentCount(); i++) {
+        java.awt.Component comp = jPanel1.getComponent(i);
+        if (comp instanceof PRODUCTSTATUSPPP) {
+            PRODUCTSTATUSPPP panel = (PRODUCTSTATUSPPP) comp;
+            String panelProductId = panel.proID.getText();
+            if (panelProductId.equals(productId)) {
+                try {
+                    int currentQty = Integer.parseInt(panel.quantity.getText().trim());
+                    int newQty = currentQty + quantityToAdd;  // Add quantity instead of subtract
+
+                    panel.quantity.setText(String.valueOf(newQty));
+                    updated = true;
+
+                    // Update panel color based on newQty
+                    if (newQty >= 15) {
+                        panel.setStockLevelColor(Color.GREEN);
+                    } else if (newQty >= 8) {
+                        panel.setStockLevelColor(Color.YELLOW);
+                    } else if (newQty >= 1) {
+                        panel.setStockLevelColor(Color.RED);
+                    } else {
+                        panel.setStockLevelColor(null);
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid quantity number in panel for product: " + productId);
+                }
+                break;  // Found and updated the matching panel; exit loop
+            }
+        }
+    }
+
+    if (updated) {
+        saveAllPanelQuantitiesToFile();
+    }
+}
     
-    
+private void saveAllPanelQuantitiesToFile() {
+    File file = new File("src/file_storage/productstatus.txt");
+
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+        for (int i = 0; i < jPanel1.getComponentCount(); i++) {
+            java.awt.Component comp = jPanel1.getComponent(i);
+            if (comp instanceof PRODUCTSTATUSPPP) {
+                PRODUCTSTATUSPPP panel = (PRODUCTSTATUSPPP) comp;
+
+                // Extract text from JLabels
+                String proID = panel.proID.getText();
+                String model = panel.model.getText();
+                String price = panel.price.getText();
+                String quantity = panel.quantity.getText();
+
+                // For the image, you could save the icon's description or a path if you have it
+                // If not, leave it empty or save a placeholder
+                String imagePath = ""; 
+                if (panel.image.getIcon() instanceof ImageIcon) {
+                    // Optional: you might store image file path somewhere accessible if needed
+                    // imagePath = your image path or identifier
+                }
+
+                // Build the line - adapt columns to your actual file format order
+                // Example: proID%%model%%price%%quantity%%imagePath
+                String line = String.join("%%", new String[] {
+                    proID, model, price, quantity, imagePath
+                });
+
+                writer.write(line);
+                writer.newLine();
+            }
+        }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Failed to save productstatus.txt: " + e.getMessage());
+    }
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

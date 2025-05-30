@@ -25,6 +25,7 @@ public CRETURN() {
     initComponents();
     setReturnDateToToday();
      loadReturnProductsFromFile();
+     
     
 }
 
@@ -87,12 +88,12 @@ public CRETURN() {
         save = new javax.swing.JButton();
         price = new javax.swing.JTextField();
         id = new javax.swing.JTextField();
-        pname = new javax.swing.JTextField();
+        ProdID = new javax.swing.JTextField();
         quanti = new javax.swing.JTextField();
         pdate = new javax.swing.JTextField();
         amount = new javax.swing.JTextField();
         rdate = new javax.swing.JTextField();
-        name = new javax.swing.JTextField();
+        refnum = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -214,12 +215,12 @@ public CRETURN() {
         });
         getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 190, 20));
 
-        pname.addActionListener(new java.awt.event.ActionListener() {
+        ProdID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pnameActionPerformed(evt);
+                ProdIDActionPerformed(evt);
             }
         });
-        getContentPane().add(pname, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 190, 20));
+        getContentPane().add(ProdID, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 190, 20));
 
         quanti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,12 +250,12 @@ public CRETURN() {
         });
         getContentPane().add(rdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 190, 190, 20));
 
-        name.addActionListener(new java.awt.event.ActionListener() {
+        refnum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameActionPerformed(evt);
+                refnumActionPerformed(evt);
             }
         });
-        getContentPane().add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 190, 20));
+        getContentPane().add(refnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 190, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/RETURN.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -335,9 +336,9 @@ public CRETURN() {
         
     }//GEN-LAST:event_idActionPerformed
 
-    private void pnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pnameActionPerformed
+    private void ProdIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProdIDActionPerformed
       
-    }//GEN-LAST:event_pnameActionPerformed
+    }//GEN-LAST:event_ProdIDActionPerformed
 
     private void quantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantiActionPerformed
       
@@ -355,15 +356,15 @@ public CRETURN() {
      
     }//GEN-LAST:event_rdateActionPerformed
 
-    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
+    private void refnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refnumActionPerformed
     
-    }//GEN-LAST:event_nameActionPerformed
+    }//GEN-LAST:event_refnumActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
     // 1. Read input values from text fields
     String customerId = id.getText().trim();
-    String customerName = name.getText().trim();
-    String productName = pname.getText().trim();
+    String refnumb = refnum.getText().trim();
+    String productID = ProdID.getText().trim();
     String priceStr = price.getText().trim();
     String quantityStr = quanti.getText().trim();
     String amountStr = amount.getText().trim();
@@ -371,7 +372,7 @@ public CRETURN() {
     String returnDate = rdate.getText().trim();
 
     // 2. Basic validation for empty fields
-    if (customerId.isEmpty() || customerName.isEmpty() || productName.isEmpty() || 
+    if (customerId.isEmpty() || refnumb.isEmpty() || productID.isEmpty() || 
         priceStr.isEmpty() || quantityStr.isEmpty() || amountStr.isEmpty() || 
         purchaseDate.isEmpty() || returnDate.isEmpty()) {
         
@@ -389,6 +390,7 @@ public CRETURN() {
         return;
     }
 
+    // 4. Validate sales record from salesreport.txt
     File file = new File("src/file_storage/salesreport.txt");
     boolean matchFound = false;
 
@@ -398,7 +400,7 @@ public CRETURN() {
             String[] data = line.split("%%");
             if (data.length >= 8) {
                 String fileCustomerId = data[2].trim();
-                String fileName = data[1].trim();
+                String fileRefnum = data[1].trim();
                 String fileProductName = data[3].trim();
                 String filePrice = data[4].trim();
                 String fileQuantity = data[5].trim();
@@ -407,18 +409,25 @@ public CRETURN() {
 
                 if (!fileCustomerId.equalsIgnoreCase(customerId)) {
                     JOptionPane.showMessageDialog(this, "Customer ID does not match with sales record.");
-                } else if (!fileName.equalsIgnoreCase(customerName)) {
+                    return;
+                } else if (!fileRefnum.equalsIgnoreCase(refnumb)) {
                     JOptionPane.showMessageDialog(this, "Customer Name does not match with sales record.");
-                } else if (!fileProductName.equalsIgnoreCase(productName)) {
+                    return;
+                } else if (!fileProductName.equalsIgnoreCase(productID)) {
                     JOptionPane.showMessageDialog(this, "Product Name does not match with sales record.");
+                    return;
                 } else if (!filePrice.equalsIgnoreCase(priceStr)) {
                     JOptionPane.showMessageDialog(this, "Price does not match with sales record.");
+                    return;
                 } else if (!fileQuantity.equalsIgnoreCase(quantityStr)) {
                     JOptionPane.showMessageDialog(this, "Quantity does not match with sales record.");
+                    return;
                 } else if (!fileAmount.equalsIgnoreCase(amountStr)) {
                     JOptionPane.showMessageDialog(this, "Amount does not match with sales record.");
+                    return;
                 } else if (!filePurchaseDate.equalsIgnoreCase(purchaseDate)) {
                     JOptionPane.showMessageDialog(this, "Purchase Date does not match with sales record.");
+                    return;
                 } else {
                     matchFound = true;
                     break;
@@ -431,14 +440,15 @@ public CRETURN() {
     }
 
     if (!matchFound) {
-        return; // Do not proceed if no match was found
+        JOptionPane.showMessageDialog(this, "No matching sales record found.");
+        return; // stop saving if no match
     }
 
-    // 5. Add row to JTable
+    // 5. Add the return record to returnproducts JTable
     DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
     Object[] newRow = new Object[] {
         customerId,
-        productName,
+        productID,
         priceStr,
         quantityStr,
         amountStr,
@@ -447,23 +457,34 @@ public CRETURN() {
     };
     model.addRow(newRow);
 
-    // 6. Save table to file
+    // 6. Save returnproducts JTable data to file
     saveReturnProductsToFile();
+
+    // 7. Update cashierproduct.txt and product.txt quantities by adding returned quantity
     updateReturnedQuantitiesToInventory();
 
-    // 7. Clear inputs
+    // ====== HERE is your requested snippet integration =======
+    String productId = id.getText().trim();  // Use actual product ID if you have it, else productName
+    int quantityReturned = Integer.parseInt(quanti.getText().trim());
+
+    if (productStatusInstance != null) {
+        productStatusInstance.addQuantityToPanelByProductId(productId, quantityReturned);
+    }
+    // =========================================================
+
+    // 8. Clear input fields for next entry
     id.setText("");
-    name.setText("");
-    pname.setText("");
+    refnum.setText("");
+    ProdID.setText("");
     price.setText("");
     quanti.setText("");
     amount.setText("");
     pdate.setText("");
     rdate.setText("");
 
-    JOptionPane.showMessageDialog(this, "Return product saved successfully.");
+    // 9. Show success message
+    JOptionPane.showMessageDialog(this, "Return product saved and inventory updated successfully.");
 
-  
     }//GEN-LAST:event_saveActionPerformed
 
        public void saveReturnProductsToFile() {
@@ -577,6 +598,7 @@ public CRETURN() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ProdID;
     private javax.swing.JButton accounthistory;
     private javax.swing.JTextField amount;
     private javax.swing.JButton customer;
@@ -587,13 +609,12 @@ public CRETURN() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logout;
-    private javax.swing.JTextField name;
     private javax.swing.JTextField pdate;
-    private javax.swing.JTextField pname;
     private javax.swing.JTextField price;
     private javax.swing.JButton product;
     private javax.swing.JTextField quanti;
     private javax.swing.JTextField rdate;
+    private javax.swing.JTextField refnum;
     private javax.swing.JTable returnproducts;
     private javax.swing.JButton save;
     private javax.swing.JButton stockmanagement;

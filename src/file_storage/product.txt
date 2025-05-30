@@ -38,7 +38,7 @@ Display: 16" FHD+(1920x1200), 144Hz Refresh Rate, IPS-Level
 Chipset: Intel® HM770
 Discrete Graphics: NVIDIA® GeForce RTX™ 4060 Laptop GPU powers advanced AI with 233 AI TOPS. Up to 2340MHz Boost Clock 115W Maximum Graphics Power with Dynamic Boost. *May vary by scenario
 Video Memory: 8GB GDDR6
-KeyBoard %%K202506%%Zeus x Raiku Keyboard%%3122543778q%%699try%%Zeushtrhthtr%%12%%Beautiful multi-color lighting effects.
+KeyBoard %%K202506%%Zeus x Raiku Keyboard%%3122543778q%%699try%%Zeushtrhthtr%%14%%Beautiful multi-color lighting effects.
 Three color matching and mechanical feel for an immersive gaming experience.
 Perfect for gamers looking to elevate their gaming experience.
 Suitable for PC, laptop, or gaming console gaming.
@@ -48,5 +48,5 @@ Rainbow ribbon breathing light effect in the medium plate.
 Support for light brightness and respiratory rate adjustment.
 KeyBoard %%K202507%%fgyhj%%grty%%ggrt%%tgyy%%10%% nhthtryrtrtr
 Screen Monitor%%S202508%%Inplay%%3245678%%200%%Inplay gaming%%20%%csdfcvgbhhnbg
-Mouse %%M202509%%frgtygrf%%trgy%%100%%cew%%4%%jnmjhj
+Mouse %%M202509%%frgtygrf%%trgy%%100%%cew%%14%%jnmjhj
 Screen Monitor%%S202510%%ausu%%65432%%45%%dfds%%10%% vfdghvgfvd
