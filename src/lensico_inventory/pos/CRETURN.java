@@ -69,6 +69,83 @@ public CRETURN() {
     }
 }
    
+   private void updateQuantitiesAfterReturn() {
+    String returnProdId = ProdID.getText().trim();
+    int returnQty;
+    try {
+        returnQty = Integer.parseInt(quanti.getText().trim());
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid quantity for return.");
+        return;
+    }
+
+    // --- Update CASHIER_EMPLOYEE productlist JTable and file ---
+    CASHIER_EMPLOYEE cashier = new CASHIER_EMPLOYEE();
+
+    DefaultTableModel cashierModel = (DefaultTableModel) cashier.getProductListTable().getModel();
+    boolean foundInCashier = false;
+    for (int i = 0; i < cashierModel.getRowCount(); i++) {
+        String prodIdInCashier = cashierModel.getValueAt(i, 0).toString();
+        if (prodIdInCashier.equals(returnProdId)) {
+            // Add returned quantity
+            int currentQty = Integer.parseInt(cashierModel.getValueAt(i, 3).toString());
+            int newQty = currentQty + returnQty;
+            cashierModel.setValueAt(newQty, i, 3);
+            foundInCashier = true;
+            break;
+        }
+    }
+
+    if (foundInCashier) {
+        // Save updated cashierproduct.txt file
+        saveTableToFile(cashierModel, "src/file_storage/cashierproduct.txt");
+    } else {
+        JOptionPane.showMessageDialog(this, "Product ID not found in CASHIER_EMPLOYEE product list.");
+    }
+
+    // --- Update PRODUCT product JTable and file ---
+    PRODUCT productPanel = new PRODUCT();
+    DefaultTableModel productModel = (DefaultTableModel) productPanel.getProductTable().getModel();
+    boolean foundInProduct = false;
+
+    for (int i = 0; i < productModel.getRowCount(); i++) {
+        String prodIdInProduct = productModel.getValueAt(i, 1).toString(); // col 2 (index 1)
+        if (prodIdInProduct.equals(returnProdId)) {
+            int currentQty = Integer.parseInt(productModel.getValueAt(i, 6).toString()); // col 7 (index 6)
+            int newQty = currentQty + returnQty;
+            productModel.setValueAt(newQty, i, 6);
+            foundInProduct = true;
+            break;
+        }
+    }
+
+    if (foundInProduct) {
+        // Save updated product.txt file
+        saveTableToFile(productModel, "src/file_storage/product.txt");
+    } else {
+        JOptionPane.showMessageDialog(this, "Product ID not found in PRODUCT product list.");
+    }
+}
+
+private void saveTableToFile(DefaultTableModel model, String filePath) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        int colCount = model.getColumnCount();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < colCount; j++) {
+                sb.append(model.getValueAt(i, j) == null ? "" : model.getValueAt(i, j).toString());
+                if (j < colCount - 1) sb.append("%%");
+            }
+            writer.write(sb.toString());
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error saving file " + filePath + ": " + e.getMessage());
+    }
+}
+   
+   
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -435,6 +512,8 @@ public CRETURN() {
 
     // 7. Save returnproducts JTable to returnproducts.txt file
     saveReturnProductsToFile();
+    
+    updateQuantitiesAfterReturn();
 
     // 8. Update product quantity in PRODUCTSTATUS panel and productstatus.txt
     PRODUCTSTATUS productStatusInstance = PRODUCTSTATUS.getInstance(); // Use singleton for single instance

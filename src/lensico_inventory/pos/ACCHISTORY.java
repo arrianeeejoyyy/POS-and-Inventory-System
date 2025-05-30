@@ -36,10 +36,18 @@ public class ACCHISTORY extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         historyC = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        historyE = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        historyU = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        historyP = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        historyR = new javax.swing.JTable();
         creturn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -117,7 +125,7 @@ public class ACCHISTORY extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Customer Name", "Date", "Time", "Status"
+                "Customer ID", "Date", "Time", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -130,15 +138,73 @@ public class ACCHISTORY extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(historyC);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 880, 680));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 420));
 
         jTabbedPane1.addTab("Customer", jPanel3);
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        historyE.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Employee ID", "Date", "Time", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(historyE);
+
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, -1));
+
+        jTabbedPane1.addTab("Employee", jPanel4);
+
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        historyU.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "User ID", "Date", "Time", "Status"
+            }
+        ));
+        jScrollPane3.setViewportView(historyU);
+
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 900, -1));
+
         jTabbedPane1.addTab("User Setting", jPanel5);
+
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        historyP.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Product ID", "Date", "Time", "Status"
+            }
+        ));
+        jScrollPane4.setViewportView(historyP);
+
+        jPanel6.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 430));
+
         jTabbedPane1.addTab("Product", jPanel6);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        historyR.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Product ID", "Date", "Time", "Status "
+            }
+        ));
+        jScrollPane5.setViewportView(historyR);
+
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, -1));
+
         jTabbedPane1.addTab("Return Product", jPanel1);
-        jTabbedPane1.addTab("Employee", jPanel4);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 900, 740));
         jTabbedPane1.getAccessibleContext().setAccessibleName("Customer");
@@ -264,7 +330,11 @@ public class ACCHISTORY extends javax.swing.JFrame {
     private javax.swing.JButton creturn;
     private javax.swing.JButton customer;
     private javax.swing.JButton employeee;
-    private javax.swing.JTable historyC;
+    public javax.swing.JTable historyC;
+    public javax.swing.JTable historyE;
+    public javax.swing.JTable historyP;
+    public javax.swing.JTable historyR;
+    public javax.swing.JTable historyU;
     private javax.swing.JButton invoice;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -272,7 +342,11 @@ public class ACCHISTORY extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton logout;
     private javax.swing.JButton product;
