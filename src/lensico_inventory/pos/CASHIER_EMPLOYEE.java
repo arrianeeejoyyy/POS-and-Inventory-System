@@ -356,7 +356,7 @@ discount.addActionListener(e -> applyDiscount());
     }//GEN-LAST:event_removeActionPerformed
 
     private void payandprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payandprintActionPerformed
-       try {
+     try {
         String paymentStr = JOptionPane.showInputDialog(this, "Enter payment amount:");
         if (paymentStr == null) return; // Cancel pressed
 
@@ -385,13 +385,22 @@ discount.addActionListener(e -> applyDiscount());
         int printConfirm = JOptionPane.showConfirmDialog(this, "Do you want to Save and Print your Receipt?", "Print", JOptionPane.YES_NO_OPTION);
 
         if (printConfirm == JOptionPane.YES_OPTION) {
-            // Update product quantities
+            // Loop through checkout items to update quantities
             for (int i = 0; i < checkoutModel.getRowCount(); i++) {
                 String productId = checkoutModel.getValueAt(i, 0).toString();
                 int quantitySold = Integer.parseInt(checkoutModel.getValueAt(i, 3).toString());
 
                 updateProductQuantity(productId, quantitySold);
                 subtractQuantityInProductList(productId, quantitySold);
+
+                // Update product quantity on the ProductStatus UI panel
+                PRODUCTSTATUS ps = PRODUCTSTATUS.getInstance();
+                if (!ps.isVisible()) {
+                    ps.setVisible(true);
+                    ps.toFront();
+                    ps.requestFocus();
+                }
+                ps.updatePanelQuantityByProductId(productId, quantitySold);
             }
 
             saveTableToTextFile(productlist, "src/file_storage/cashierproduct.txt");
@@ -414,11 +423,11 @@ discount.addActionListener(e -> applyDiscount());
                 String.format("%.2f", vatAmount),
                 customername.getText()
             );
-            
-            
-            
-                updateProductStatusPanelsAfterSale();
-            // ✅ Save to SALESREPORT table and text file
+
+            // Optional: full refresh of product panels instead of incremental update
+            // PRODUCTSTATUS.getInstance().loadProductStatusPanels();
+
+            // Save sales report
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/salesreport.txt", true))) {
                 for (int i = 0; i < checkoutModel.getRowCount(); i++) {
                     String productID = checkoutModel.getValueAt(i, 0).toString();
@@ -437,12 +446,10 @@ discount.addActionListener(e -> applyDiscount());
                         date.getText()
                     };
 
-                    // Append row to the salesreport table
-                    SALESREPORT reportFrame = new SALESREPORT(); // new frame instance (could be changed to singleton)
+                    SALESREPORT reportFrame = new SALESREPORT();
                     DefaultTableModel salesModel = (DefaultTableModel) reportFrame.salesreport.getModel();
                     salesModel.addRow(row);
 
-                    // Save to file
                     writer.write(String.join("%%", row[0].toString(), row[1].toString(), row[2].toString(),
                             row[3].toString(), row[4].toString(), row[5].toString(), row[6].toString(), row[7].toString()));
                     writer.newLine();

@@ -40,7 +40,7 @@ public class PRODUCTSTATUSPPP extends javax.swing.JPanel {
         model = new javax.swing.JLabel();
         quantity = new javax.swing.JLabel();
         price = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        proID = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -58,10 +58,12 @@ public class PRODUCTSTATUSPPP extends javax.swing.JPanel {
         price.setForeground(new java.awt.Color(255, 255, 255));
         add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 70, 18));
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("jLabel2");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 180, 20));
+        proID.setForeground(new java.awt.Color(255, 255, 255));
+        proID.setText("jLabel2");
+        add(proID, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 180, 20));
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 255));
+        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 130));
     }// </editor-fold>//GEN-END:initComponents
@@ -83,9 +85,9 @@ public class PRODUCTSTATUSPPP extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel image;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     public javax.swing.JLabel model;
     public javax.swing.JLabel price;
+    public javax.swing.JLabel proID;
     public javax.swing.JLabel quantity;
     // End of variables declaration//GEN-END:variables
 }

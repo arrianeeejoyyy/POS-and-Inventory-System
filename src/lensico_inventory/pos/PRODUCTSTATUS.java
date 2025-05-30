@@ -33,7 +33,16 @@ public class PRODUCTSTATUS extends javax.swing.JFrame {
 private boolean isEditing = false;            // Tracks if we are editing an existing product
 private String editingProductId = null;       // Stores the Product ID currently being edited
         
-        
+         private static PRODUCTSTATUS instance;
+
+    public static PRODUCTSTATUS getInstance() {
+        if (instance == null) {
+            instance = new PRODUCTSTATUS();
+        }
+        return instance;
+    }
+    
+    
     public PRODUCTSTATUS() {
         initComponents();
  
@@ -75,6 +84,39 @@ private String editingProductId = null;       // Stores the Product ID currently
       type.addActionListener(e -> generateProductId());
     }
 
+    public void updatePanelQuantityByProductId(String productId, int quantitySold) {
+    for (int i = 0; i < jPanel1.getComponentCount(); i++) {
+        java.awt.Component comp = jPanel1.getComponent(i);
+        if (comp instanceof PRODUCTSTATUSPPP) {
+            PRODUCTSTATUSPPP panel = (PRODUCTSTATUSPPP) comp;
+            String panelProductId = panel.proID.getText();
+            if (panelProductId.equals(productId)) {
+                try {
+                    int currentQty = Integer.parseInt(panel.quantity.getText().trim());
+                    int newQty = currentQty - quantitySold;
+                    if (newQty < 0) newQty = 0;
+                    panel.quantity.setText(String.valueOf(newQty));
+
+                    // Change panel background color based on newQty
+                    if (newQty >= 1 && newQty <= 7) {
+                        panel.setStockLevelColor(Color.RED);
+                    } else if (newQty >= 8 && newQty <= 14) {
+                        panel.setStockLevelColor(Color.YELLOW);
+                    } else if (newQty >= 15) {
+                        panel.setStockLevelColor(Color.GREEN);
+                    } else {
+                        panel.setStockLevelColor(null);
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid quantity number in panel for product: " + productId);
+                }
+                break;
+            }
+        }
+    }
+}
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -647,11 +689,12 @@ public void loadProductStatusPanels() {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split("%%");
-            if (parts.length >= 4) {
+            if (parts.length >= 5) {
                 String iconPath = parts[0];
                 String modelText = parts[1];
                 String priceText = parts[2];
                 String quantityText = parts[3];
+                String productId = parts[4];  // Assuming Product ID is at index 4
 
                 PRODUCTSTATUSPPP panel = new PRODUCTSTATUSPPP();
                 File imgFile = new File(iconPath);
@@ -668,6 +711,9 @@ public void loadProductStatusPanels() {
                 panel.model.setText(modelText);
                 panel.price.setText(priceText);
                 panel.quantity.setText(quantityText);
+
+                // Set Product ID in jLabel2
+                panel.proID.setText(productId);
 
                 // Add color coding based on quantity
                 int qty = Integer.parseInt(quantityText.trim());
@@ -699,6 +745,8 @@ public void loadProductStatusPanels() {
     jPanel1.revalidate();
     jPanel1.repaint();
 }
+
+
 private void loadIconPathToIcon(String modelToFind) {
     try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/productstatus.txt"))) {
         String line;
