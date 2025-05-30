@@ -361,120 +361,96 @@ public CRETURN() {
     }//GEN-LAST:event_refnumActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-    // 1. Read input values from text fields
-    String customerId = id.getText().trim();
-    String refnumb = refnum.getText().trim();
-    String productID = ProdID.getText().trim();
-    String priceStr = price.getText().trim();
-    String quantityStr = quanti.getText().trim();
-    String amountStr = amount.getText().trim();
-    String purchaseDate = pdate.getText().trim();
-    String returnDate = rdate.getText().trim();
+     // 1. Read all inputs from text fields
+    String refnumInput = refnum.getText().trim();
+    String idInput = id.getText().trim();
+    String prodIdInput = ProdID.getText().trim();
+    String priceInput = price.getText().trim();
+    String quantiInput = quanti.getText().trim();
+    String amountInput = amount.getText().trim();
+    String pdateInput = pdate.getText().trim();
+    String rdateInput = rdate.getText().trim();
 
-    // 2. Basic validation for empty fields
-    if (customerId.isEmpty() || refnumb.isEmpty() || productID.isEmpty() || 
-        priceStr.isEmpty() || quantityStr.isEmpty() || amountStr.isEmpty() || 
-        purchaseDate.isEmpty() || returnDate.isEmpty()) {
-        
+    // 2. Check for empty fields
+    if (refnumInput.isEmpty() || idInput.isEmpty() || prodIdInput.isEmpty() || priceInput.isEmpty()
+            || quantiInput.isEmpty() || amountInput.isEmpty() || pdateInput.isEmpty() || rdateInput.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill in all fields.");
         return;
     }
 
-    // 3. Validate numeric fields
+    // 3. Validate numeric fields: price, quantity, amount
     try {
-        Double.parseDouble(priceStr);
-        Integer.parseInt(quantityStr);
-        Double.parseDouble(amountStr);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Please enter valid numbers for price, quantity, and amount.");
+        Double.parseDouble(priceInput);
+        Integer.parseInt(quantiInput);
+        Double.parseDouble(amountInput);
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Invalid numeric value in price, quantity, or amount.");
         return;
     }
 
-    // 4. Validate sales record from salesreport.txt
-    File file = new File("src/file_storage/salesreport.txt");
+    // 4. Load salesreport JTable from SALESREPORT class
+    SALESREPORT salesReportFrame = new SALESREPORT();
+    javax.swing.JTable salesTable = salesReportFrame.salesreport;  // access the JTable
+
+    // 5. Validate each input against the corresponding column in salesreport JTable
     boolean matchFound = false;
+    for (int i = 0; i < salesTable.getRowCount(); i++) {
+        String salesRefnum = salesTable.getValueAt(i, 1).toString().trim();     // col 2
+        String salesId = salesTable.getValueAt(i, 2).toString().trim();         // col 3
+        String salesProdId = salesTable.getValueAt(i, 3).toString().trim();     // col 4
+        String salesPrice = salesTable.getValueAt(i, 4).toString().trim();      // col 5
+        String salesQty = salesTable.getValueAt(i, 5).toString().trim();        // col 6
+        String salesAmount = salesTable.getValueAt(i, 6).toString().trim();     // col 7
+        String salesPdate = salesTable.getValueAt(i, 7).toString().trim();      // col 8
 
-    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] data = line.split("%%");
-            if (data.length >= 8) {
-                String fileCustomerId = data[2].trim();
-                String fileRefnum = data[1].trim();
-                String fileProductName = data[3].trim();
-                String filePrice = data[4].trim();
-                String fileQuantity = data[5].trim();
-                String fileAmount = data[6].trim();
-                String filePurchaseDate = data[7].trim();
-
-                if (!fileCustomerId.equalsIgnoreCase(customerId)) {
-                    JOptionPane.showMessageDialog(this, "Customer ID does not match with sales record.");
-                    return;
-                } else if (!fileRefnum.equalsIgnoreCase(refnumb)) {
-                    JOptionPane.showMessageDialog(this, "Customer Name does not match with sales record.");
-                    return;
-                } else if (!fileProductName.equalsIgnoreCase(productID)) {
-                    JOptionPane.showMessageDialog(this, "Product Name does not match with sales record.");
-                    return;
-                } else if (!filePrice.equalsIgnoreCase(priceStr)) {
-                    JOptionPane.showMessageDialog(this, "Price does not match with sales record.");
-                    return;
-                } else if (!fileQuantity.equalsIgnoreCase(quantityStr)) {
-                    JOptionPane.showMessageDialog(this, "Quantity does not match with sales record.");
-                    return;
-                } else if (!fileAmount.equalsIgnoreCase(amountStr)) {
-                    JOptionPane.showMessageDialog(this, "Amount does not match with sales record.");
-                    return;
-                } else if (!filePurchaseDate.equalsIgnoreCase(purchaseDate)) {
-                    JOptionPane.showMessageDialog(this, "Purchase Date does not match with sales record.");
-                    return;
-                } else {
-                    matchFound = true;
-                    break;
-                }
-            }
+        if (salesRefnum.equalsIgnoreCase(refnumInput)
+            && salesId.equalsIgnoreCase(idInput)
+            && salesProdId.equalsIgnoreCase(prodIdInput)
+            && salesPrice.equalsIgnoreCase(priceInput)
+            && salesQty.equalsIgnoreCase(quantiInput)
+            && salesAmount.equalsIgnoreCase(amountInput)
+            && salesPdate.equalsIgnoreCase(pdateInput)) {
+            matchFound = true;
+            break;
         }
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Error reading sales report: " + e.getMessage());
-        return;
     }
 
     if (!matchFound) {
-        JOptionPane.showMessageDialog(this, "No matching sales record found.");
-        return; // stop saving if no match
+        JOptionPane.showMessageDialog(this, "No matching sales record found for the entered data.");
+        return;
     }
 
-    // 5. Add the return record to returnproducts JTable
-    DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
-    Object[] newRow = new Object[] {
-        customerId,
-        productID,
-        priceStr,
-        quantityStr,
-        amountStr,
-        purchaseDate,
-        returnDate
+    // 6. Add to returnproducts JTable
+    DefaultTableModel returnModel = (DefaultTableModel) returnproducts.getModel();
+    Object[] newRow = new Object[]{
+        idInput,
+        prodIdInput,
+        priceInput,
+        quantiInput,
+        amountInput,
+        pdateInput,
+        rdateInput
     };
-    model.addRow(newRow);
+    returnModel.addRow(newRow);
 
-    // 6. Save returnproducts JTable data to file
+    // 7. Save returnproducts JTable to returnproducts.txt file
     saveReturnProductsToFile();
 
-    // 7. Update cashierproduct.txt and product.txt quantities by adding returned quantity
-    updateReturnedQuantitiesToInventory();
-
-    // ====== HERE is your requested snippet integration =======
-    String productId = id.getText().trim();  // Use actual product ID if you have it, else productName
-    int quantityReturned = Integer.parseInt(quanti.getText().trim());
+    // 8. Update product quantity in PRODUCTSTATUS panel and productstatus.txt
+    PRODUCTSTATUS productStatusInstance = PRODUCTSTATUS.getInstance(); // Use singleton for single instance
 
     if (productStatusInstance != null) {
-        productStatusInstance.addQuantityToPanelByProductId(productId, quantityReturned);
+        productStatusInstance.addQuantityToPanelByProductId(prodIdInput, Integer.parseInt(quantiInput));
+    } else {
+        JOptionPane.showMessageDialog(this, "Product Status panel is not loaded.");
     }
-    // =========================================================
 
-    // 8. Clear input fields for next entry
-    id.setText("");
+    // 9. Persist quantity update to productstatus.txt file
+    updateQuantityInProductStatusFile(prodIdInput, Integer.parseInt(quantiInput));
+
+    // 10. Clear input fields
     refnum.setText("");
+    id.setText("");
     ProdID.setText("");
     price.setText("");
     quanti.setText("");
@@ -482,11 +458,50 @@ public CRETURN() {
     pdate.setText("");
     rdate.setText("");
 
-    // 9. Show success message
-    JOptionPane.showMessageDialog(this, "Return product saved and inventory updated successfully.");
-
+    JOptionPane.showMessageDialog(this, "Return recorded and inventory updated successfully.");
     }//GEN-LAST:event_saveActionPerformed
 
+    private void updateQuantityInProductStatusFile(String productId, int qtyToAdd) {
+    File file = new File("src/file_storage/productstatus.txt");
+
+    try {
+        // Read all lines into a List
+        java.util.List<String> lines = new java.util.ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("%%");
+                if (parts.length >= 5 && parts[4].equals(productId)) {
+                    int currentQty = 0;
+                    try {
+                        currentQty = Integer.parseInt(parts[3]);
+                    } catch (NumberFormatException e) {
+                        currentQty = 0;
+                    }
+                    int newQty = currentQty + qtyToAdd;
+                    parts[3] = String.valueOf(newQty);
+                    line = String.join("%%", parts);
+                }
+                lines.add(line);
+            }
+        }
+
+        // Overwrite the original file with updated lines
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
+            for (String updatedLine : lines) {
+                writer.write(updatedLine);
+                writer.newLine();
+            }
+        }
+
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Error updating productstatus.txt: " + e.getMessage());
+    }
+}
+    
+    
+    
+    
        public void saveReturnProductsToFile() {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(RETURN_PRODUCT_FILE))) {
         DefaultTableModel model = (DefaultTableModel) returnproducts.getModel();
@@ -523,68 +538,7 @@ public CRETURN() {
     }
 }
     
-       private void updateReturnedQuantitiesToInventory() {
-    DefaultTableModel returnModel = (DefaultTableModel) returnproducts.getModel();
-
-    for (int i = 0; i < returnModel.getRowCount(); i++) {
-        String returnProductId = returnModel.getValueAt(i, 1).toString(); // Column 2
-        int returnedQty = Integer.parseInt(returnModel.getValueAt(i, 3).toString()); // Column 4
-
-        // --- Update cashierproduct.txt directly ---
-        try {
-            File file = new File("src/file_storage/cashierproduct.txt");
-            ArrayList<String> updatedLines = new ArrayList<>();
-
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("%%");
-                if (parts.length >= 4 && parts[0].equals(returnProductId)) {
-                    int currentQty = Integer.parseInt(parts[3]);
-                    parts[3] = String.valueOf(currentQty + returnedQty); // Update Quantity
-                }
-                updatedLines.add(String.join("%%", parts));
-            }
-            reader.close();
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            for (String updatedLine : updatedLines) {
-                writer.write(updatedLine);
-                writer.newLine();
-            }
-            writer.close();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error updating cashierproduct.txt: " + e.getMessage());
-        }
-
-        // --- Update product.txt directly ---
-        try {
-            File file = new File("src/file_storage/product.txt");
-            ArrayList<String> updatedLines = new ArrayList<>();
-
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("%%");
-                if (parts.length >= 7 && parts[1].equals(returnProductId)) {
-                    int currentQty = Integer.parseInt(parts[6]);
-                    parts[6] = String.valueOf(currentQty + returnedQty); // Update Quantity
-                }
-                updatedLines.add(String.join("%%", parts));
-            }
-            reader.close();
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            for (String updatedLine : updatedLines) {
-                writer.write(updatedLine);
-                writer.newLine();
-            }
-            writer.close();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error updating product.txt: " + e.getMessage());
-        }
-    }
-}
+      
     
     public static void main(String args[]) {
         
