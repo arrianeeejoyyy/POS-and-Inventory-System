@@ -85,6 +85,10 @@ private String editingProductId = null;       // Stores the Product ID currently
     }
 
     public void updatePanelQuantityByProductId(String productId, int quantitySold) {
+    if (!this.isVisible()) {
+        // Skip UI update if the window is not visible
+        return;
+    }
     for (int i = 0; i < jPanel1.getComponentCount(); i++) {
         java.awt.Component comp = jPanel1.getComponent(i);
         if (comp instanceof PRODUCTSTATUSPPP) {
@@ -96,8 +100,8 @@ private String editingProductId = null;       // Stores the Product ID currently
                     int newQty = currentQty - quantitySold;
                     if (newQty < 0) newQty = 0;
                     panel.quantity.setText(String.valueOf(newQty));
-
-                    // Change panel background color based on newQty
+                    
+                    // Change panel color based on stock
                     if (newQty >= 1 && newQty <= 7) {
                         panel.setStockLevelColor(Color.RED);
                     } else if (newQty >= 8 && newQty <= 14) {
@@ -1012,6 +1016,43 @@ private void updateQuantityInFileAdd(String filePath, String productId, int qtyT
 }
 
 
+public void updateQuantityInProductStatusFileWithoutTemp(String productId, int quantitySold) {
+    File file = new File("src/file_storage/productstatus.txt");
+    try {
+        // Read all lines into memory
+        java.util.List<String> lines = new java.util.ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("%%");
+                if (parts.length >= 5 && parts[4].equals(productId)) {
+                    int currentQty = 0;
+                    try {
+                        currentQty = Integer.parseInt(parts[3]);
+                    } catch (NumberFormatException e) {
+                        currentQty = 0;
+                    }
+                    int newQty = currentQty - quantitySold;
+                    if (newQty < 0) newQty = 0;
+                    parts[3] = String.valueOf(newQty);
+                    line = String.join("%%", parts);
+                }
+                lines.add(line);
+            }
+        }
+
+        // Overwrite the entire file with updated lines
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
+            for (String updatedLine : lines) {
+                writer.write(updatedLine);
+                writer.newLine();
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(null, "Error updating productstatus.txt: " + e.getMessage());
+    }
+}
 
 
 

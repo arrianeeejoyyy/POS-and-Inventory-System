@@ -356,9 +356,10 @@ discount.addActionListener(e -> applyDiscount());
     }//GEN-LAST:event_removeActionPerformed
 
     private void payandprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payandprintActionPerformed
-     try {
+    
+    try {
         String paymentStr = JOptionPane.showInputDialog(this, "Enter payment amount:");
-        if (paymentStr == null) return; // Cancel pressed
+        if (paymentStr == null) return; // User cancelled
 
         double payment = Double.parseDouble(paymentStr);
 
@@ -385,26 +386,29 @@ discount.addActionListener(e -> applyDiscount());
         int printConfirm = JOptionPane.showConfirmDialog(this, "Do you want to Save and Print your Receipt?", "Print", JOptionPane.YES_NO_OPTION);
 
         if (printConfirm == JOptionPane.YES_OPTION) {
-            // Loop through checkout items to update quantities
+            // Loop through checkout items to update quantities and files
             for (int i = 0; i < checkoutModel.getRowCount(); i++) {
                 String productId = checkoutModel.getValueAt(i, 0).toString();
                 int quantitySold = Integer.parseInt(checkoutModel.getValueAt(i, 3).toString());
 
+                // Update quantity in product.txt and cashierproduct.txt files
                 updateProductQuantity(productId, quantitySold);
+
+                // Update quantity in productlist JTable UI
                 subtractQuantityInProductList(productId, quantitySold);
 
-                // Update product quantity on the ProductStatus UI panel
+                // Update quantity in productstatus.txt file WITHOUT opening PRODUCTSTATUS JFrame
                 PRODUCTSTATUS ps = PRODUCTSTATUS.getInstance();
-                if (!ps.isVisible()) {
-                    ps.setVisible(true);
-                    ps.toFront();
-                    ps.requestFocus();
-                }
+                ps.updateQuantityInProductStatusFileWithoutTemp(productId, quantitySold);
+
+                // Update UI panel only if PRODUCTSTATUS window is visible; won't open the frame
                 ps.updatePanelQuantityByProductId(productId, quantitySold);
             }
 
+            // Save updated productlist JTable to file
             saveTableToTextFile(productlist, "src/file_storage/cashierproduct.txt");
 
+            // Prepare and display receipt
             Reciept receiptFrame = new Reciept();
             receiptFrame.fillReceiptFromCheckout(CHECKOUT);
             receiptFrame.setFullReceiptSummary(
@@ -424,10 +428,7 @@ discount.addActionListener(e -> applyDiscount());
                 customername.getText()
             );
 
-            // Optional: full refresh of product panels instead of incremental update
-            // PRODUCTSTATUS.getInstance().loadProductStatusPanels();
-
-            // Save sales report
+            // Save sales report to file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/salesreport.txt", true))) {
                 for (int i = 0; i < checkoutModel.getRowCount(); i++) {
                     String productID = checkoutModel.getValueAt(i, 0).toString();
@@ -446,6 +447,7 @@ discount.addActionListener(e -> applyDiscount());
                         date.getText()
                     };
 
+                    // Optionally update SALESREPORT UI (if open)
                     SALESREPORT reportFrame = new SALESREPORT();
                     DefaultTableModel salesModel = (DefaultTableModel) reportFrame.salesreport.getModel();
                     salesModel.addRow(row);

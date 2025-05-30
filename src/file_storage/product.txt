@@ -48,4 +48,5 @@ Rainbow ribbon breathing light effect in the medium plate.
 Support for light brightness and respiratory rate adjustment.
 KeyBoard %%K202507%%fgyhj%%grty%%ggrt%%tgyy%%10%% nhthtryrtrtr
 Screen Monitor%%S202508%%Inplay%%3245678%%200%%Inplay gaming%%20%%csdfcvgbhhnbg
-Mouse %%M202509%%frgtygrf%%trgy%%100%%cew%%15%%jnmjhj
+Mouse %%M202509%%frgtygrf%%trgy%%100%%cew%%4%%jnmjhj
+Screen Monitor%%S202510%%ausu%%65432%%45%%dfds%%10%% vfdghvgfvd
