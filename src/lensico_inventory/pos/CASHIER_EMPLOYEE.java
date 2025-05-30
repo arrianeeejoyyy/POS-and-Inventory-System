@@ -48,7 +48,10 @@ discount.addActionListener(e -> applyDiscount());
     }
 
    
-    
+    public void updateProductStatusPanelsAfterSale() {
+    PRODUCTSTATUS ps = new PRODUCTSTATUS();
+    ps.loadProductStatusPanels(); // This reloads panels with latest file quantities
+}
     
     
     @SuppressWarnings("unchecked")
@@ -411,7 +414,10 @@ discount.addActionListener(e -> applyDiscount());
                 String.format("%.2f", vatAmount),
                 customername.getText()
             );
-
+            
+            
+            
+                updateProductStatusPanelsAfterSale();
             // ✅ Save to SALESREPORT table and text file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/salesreport.txt", true))) {
                 for (int i = 0; i < checkoutModel.getRowCount(); i++) {
