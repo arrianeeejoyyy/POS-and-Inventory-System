@@ -816,7 +816,7 @@ private void updateProductData(String targetProductId, String selectedtext, Stri
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("%%");
                 if (parts.length >= 3 && parts[1].equals(pmodel)) {
-                    writer.write(iconpath + "%%" + pmodel + "%%" + uprice + "%%" + quanti);
+                    writer.write(iconpath + "%%" + pmodel + "%%" + uprice + "%%" + quanti + "%%" + pid);
                 } else {
                     writer.write(line);
                 }
@@ -865,7 +865,7 @@ private void addNewProduct(String selectedtext, String pid, String pmodel, Strin
 
         try (BufferedWriter writer3 = new BufferedWriter(new FileWriter("src/file_storage/productstatus.txt", true))) {
             // Save product status info
-            writer3.write(iconpath + "%%" + pmodel + "%%" + uprice + "%%" + quanti);
+            writer3.write(iconpath + "%%" + pmodel + "%%" + uprice + "%%" + quanti + "%%" + pid);
             writer3.newLine();
         }
 
@@ -1010,6 +1010,11 @@ private void updateQuantityInFileAdd(String filePath, String productId, int qtyT
         JOptionPane.showMessageDialog(null, "Failed to update file: " + filePath);
     }
 }
+
+
+
+
+
 ///dont remove selfffff
     public static void main(String args[]) {
      
