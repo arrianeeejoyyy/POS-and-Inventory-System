@@ -4,7 +4,10 @@
  */
 package lensico_inventory.pos;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JOptionPane;
@@ -18,7 +21,7 @@ public class CUSTOMERADD extends javax.swing.JFrame {
     
         private static final int baseCustomerId = 1112050;
         private static int customerCounter = 1;
-        
+        private static final String COUNTER_FILE = "src/file_storage/customer_counter.txt";
        
 
 
@@ -61,7 +64,42 @@ public CUSTOMERADD(CUSTOMER customer, ACCHISTORY accHistory) {
 
     }
 
+    private void loadCustomerCounter() {
+        File file = new File(COUNTER_FILE);
+        if (file.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line = br.readLine();
+                if (line != null) {
+                    customerCounter = Integer.parseInt(line.trim());
+                }
+            } catch (IOException | NumberFormatException ex) {
+                System.err.println("Failed to load customer counter, starting at 1");
+                customerCounter = 1;
+            }
+        } else {
+            customerCounter = 1; // Default start
+        }
+    }
 
+    private void saveCustomerCounter() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(COUNTER_FILE))) {
+            bw.write(String.valueOf(customerCounter));
+        } catch (IOException ex) {
+            System.err.println("Failed to save customer counter.");
+        }
+    }
+
+    private void generateCustomerId() {
+        String generatedId = String.valueOf(baseCustomerId + customerCounter);
+        id.setText(generatedId);
+    }
+
+    private void incrementCustomerCounter() {
+        customerCounter++;
+        saveCustomerCounter();
+    }
+    
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -160,61 +198,63 @@ public CUSTOMERADD(CUSTOMER customer, ACCHISTORY accHistory) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SAVEActionPerformed
+       
         if (!jCheckBox1.isSelected()) {
-        JOptionPane.showMessageDialog(null, "You must agree to the terms to proceed.");
-        return;
-    }
+            JOptionPane.showMessageDialog(null, "You must agree to the terms to proceed.");
+            return;
+        }
 
-    String n = name.getText();
-    String c = contactnumber.getText();
-    String e = email.getText();
-    String a = address.getText();
+        String n = name.getText();
+        String c = contactnumber.getText();
+        String e = email.getText();
+        String a = address.getText();
 
-    if (n.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Name is empty. Please provide a name.");
+        if (n.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Name is empty. Please provide a name.");
+            name.setText("");
+            return;
+        }
+        if (!c.matches("^09\\d{9}$")) {
+            JOptionPane.showMessageDialog(null, "Contact Number must be 11 digits only and start with 09.");
+            contactnumber.setText("");
+            return;
+        }
+        if (!e.contains("@gmail.com")) {
+            JOptionPane.showMessageDialog(null, "Email must be a Gmail address.");
+            email.setText("");
+            return;
+        }
+        if (a.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Address must be filled in.");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+            null,
+            "Are you sure to proceed?",
+            "Confirmation",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null, "Operation cancelled.");
+            return;
+        }
+
+        // At this point, you would save customer info (not shown here)
+
+        // Increment and save counter
+        incrementCustomerCounter();
+
+        generateCustomerId();
         name.setText("");
-        return;
-    } 
-    if (!c.matches("^09\\d{9}$")) {
-        JOptionPane.showMessageDialog(null, "Contact Number must be 11 digits only and start with 09.");
         contactnumber.setText("");
-        return;
-    } 
-    if (!e.contains("@gmail.com")) {
-        JOptionPane.showMessageDialog(null, "Email must be a Gmail address.");
-        email.setText("");    
-        return;
-    } 
-    if (a.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Address must be filled in.");
-        return;
-    }
+        email.setText("");
+        address.setText("");
+        jCheckBox1.setSelected(false);
 
-    int confirm = JOptionPane.showConfirmDialog(
-        null,
-        "Are you sure to proceed?",
-        "Confirmation",
-        JOptionPane.YES_NO_OPTION
-    );
-
-    if (confirm != JOptionPane.YES_OPTION) {
-        JOptionPane.showMessageDialog(null, "Operation cancelled.");
-        return;
-    }
-
-   
-
-
-    // Reset form
-    customerCounter++;
-    generateCustomerId();
-    name.setText("");
-    contactnumber.setText("");
-    email.setText("");
-    address.setText("");
-    jCheckBox1.setSelected(false);
-
-    JOptionPane.showMessageDialog(null, "Information saved successfully!");
+        JOptionPane.showMessageDialog(null, "Information saved successfully!");
+    
     }//GEN-LAST:event_SAVEActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
@@ -234,10 +274,7 @@ public CUSTOMERADD(CUSTOMER customer, ACCHISTORY accHistory) {
       
     }//GEN-LAST:event_idActionPerformed
 
-   private void generateCustomerId() {
-    String generatedId = baseCustomerId + String.format("%02d", customerCounter);
-    id.setText(generatedId);
-}
+
     
     
     
