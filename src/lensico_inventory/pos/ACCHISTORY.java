@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
     public ACCHISTORY() {
         initComponents();
         
-       
+       loadHistoryCTableFromFile();
     }
 
  
