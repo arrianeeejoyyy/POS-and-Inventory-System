@@ -16,6 +16,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,6 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 public class PRODUCTSTATUS extends javax.swing.JFrame {
           private static final int baseProductId = 202500;
@@ -582,7 +586,6 @@ private void saveAllPanelQuantitiesToFile() {
     String des = description.getText();
     String iconpath = imagepath.getText();
 
-    
     if (barcode.isEmpty() || uprice.isEmpty() || brandn.isEmpty() || quanti.isEmpty() || des.isEmpty()) {
         JOptionPane.showMessageDialog(null, "All Fields must be filled in.");
         return;
@@ -608,26 +611,28 @@ private void saveAllPanelQuantitiesToFile() {
     }
 
     if (isEditing) {
-        
         updateProductData(editingProductId, selectedtext, pid, pmodel, barcode, uprice, brandn, quanti, des, iconpath);
         JOptionPane.showMessageDialog(null, "Product updated successfully.");
+        addToProductHistory(pid);  // Add to history on update
     } else {
-        
         addNewProduct(selectedtext, pid, pmodel, barcode, uprice, brandn, quanti, des, iconpath);
         JOptionPane.showMessageDialog(null, "Successfully saved.");
+        addToProductHistory(pid);  // Add to history on new product save
     }
 
-   
+    // Clear form fields after save
     clearForm();
+
+    // Reset flags
     isEditing = false;
     editingProductId = null;
 
-    
+    // Disable editing on ID, Type, Quantity fields after save
     id.setEditable(false);
     type.setEnabled(true);
     quantity.setEditable(true);
 
-   
+    // Reload product panels to reflect changes
     loadProductStatusPanels();
     }//GEN-LAST:event_saveActionPerformed
 
@@ -1138,7 +1143,51 @@ public void updateQuantityInProductStatusFileWithoutTemp(String productId, int q
     }
 }
 
+public void addToProductHistory(String productId) {
+    try {
+        // Get current date and time
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String status = "Active";
 
+        // Access ACCHISTORY instance and its historyP JTable
+        ACCHISTORY accHistory = ACCHISTORY.instance;
+        if (accHistory == null) {
+            // If ACCHISTORY window is not opened yet, open it once (optional)
+            accHistory = new ACCHISTORY();
+            accHistory.setVisible(false); // keep hidden, only for data operations
+        }
+
+        DefaultTableModel model = (DefaultTableModel) accHistory.historyP.getModel();
+
+        // Add new row to JTable
+        model.addRow(new Object[] { productId, date, time, status });
+
+        // Save JTable data to file src/file_storage/historyP.txt
+        saveHistoryPToFile(accHistory.historyP, "src/file_storage/historyP.txt");
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error adding product history: " + e.getMessage());
+    }
+}
+
+private void saveHistoryPToFile(javax.swing.JTable table, String filePath) {
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                Object val = model.getValueAt(i, j);
+                writer.write(val == null ? "" : val.toString());
+                if (j < model.getColumnCount() - 1) {
+                    writer.write("%%");
+                }
+            }
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error saving product history file: " + e.getMessage());
+    }
+}
 
 ///dont remove selfffff
     public static void main(String args[]) {

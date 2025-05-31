@@ -5,6 +5,9 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -29,8 +32,40 @@ public class USERSETTING extends javax.swing.JFrame {
              }
          });
     }
+    
+    
 
     @SuppressWarnings("unchecked")
+    
+    private void addToUserHistory(String eid) {
+    try {
+        // Get instance of ACCHISTORY (make sure ACCHISTORY.instance is accessible and initialized)
+        ACCHISTORY accHistory = ACCHISTORY.instance;
+        if (accHistory == null) {
+            // If instance not created yet, create and show once (optional)
+            accHistory = new ACCHISTORY();
+            accHistory.setVisible(false); // invisible by default
+            ACCHISTORY.instance = accHistory;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) accHistory.historyU.getModel();
+
+        // Prepare current date and time strings
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+        String status = "Active";  // or any default status you want to show
+
+        // Add row to historyU JTable
+        model.addRow(new Object[] { eid, currentDate, currentTime, status });
+
+        // Save updated table data to file
+        accHistory.saveHistoryUTableToFile();
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error updating user history: " + ex.getMessage());
+    }
+}
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -222,42 +257,51 @@ public class USERSETTING extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        String user = name.getText();
-        String pass = password.getText();
-        String cpass = confirmpassword.getText();
-        String id = eid.getText();
+         String user = name.getText();
+    String pass = password.getText();
+    String cpass = confirmpassword.getText();
+    String id = eid.getText();
 
-        if (!isEmployeeValid(id)) {
-            JOptionPane.showMessageDialog(null, "Employee ID does not exist or is not a cashier.");
-            return;
-        }
+    if (!isEmployeeValid(id)) {
+        JOptionPane.showMessageDialog(null, "Employee ID does not exist or is not a cashier.");
+        return;
+    }
 
-        if (user.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Username is required.");
+    if (user.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Username is required.");
+        name.setText("");
+    } else if (!pass.equals(cpass)) {
+        JOptionPane.showMessageDialog(null, "Passwords do not match.");
+        password.setText("");
+        confirmpassword.setText("");
+    } else if (!jCheckBox1.isSelected()) {
+        // Check if your checkbox is ticked, since you mentioned checkbox condition
+        JOptionPane.showMessageDialog(null, "Please confirm the checkbox before saving.");
+    } else {
+        USERSETTINGCASHIERACC CACC = new USERSETTINGCASHIERACC();
+        CACC.AddRowToJTable(new Object[]{id, user, pass, true}); // Add to cashier JTable
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/usercashier.txt", true));
+            writer.write(id + "%%" + user + "%%" + pass + "%%" + true);
+            writer.newLine();
+            writer.close();
+
+            // Add to ACCHISTORY user history table and save file
+            addToUserHistory(id);
+
+            // Clear inputs
             name.setText("");
-        } else if (!pass.equals(cpass)) {
-            JOptionPane.showMessageDialog(null, "Passwords do not match.");
+            eid.setText("");
             password.setText("");
             confirmpassword.setText("");
-        } else {
-            USERSETTINGCASHIERACC CACC = new USERSETTINGCASHIERACC();
-            CACC.AddRowToJTable(new Object[]{id, user, pass, true}); // FIXED
+            jCheckBox1.setSelected(false);
 
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/usercashier.txt", true));
-                writer.write(id + "%%" + user + "%%" + pass + "%%" +  true); // Match the table's 3-column format
-                writer.newLine();
-                writer.close();
-
-                name.setText("");
-                eid.setText("");
-                password.setText("");
-                confirmpassword.setText("");
-
-                JOptionPane.showMessageDialog(null, "Employee has been added successfully to cashier");
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Error saving user data: " + e.getMessage());
-            }}
+            JOptionPane.showMessageDialog(null, "Employee has been added successfully to cashier");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error saving user data: " + e.getMessage());
+        }
+    }
     }//GEN-LAST:event_saveActionPerformed
 
     private void customerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerActionPerformed

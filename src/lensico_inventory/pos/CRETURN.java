@@ -144,8 +144,43 @@ private void saveTableToFile(DefaultTableModel model, String filePath) {
     }
 }
    
+ private void appendToHistoryRFile(String id) {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    String date = dateFormat.format(new Date());
+
+    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    String time = timeFormat.format(new Date());
+
+    String status = "Returned";
+
+    String lineToAppend = id + "%%" + date + "%%" + time + "%%" + status;
+
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/historyR.txt", true))) {
+        writer.write(lineToAppend);
+        writer.newLine();
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error writing to historyR.txt: " + e.getMessage());
+    }
+}
    
    
+   public void saveHistoryRTableToFile() {
+    DefaultTableModel model = (DefaultTableModel) ACCHISTORY.instance.historyR.getModel();
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/historyR.txt"))) {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                writer.write(model.getValueAt(i, j).toString());
+                if (j < model.getColumnCount() - 1) {
+                    writer.write("%%");
+                }
+            }
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error saving to historyR.txt: " + e.getMessage());
+    }
+}
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -512,22 +547,14 @@ private void saveTableToFile(DefaultTableModel model, String filePath) {
 
     // 7. Save returnproducts JTable to returnproducts.txt file
     saveReturnProductsToFile();
-    
+
+    // 8. Update quantities after return
     updateQuantitiesAfterReturn();
 
-    // 8. Update product quantity in PRODUCTSTATUS panel and productstatus.txt
-    PRODUCTSTATUS productStatusInstance = PRODUCTSTATUS.getInstance(); // Use singleton for single instance
+    // 9. Add to ACCHISTORY's historyR JTable
+   appendToHistoryRFile(idInput);
 
-    if (productStatusInstance != null) {
-        productStatusInstance.addQuantityToPanelByProductId(prodIdInput, Integer.parseInt(quantiInput));
-    } else {
-        JOptionPane.showMessageDialog(this, "Product Status panel is not loaded.");
-    }
-
-    // 9. Persist quantity update to productstatus.txt file
-    updateQuantityInProductStatusFile(prodIdInput, Integer.parseInt(quantiInput));
-
-    // 10. Clear input fields
+    // 11. Clear input fields
     refnum.setText("");
     id.setText("");
     ProdID.setText("");
