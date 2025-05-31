@@ -416,86 +416,107 @@ public class EMPLOYEE extends javax.swing.JFrame {
     }//GEN-LAST:event_usersettingActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        String id = eid.getText().trim();
-        String user = name.getText().trim();
-        String num = mobilenumber.getText().trim();
-        String mail = email.getText().trim();
-        String aa = age.getText().trim();
-        String ba = bankacc.getText().trim();
-        String an = accno.getText().trim();
-        String cp = cperson.getText().trim();
-        String cpn = cpnumber.getText().trim();
-        String poss = position.getSelectedItem();
-        String ge = sex.getSelectedItem();
+         // Check if terms checkbox is selected
+    if (!jCheckBox1.isSelected()) {
+        JOptionPane.showMessageDialog(null, "You must agree to the terms to proceed.");
+        return;  // Stop further execution if not checked
+    }
 
-        // Validation patterns
-        String namePattern = "^[a-zA-Z ]+$";
-        String numberPattern = "^09\\d{9}$";
-        String digitsOnlyPattern = "^\\d+$";
+    String id = eid.getText().trim();
+    String user = name.getText().trim();
+    String num = mobilenumber.getText().trim();
+    String mail = email.getText().trim();
+    String aa = age.getText().trim();
+    String ba = bankacc.getText().trim();
+    String an = accno.getText().trim();
+    String cp = cperson.getText().trim();
+    String cpn = cpnumber.getText().trim();
+    String poss = (String) position.getSelectedItem();
+    String ge = (String) sex.getSelectedItem();
 
-        if (user.isEmpty() || !user.matches(namePattern)) {
-            JOptionPane.showMessageDialog(null, "Name must not be empty and contain only letters and spaces.");
+    // Validation patterns
+    String namePattern = "^[a-zA-Z ]+$";
+    String numberPattern = "^09\\d{9}$";
+    String digitsOnlyPattern = "^\\d+$";
+
+    // Validate combo box selections
+    if (poss.equals("Select Position")) {
+        JOptionPane.showMessageDialog(null, "Please select a valid Position.");
+        return;
+    }
+    if (ge.equals("Please Select")) {
+        JOptionPane.showMessageDialog(null, "Please select a valid Sex.");
+        return;
+    }
+
+    if (user.isEmpty() || !user.matches(namePattern)) {
+        JOptionPane.showMessageDialog(null, "Name must not be empty and contain only letters and spaces.");
+        name.setText("");
+    } else if (ba.isEmpty() || !ba.matches(namePattern)) {
+        JOptionPane.showMessageDialog(null, "Bank Account name must not be empty and contain only letters and spaces.");
+        bankacc.setText("");
+    } else if (cp.isEmpty() || !cp.matches(namePattern)) {
+        JOptionPane.showMessageDialog(null, "Contact Person must not be empty and contain only letters and spaces.");
+        cperson.setText("");
+    } else if (mail.isEmpty() || !mail.endsWith("@gmail.com")) {
+        JOptionPane.showMessageDialog(null, "Email must end with @gmail.com.");
+        email.setText("");
+    } else if (!num.matches(numberPattern)) {
+        JOptionPane.showMessageDialog(null, "Mobile number must start with 09 and be exactly 11 digits.");
+        mobilenumber.setText("");
+    } else if (!cpn.matches(numberPattern)) {
+        JOptionPane.showMessageDialog(null, "Contact Person's number must start with 09 and be exactly 11 digits.");
+        cpnumber.setText("");
+    } else if (num.equals(cpn)) {
+        JOptionPane.showMessageDialog(null, "Contact Person's number must not be the same as the Mobile number.");
+        mobilenumber.setText("");
+        cpnumber.setText("");
+    } else if (user.equalsIgnoreCase(cp)) {
+        JOptionPane.showMessageDialog(null, "Contact Person's name must not be the same as the Name.");
+        name.setText("");
+        cperson.setText("");
+    } else if (!an.matches(digitsOnlyPattern)) {
+        JOptionPane.showMessageDialog(null, "Account Number must contain digits only.");
+        accno.setText("");
+    } else if (!aa.matches(digitsOnlyPattern)) {
+        JOptionPane.showMessageDialog(null, "Age must contain digits only.");
+        age.setText("");
+    } else {
+        // Format data string to save and add to table
+        String data = id + "%%" + user + "%%" + poss + "%%" + num + "%%" + mail + "%%" + aa + "%%" + ge + "%%" + ba + "%%" + an + "%%" + cp + "%%" + cpn;
+
+        // Add to JTable
+        EMPLOYEEFULLD FULLD = new EMPLOYEEFULLD();
+        FULLD.AddRowToJTable(new Object[] { data });
+
+        // Save to file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/employeee.txt", true))) {
+            writer.write(data);
+            writer.newLine();
+            JOptionPane.showMessageDialog(null, "Successfully saved.");
+
+            EmployeeCounter++;
+            saveEmployeeCounter();
+            generateCustomerId();
+
+            // Clear fields
             name.setText("");
-        }else if (ba.isEmpty() || !ba.matches(namePattern)) {
-            JOptionPane.showMessageDialog(null, "Bank Account name must not be empty and contain only letters and spaces.");
-            bankacc.setText("");
-        } else if (cp.isEmpty() || !cp.matches(namePattern)) {
-            JOptionPane.showMessageDialog(null, "Contact Person must not be empty and contain only letters and spaces.");
-            cperson.setText("");
-        } else if (mail.isEmpty() || !mail.endsWith("@gmail.com")) {
-            JOptionPane.showMessageDialog(null, "Email must end with @gmail.com.");
+            mobilenumber.setText("");
             email.setText("");
-        } else if (!num.matches(numberPattern)) {
-            JOptionPane.showMessageDialog(null, "Mobile number must start with 09 and be exactly 11 digits.");
-            mobilenumber.setText("");
-        } else if (!cpn.matches(numberPattern)) {
-            JOptionPane.showMessageDialog(null, "Contact Person's number must start with 09 and be exactly 11 digits.");
-            cpnumber.setText("");
-        } else if (num.equals(cpn)) {
-            JOptionPane.showMessageDialog(null, "Contact Person's number must not be the same as the Mobile number.");
-            mobilenumber.setText("");
-            cpnumber.setText("");
-        } else if (user.equalsIgnoreCase(cp)) {
-            JOptionPane.showMessageDialog(null, "Contact Person's name must not be the same as the Name.");
-            name.setText("");
-            cperson.setText("");
-        } else if (!an.matches(digitsOnlyPattern)) {
-            JOptionPane.showMessageDialog(null, "Account Number must contain digits only.");
-            accno.setText("");
-        } else if (!aa.matches(digitsOnlyPattern)) {
-            JOptionPane.showMessageDialog(null, "Age must contain digits only.");
             age.setText("");
-        } else {
-            // Add to JTable
-            
-            EMPLOYEEFULLD FULLD = new EMPLOYEEFULLD();
-            FULLD.AddRowToJTable(new Object[]{id + "%%" + user + "%%" + poss + "%%" + num + "%%" + mail + "%%" + aa + "%%" + ge + "%%" + ba + "%%" + an + "%%" + cp + "%%" + cpn});
-            
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/employeee.txt", true))) {
-                writer.write(id + "%%" + user + "%%" + poss + "%%" + num + "%%" + mail + "%%" + aa + "%%" + ge + "%%" + ba + "%%" + an + "%%" + cp + "%%" + cpn);
-                writer.newLine();
-                JOptionPane.showMessageDialog(null, "Successfully saved.");
+            bankacc.setText("");
+            accno.setText("");
+            cperson.setText("");
+            cpnumber.setText("");
+            position.setSelectedIndex(0); // Reset combo boxes to placeholder
+            sex.setSelectedIndex(0);
+            jCheckBox1.setSelected(false);  // Uncheck checkbox
 
-                EmployeeCounter++;
-                saveEmployeeCounter(); // Save the new counter value to file
-                generateCustomerId();  // Update the ID display
-           // Clear fields
-           name.setText("");
-           mobilenumber.setText("");
-           email.setText("");
-           age.setText("");
-           bankacc.setText("");
-           accno.setText("");
-           cperson.setText("");
-           cpnumber.setText("");
-    
-                
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error saving data.");
-            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error saving data.");
         }
-  
+    }
     }//GEN-LAST:event_saveActionPerformed
 
     private void ereportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ereportActionPerformed
