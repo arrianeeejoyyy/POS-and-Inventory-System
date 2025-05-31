@@ -19,13 +19,12 @@ public class CUSTOMERADD extends javax.swing.JFrame {
         private static final int baseCustomerId = 1112050;
         private static int customerCounter = 1;
         
-        private CUSTOMER customerInstance;
-private ACCHISTORY accHistoryInstance;
+       
+
 
 public CUSTOMERADD(CUSTOMER customer, ACCHISTORY accHistory) {
     initComponents();
-    this.customerInstance = customer;
-    this.accHistoryInstance = accHistory;
+   
     // your other init code here...
 }    
         
@@ -203,51 +202,8 @@ public CUSTOMERADD(CUSTOMER customer, ACCHISTORY accHistory) {
         return;
     }
 
-    // Add to CUSTOMER JTable via passed instance
-    if (customerInstance != null) {
-        customerInstance.AddRowToJTable(new Object[]{
-            id.getText(),
-            n,
-            c,
-            e,
-            a
-        });
-    } else {
-        JOptionPane.showMessageDialog(null, "Customer table instance not found.");
-    }
+   
 
-    // Save to text file
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/txtxt.txt", true))) {
-        writer.write(id.getText() + "%%" + n + "%%" + c + "%%" + e + "%%" + a);
-        writer.newLine();
-        JOptionPane.showMessageDialog(null, "Information saved to text file.");
-    } catch (IOException ex) {
-        JOptionPane.showMessageDialog(null, "Error saving to file: " + ex.getMessage());
-    }
-
-    // Add to ACCHISTORY JTable via passed instance
-    if (accHistoryInstance != null) {
-        try {
-            java.time.ZoneId phZoneId = java.time.ZoneId.of("Asia/Manila");
-            java.time.ZonedDateTime now = java.time.ZonedDateTime.now(phZoneId);
-            String currentDate = now.toLocalDate().toString(); // yyyy-MM-dd
-            String currentTime = now.toLocalTime().withNano(0).toString(); // HH:mm:ss
-
-            javax.swing.JTable historyCTable = accHistoryInstance.historyC;
-            javax.swing.table.DefaultTableModel historyModel = (javax.swing.table.DefaultTableModel) historyCTable.getModel();
-
-            historyModel.addRow(new Object[]{
-                id.getText(),
-                currentDate,
-                currentTime,
-                "Active"
-            });
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error updating account history: " + ex.getMessage());
-        }
-    } else {
-        JOptionPane.showMessageDialog(null, "Account history instance not found.");
-    }
 
     // Reset form
     customerCounter++;
