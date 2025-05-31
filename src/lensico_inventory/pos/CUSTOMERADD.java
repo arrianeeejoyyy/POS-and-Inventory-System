@@ -96,15 +96,17 @@ public CUSTOMERADD(ACCHISTORY accHistory) {
         }
     }
 
+    
+    
     private void generateCustomerId() {
-        String generatedId = String.valueOf(baseCustomerId + customerCounter);
-        id.setText(generatedId);
-    }
+    int count = CustomerCounterManager.getInstance().getCounter();
+    String generatedId = String.valueOf(baseCustomerId + count);
+    id.setText(generatedId);
+}
 
-    private void incrementCustomerCounter() {
-        customerCounter++;
-        saveCustomerCounter();
-    }
+private void incrementCustomerCounter() {
+    CustomerCounterManager.getInstance().incrementCounter();
+}
     
     
     
@@ -249,6 +251,27 @@ public CUSTOMERADD(ACCHISTORY accHistory) {
         return;
     }
 
+    
+     CUSTOMER.AddRowToJTable(new Object[]{
+                                    id.getText(),
+                                    name.getText(),
+                                    contactnumber.getText(),
+                                    email.getText(),
+                                    address.getText()
+                                    });
+                
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/txtxt.txt", true))) {
+                        writer.write(id.getText() + "%%" +
+                                            name.getText() + "%%" +
+                                            contactnumber.getText() + "%%" +
+                                            email.getText() + "%%" +
+                                            address.getText());
+                        writer.newLine();
+                        JOptionPane.showMessageDialog(null, "Information saved to text file.");
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "Error saving to file: " + ex.getMessage());
+                    }
+                
     // TODO: Save the customer info to your database or file here
 
     // Increment and save the customer counter
@@ -269,7 +292,9 @@ public CUSTOMERADD(ACCHISTORY accHistory) {
         accHistory.appendToHistoryCFile(customerId, date, time, status);
     }
 
-    // Generate next customer ID
+    
+        // Generate next customer ID
+
     generateCustomerId();
 
     // Clear form fields
