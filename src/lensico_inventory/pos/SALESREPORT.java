@@ -215,45 +215,53 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 49, 865, 590));
 
-        totalsales.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        totalsales.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         totalsales.setForeground(new java.awt.Color(255, 255, 255));
-        totalsales.setText("jLabel1");
-        getContentPane().add(totalsales, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 690, 120, 30));
+        totalsales.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalsales.setToolTipText("");
+        getContentPane().add(totalsales, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 680, 180, 60));
 
-        salestoday.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        salestoday.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         salestoday.setForeground(new java.awt.Color(255, 255, 255));
-        salestoday.setText("jLabel1");
-        getContentPane().add(salestoday, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 690, 120, 30));
+        salestoday.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        salestoday.setToolTipText("");
+        getContentPane().add(salestoday, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 680, 140, 50));
 
+        startdate.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         startdate.setText("Start Date");
-        getContentPane().add(startdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 670, 90, -1));
+        getContentPane().add(startdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 665, 90, -1));
 
+        enddate.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         enddate.setText("End Date");
-        getContentPane().add(enddate, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 700, 80, -1));
+        getContentPane().add(enddate, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 700, 80, -1));
 
-        cstartdate.setText("jButton2");
+        cstartdate.setToolTipText("");
+        cstartdate.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cstartdate.setContentAreaFilled(false);
         cstartdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cstartdateActionPerformed(evt);
             }
         });
-        getContentPane().add(cstartdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 670, 40, -1));
+        getContentPane().add(cstartdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 663, 40, 30));
 
-        cenddate.setText("jButton3");
+        cenddate.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cenddate.setContentAreaFilled(false);
         cenddate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cenddateActionPerformed(evt);
             }
         });
-        getContentPane().add(cenddate, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 700, 30, -1));
+        getContentPane().add(cenddate, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 700, 40, 20));
 
-        printr.setText("jButton2");
+        printr.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        printr.setContentAreaFilled(false);
         printr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 printrActionPerformed(evt);
             }
         });
-        getContentPane().add(printr, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 750, 180, -1));
+        getContentPane().add(printr, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 733, 160, 40));
 
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/SALES REPORT.png"))); // NOI18N
         getContentPane().add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
