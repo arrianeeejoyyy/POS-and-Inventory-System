@@ -1,6 +1,7 @@
 
 package lensico_inventory.pos;
 
+import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -118,6 +119,34 @@ public class EMPLOYEE extends javax.swing.JFrame {
              }
          });
           
+          eid.setOpaque(false);
+        eid.setBackground(new Color (0,0,0,0));
+        
+        name.setOpaque(false);
+        name.setBackground(new Color (0,0,0,0));
+        
+         mobilenumber.setOpaque(false);
+        mobilenumber.setBackground(new Color (0,0,0,0));
+        
+        email.setOpaque(false);
+        email.setBackground(new Color (0,0,0,0));
+        
+         age.setOpaque(false);
+        age.setBackground(new Color (0,0,0,0));
+        
+        bankacc.setOpaque(false);
+        bankacc.setBackground(new Color (0,0,0,0));
+        
+         accno.setOpaque(false);
+        accno.setBackground(new Color (0,0,0,0));
+        
+        cperson.setOpaque(false);
+        cperson.setBackground(new Color (0,0,0,0));
+        
+        cpnumber.setOpaque(false);
+        cpnumber.setBackground(new Color (0,0,0,0)); 
+         
+         
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -290,7 +319,7 @@ public class EMPLOYEE extends javax.swing.JFrame {
                 efdActionPerformed(evt);
             }
         });
-        getContentPane().add(efd, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 740, 400, 40));
+        getContentPane().add(efd, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 740, 400, 40));
 
         save.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         save.setContentAreaFilled(false);
@@ -337,11 +366,19 @@ public class EMPLOYEE extends javax.swing.JFrame {
         getContentPane().add(eid, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 140, 330, 30));
         eid.setOpaque(false);
 
+        sex.setBackground(new java.awt.Color(102, 102, 102));
+        sex.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        sex.setForeground(new java.awt.Color(255, 255, 255));
         sex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select", "Male", "Female" }));
-        getContentPane().add(sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 350, 120, 30));
+        sex.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 354, 110, -1));
 
+        position.setBackground(new java.awt.Color(102, 102, 102));
+        position.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        position.setForeground(new java.awt.Color(255, 255, 255));
         position.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Position", "Counter", "Bagger", "Manager" }));
-        getContentPane().add(position, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 230, 330, -1));
+        position.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(position, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 225, 330, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/EMPLOYEE.png"))); // NOI18N
         jLabel1.setToolTipText("");

@@ -1,6 +1,7 @@
 
 package lensico_inventory.pos;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -25,6 +26,11 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
 
     private static final String FILE_PATH = "src/file_storage/cashierproduct.txt";
     
+    public CASHIER_EMPLOYEE(String username) {
+    initComponents();  // initialize UI components
+    CASHIER1.setText(username);  // set username on the label
+    // Add any other initialization here if needed
+}
     
     public CASHIER_EMPLOYEE() {
         initComponents();
@@ -45,6 +51,18 @@ updateItemsCount();
         
 
 discount.addActionListener(e -> applyDiscount());
+
+ 
+        
+        productid.setOpaque(false);
+        productid.setBackground(new Color (0,0,0,0));
+        
+        quanti.setOpaque(false);
+        quanti.setBackground(new Color (0,0,0,0));
+        
+        
+
+
     }
 
    
@@ -199,39 +217,48 @@ discount.addActionListener(e -> applyDiscount());
         grandtotal.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(grandtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 650, 200, 20));
 
-        discount.setBackground(new java.awt.Color(102, 102, 102));
+        discount.setBackground(new java.awt.Color(0, 0, 51));
         discount.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         discount.setForeground(new java.awt.Color(255, 255, 255));
         discount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "5%", "10%", "15%", "20%", "25%", "30%", " " }));
         discount.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(discount, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 590, 210, 20));
+        getContentPane().add(discount, new org.netbeans.lib.awtextra.AbsoluteConstraints(1055, 587, 220, 20));
 
-        newtransaction.setText("jButton2");
+        newtransaction.setToolTipText("");
+        newtransaction.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        newtransaction.setContentAreaFilled(false);
         newtransaction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newtransactionActionPerformed(evt);
             }
         });
-        getContentPane().add(newtransaction, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 180, 150, -1));
+        getContentPane().add(newtransaction, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 180, 150, 30));
 
         TAX.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         TAX.setForeground(new java.awt.Color(255, 255, 255));
         TAX.setText("12%");
         getContentPane().add(TAX, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 620, -1, -1));
 
-        CASHIER1.setText("jLabel2");
-        getContentPane().add(CASHIER1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 770, 190, 20));
+        CASHIER1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        CASHIER1.setForeground(new java.awt.Color(255, 255, 255));
+        CASHIER1.setText("11");
+        getContentPane().add(CASHIER1, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 770, 190, 20));
 
-        customername.setText("jLabel2");
-        getContentPane().add(customername, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 760, 230, 20));
+        customername.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        customername.setForeground(new java.awt.Color(255, 255, 255));
+        customername.setText("11");
+        getContentPane().add(customername, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 765, 230, 20));
 
-        customerID.setText("jTextField1");
+        customerID.setBackground(new java.awt.Color(0, 0, 51));
+        customerID.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        customerID.setForeground(new java.awt.Color(255, 255, 255));
+        customerID.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         customerID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerIDActionPerformed(evt);
             }
         });
-        getContentPane().add(customerID, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 730, 160, -1));
+        getContentPane().add(customerID, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 730, 170, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/CASHIER EMPLOYEE.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
@@ -357,6 +384,11 @@ discount.addActionListener(e -> applyDiscount());
 
     private void payandprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payandprintActionPerformed
     
+        if (customerID.getText().trim().isEmpty() || customername.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter valid Customer ID and ensure customer name is displayed.", "Missing Customer Information", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        
     try {
         String paymentStr = JOptionPane.showInputDialog(this, "Enter payment amount:");
         if (paymentStr == null) return; // User cancelled

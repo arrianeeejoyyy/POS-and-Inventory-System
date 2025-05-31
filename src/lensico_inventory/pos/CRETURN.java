@@ -1,6 +1,7 @@
 
 package lensico_inventory.pos;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,7 +27,11 @@ public CRETURN() {
     setReturnDateToToday();
      loadReturnProductsFromFile();
      
-    
+    id.setOpaque(false);
+        id.setBackground(new Color (0,0,0,0));
+        
+        refnum.setOpaque(false);
+        refnum.setBackground(new Color (0,0,0,0));
 }
 
    private void setReturnDateToToday() {
@@ -313,61 +318,69 @@ private void saveTableToFile(DefaultTableModel model, String filePath) {
         });
         getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 240, 100, 30));
 
+        price.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         price.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 priceActionPerformed(evt);
             }
         });
-        getContentPane().add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, 190, 20));
+        getContentPane().add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 138, 190, 22));
 
+        id.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idActionPerformed(evt);
             }
         });
-        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 190, 20));
+        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 138, 180, 22));
 
+        ProdID.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         ProdID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProdIDActionPerformed(evt);
             }
         });
-        getContentPane().add(ProdID, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 190, 20));
+        getContentPane().add(ProdID, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 192, 180, 22));
 
+        quanti.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         quanti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quantiActionPerformed(evt);
             }
         });
-        getContentPane().add(quanti, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 140, 190, 20));
+        getContentPane().add(quanti, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 138, 180, 22));
 
+        pdate.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         pdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pdateActionPerformed(evt);
             }
         });
-        getContentPane().add(pdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 190, 190, 20));
+        getContentPane().add(pdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 192, 190, 22));
 
+        amount.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         amount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 amountActionPerformed(evt);
             }
         });
-        getContentPane().add(amount, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 140, 190, 20));
+        getContentPane().add(amount, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 138, 190, 22));
 
+        rdate.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         rdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdateActionPerformed(evt);
             }
         });
-        getContentPane().add(rdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 190, 190, 20));
+        getContentPane().add(rdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 192, 190, 22));
 
+        refnum.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         refnum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refnumActionPerformed(evt);
             }
         });
-        getContentPane().add(refnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 190, 20));
+        getContentPane().add(refnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 192, 190, 22));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/RETURN.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

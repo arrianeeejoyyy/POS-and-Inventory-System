@@ -442,7 +442,7 @@ private void saveAllPanelQuantitiesToFile() {
                 imagepathActionPerformed(evt);
             }
         });
-        getContentPane().add(imagepath, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 555, 110, 20));
+        getContentPane().add(imagepath, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 555, 120, 20));
 
         edit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         edit.setContentAreaFilled(false);
@@ -477,7 +477,7 @@ private void saveAllPanelQuantitiesToFile() {
         addtype.setForeground(new java.awt.Color(255, 255, 255));
         addtype.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         addtype.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(addtype, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 80, 170, -1));
+        getContentPane().add(addtype, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 80, 180, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/PRODUCT STATUS_1.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

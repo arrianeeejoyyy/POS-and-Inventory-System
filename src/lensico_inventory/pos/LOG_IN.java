@@ -191,7 +191,8 @@ public class LOG_IN extends javax.swing.JFrame {
         if (username.equals("admin") && password.equals("123456")) {
             new ADMIN().setVisible(true);
         } else {
-            new CASHIER_EMPLOYEE().setVisible(true);
+             CASHIER_EMPLOYEE cashierFrame = new CASHIER_EMPLOYEE(username);
+    cashierFrame.setVisible(true);
         }
     
     }//GEN-LAST:event_enterActionPerformed

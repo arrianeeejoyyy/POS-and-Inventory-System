@@ -1,5 +1,6 @@
 package lensico_inventory.pos;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -31,6 +32,19 @@ public class USERSETTING extends javax.swing.JFrame {
                  }
              }
          });
+         
+         eid.setOpaque(false);
+        eid.setBackground(new Color (0,0,0,0));
+        
+         name.setOpaque(false);
+        name.setBackground(new Color (0,0,0,0));
+        
+        password.setOpaque(false);
+        password.setBackground(new Color (0,0,0,0));
+        
+        confirmpassword.setOpaque(false);
+        confirmpassword.setBackground(new Color (0,0,0,0)); 
+         
     }
     
     
@@ -103,14 +117,14 @@ public class USERSETTING extends javax.swing.JFrame {
                 nameActionPerformed(evt);
             }
         });
-        getContentPane().add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(735, 323, 210, 25));
+        getContentPane().add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(735, 323, 200, 25));
 
         eid.setOpaque(false);
         eid.setBackground(new java.awt.Color(0, 0, 0));
         eid.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         eid.setForeground(new java.awt.Color(255, 255, 255));
         eid.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(eid, new org.netbeans.lib.awtextra.AbsoluteConstraints(735, 292, 210, 25));
+        getContentPane().add(eid, new org.netbeans.lib.awtextra.AbsoluteConstraints(735, 292, 200, 25));
 
         password.setOpaque(false);
         password.setBackground(new java.awt.Color(0, 0, 0));
@@ -122,14 +136,14 @@ public class USERSETTING extends javax.swing.JFrame {
                 passwordActionPerformed(evt);
             }
         });
-        getContentPane().add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(735, 355, 210, 25));
+        getContentPane().add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(735, 355, 160, 25));
 
         confirmpassword.setOpaque(false);
         confirmpassword.setBackground(new java.awt.Color(0, 0, 0));
         confirmpassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         confirmpassword.setForeground(new java.awt.Color(255, 255, 255));
         confirmpassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(confirmpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(735, 387, 210, 25));
+        getContentPane().add(confirmpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(735, 387, 160, 25));
 
         save.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         save.setContentAreaFilled(false);
