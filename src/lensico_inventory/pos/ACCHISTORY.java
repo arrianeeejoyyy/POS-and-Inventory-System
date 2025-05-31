@@ -12,11 +12,22 @@ import javax.swing.table.DefaultTableModel;
 
  class ACCHISTORY extends javax.swing.JFrame {
 
-
+ public static ACCHISTORY instance;
+ 
+ 
     public ACCHISTORY() {
         initComponents();
         
-       loadHistoryCTableFromFile();
+        instance = this;  // assign current instance on creation
+
+        // Load all history tables on start
+        loadHistoryCTableFromFile();
+        loadHistoryETableFromFile();
+        loadHistoryUTableFromFile();
+        loadHistoryPTableFromFile();
+        loadHistoryRTableFromFile();
+        
+       
     }
 
  
@@ -216,6 +227,84 @@ import javax.swing.table.DefaultTableModel;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     // ----------------- Customer History -----------------
+    public void saveHistoryCTableToFile() {
+        saveTableToFile(historyC, "src/file_storage/historyC.txt");
+    }
+
+    public void loadHistoryCTableFromFile() {
+        loadTableFromFile(historyC, "src/file_storage/historyC.txt");
+    }
+
+    // ----------------- Employee History -----------------
+    public void saveHistoryETableToFile() {
+        saveTableToFile(historyE, "src/file_storage/historyE.txt");
+    }
+
+    public void loadHistoryETableFromFile() {
+        loadTableFromFile(historyE, "src/file_storage/historyE.txt");
+    }
+
+    // ----------------- User Setting History -----------------
+    public void saveHistoryUTableToFile() {
+        saveTableToFile(historyU, "src/file_storage/historyU.txt");
+    }
+
+    public void loadHistoryUTableFromFile() {
+        loadTableFromFile(historyU, "src/file_storage/historyU.txt");
+    }
+
+    // ----------------- Product History -----------------
+    public void saveHistoryPTableToFile() {
+        saveTableToFile(historyP, "src/file_storage/historyP.txt");
+    }
+
+    public void loadHistoryPTableFromFile() {
+        loadTableFromFile(historyP, "src/file_storage/historyP.txt");
+    }
+
+    // ----------------- Return Product History -----------------
+    public void saveHistoryRTableToFile() {
+        saveTableToFile(historyR, "src/file_storage/historyR.txt");
+    }
+
+    public void loadHistoryRTableFromFile() {
+        loadTableFromFile(historyR, "src/file_storage/historyR.txt");
+    }
+
+    // ----------------- Generic Table Save/Load Methods -----------------
+    private void saveTableToFile(javax.swing.JTable table, String filePath) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    Object val = model.getValueAt(i, j);
+                    writer.write(val == null ? "" : val.toString());
+                    if (j < model.getColumnCount() - 1) {
+                        writer.write("%%");
+                    }
+                }
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error saving to file " + filePath + ": " + e.getMessage());
+        }
+    }
+
+    private void loadTableFromFile(javax.swing.JTable table, String filePath) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0); // Clear existing rows
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] rowData = line.split("%%");
+                model.addRow(rowData);
+            }
+        } catch (IOException e) {
+            // It's okay if file doesn't exist yet (first run)
+        }
+    }
+    
     private void usersettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usersettingActionPerformed
         this.setVisible(false);
         USERSETTING US = new USERSETTING();
@@ -282,40 +371,7 @@ import javax.swing.table.DefaultTableModel;
     }//GEN-LAST:event_creturnActionPerformed
 
    
-    public void saveHistoryCTableToFile() {
-    String filePath = "src/file_storage/historyC.txt";
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-        DefaultTableModel model = (DefaultTableModel) historyC.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            for (int j = 0; j < model.getColumnCount(); j++) {
-                writer.write(model.getValueAt(i, j).toString());
-                if (j < model.getColumnCount() - 1) {
-                    writer.write("%%");
-                }
-            }
-            writer.newLine();
-        }
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(null, "Error saving historyC to file: " + e.getMessage());
-    }
-}
-
-public void loadHistoryCTableFromFile() {
-    String filePath = "src/file_storage/historyC.txt";
-    DefaultTableModel model = (DefaultTableModel) historyC.getModel();
-    model.setRowCount(0); // Clear existing rows
-
-    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] rowData = line.split("%%");
-            model.addRow(rowData);
-        }
-    } catch (IOException e) {
-        // Possibly first run, file not found is ok
-    }
-}
-
+ 
     
     
     

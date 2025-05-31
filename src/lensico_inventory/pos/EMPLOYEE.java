@@ -417,6 +417,7 @@ public class EMPLOYEE extends javax.swing.JFrame {
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
          // Check if terms checkbox is selected
+    // Check if terms checkbox is selected
     if (!jCheckBox1.isSelected()) {
         JOptionPane.showMessageDialog(null, "You must agree to the terms to proceed.");
         return;  // Stop further execution if not checked
@@ -452,44 +453,54 @@ public class EMPLOYEE extends javax.swing.JFrame {
     if (user.isEmpty() || !user.matches(namePattern)) {
         JOptionPane.showMessageDialog(null, "Name must not be empty and contain only letters and spaces.");
         name.setText("");
+        return;
     } else if (ba.isEmpty() || !ba.matches(namePattern)) {
         JOptionPane.showMessageDialog(null, "Bank Account name must not be empty and contain only letters and spaces.");
         bankacc.setText("");
+        return;
     } else if (cp.isEmpty() || !cp.matches(namePattern)) {
         JOptionPane.showMessageDialog(null, "Contact Person must not be empty and contain only letters and spaces.");
         cperson.setText("");
+        return;
     } else if (mail.isEmpty() || !mail.endsWith("@gmail.com")) {
         JOptionPane.showMessageDialog(null, "Email must end with @gmail.com.");
         email.setText("");
+        return;
     } else if (!num.matches(numberPattern)) {
         JOptionPane.showMessageDialog(null, "Mobile number must start with 09 and be exactly 11 digits.");
         mobilenumber.setText("");
+        return;
     } else if (!cpn.matches(numberPattern)) {
         JOptionPane.showMessageDialog(null, "Contact Person's number must start with 09 and be exactly 11 digits.");
         cpnumber.setText("");
+        return;
     } else if (num.equals(cpn)) {
         JOptionPane.showMessageDialog(null, "Contact Person's number must not be the same as the Mobile number.");
         mobilenumber.setText("");
         cpnumber.setText("");
+        return;
     } else if (user.equalsIgnoreCase(cp)) {
         JOptionPane.showMessageDialog(null, "Contact Person's name must not be the same as the Name.");
         name.setText("");
         cperson.setText("");
+        return;
     } else if (!an.matches(digitsOnlyPattern)) {
         JOptionPane.showMessageDialog(null, "Account Number must contain digits only.");
         accno.setText("");
+        return;
     } else if (!aa.matches(digitsOnlyPattern)) {
         JOptionPane.showMessageDialog(null, "Age must contain digits only.");
         age.setText("");
+        return;
     } else {
         // Format data string to save and add to table
         String data = id + "%%" + user + "%%" + poss + "%%" + num + "%%" + mail + "%%" + aa + "%%" + ge + "%%" + ba + "%%" + an + "%%" + cp + "%%" + cpn;
 
-        // Add to JTable
+        // Add to JTable (your existing code references EMPLOYEEFULLD for this)
         EMPLOYEEFULLD FULLD = new EMPLOYEEFULLD();
         FULLD.AddRowToJTable(new Object[] { data });
 
-        // Save to file
+        // Save employee data to file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/employeee.txt", true))) {
             writer.write(data);
             writer.newLine();
@@ -499,7 +510,21 @@ public class EMPLOYEE extends javax.swing.JFrame {
             saveEmployeeCounter();
             generateCustomerId();
 
-            // Clear fields
+            // Now update ACCHISTORY JTable for employee history
+            ACCHISTORY historyWindow = new ACCHISTORY();
+            loadHistoryETableFromFile(historyWindow);
+
+            // Prepare row data: id, date, time, status "Active"
+            String date = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String time = java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
+            String status = "Active";
+
+            javax.swing.table.DefaultTableModel historyModel = (javax.swing.table.DefaultTableModel) historyWindow.historyE.getModel();
+            historyModel.addRow(new Object[] { id, date, time, status });
+
+            saveHistoryETableToFile(historyWindow);
+
+            // Clear input fields
             name.setText("");
             mobilenumber.setText("");
             email.setText("");
@@ -508,9 +533,9 @@ public class EMPLOYEE extends javax.swing.JFrame {
             accno.setText("");
             cperson.setText("");
             cpnumber.setText("");
-            position.setSelectedIndex(0); // Reset combo boxes to placeholder
+            position.setSelectedIndex(0);
             sex.setSelectedIndex(0);
-            jCheckBox1.setSelected(false);  // Uncheck checkbox
+            jCheckBox1.setSelected(false);
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -568,6 +593,43 @@ private void loadEmployeeCounter() {
         e.printStackTrace();
     }
 }
+
+public void saveHistoryETableToFile(ACCHISTORY historyWindow) {
+    String filePath = "src/file_storage/historyE.txt";
+    DefaultTableModel model = (DefaultTableModel) historyWindow.historyE.getModel();
+
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                writer.write(model.getValueAt(i, j).toString());
+                if (j < model.getColumnCount() - 1) {
+                    writer.write("%%");
+                }
+            }
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Error saving historyE to file: " + e.getMessage());
+    }
+}
+
+// 2. Load historyE JTable data from file
+public void loadHistoryETableFromFile(ACCHISTORY historyWindow) {
+    String filePath = "src/file_storage/historyE.txt";
+    DefaultTableModel model = (DefaultTableModel) historyWindow.historyE.getModel();
+    model.setRowCount(0); // Clear existing rows
+
+    try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(filePath))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] rowData = line.split("%%");
+            model.addRow(rowData);
+        }
+    } catch (IOException e) {
+        // If file not found, no problem on first run
+    }
+}
+
    
    
     public static void main(String args[]) {
