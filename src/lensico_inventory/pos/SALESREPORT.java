@@ -11,27 +11,62 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import com.toedter.calendar.JDateChooser;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.stream.IntStream;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.io.FileOutputStream;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Cell;
 
 
 public class SALESREPORT extends javax.swing.JFrame {
 
-  
+  private JDateChooser startDateChooser;
+private JDateChooser endDateChooser;
      
     public SALESREPORT() {
         initComponents();
          loadSalesReportFromFile();
          
+         
+         startDateChooser = new JDateChooser();
+endDateChooser = new JDateChooser();
+
+// Optionally set date format
+startDateChooser.setDateFormatString("yyyy-MM-dd");
+endDateChooser.setDateFormatString("yyyy-MM-dd");
     }
 
-   public void loadSalesReportFromFile() {
+ public void loadSalesReportFromFile() {
     DefaultTableModel model = (DefaultTableModel) salesreport.getModel();
-    model.setRowCount(0); // Clear existing
+    model.setRowCount(0); // Clear existing rows
 
     File file = new File("src/file_storage/salesreport.txt");
     if (!file.exists()) return;
+
+    double grandTotal = 0.0;
+    double todayTotal = 0.0;
+
+    // Get today's date in Philippines timezone
+    ZoneId phZone = ZoneId.of("Asia/Manila");
+    LocalDate today = LocalDate.now(phZone);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Adjust if your date format is different
 
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
         String line;
@@ -39,14 +74,32 @@ public class SALESREPORT extends javax.swing.JFrame {
             String[] data = line.split("%%");
             if (data.length == 8) {
                 model.addRow(data);
+
+                try {
+                    // Parse total sales from column index 6
+                    double totalValue = Double.parseDouble(data[6]);
+                    grandTotal += totalValue;
+
+                    // Parse date from column index 7
+                    LocalDate saleDate = LocalDate.parse(data[7], formatter);
+
+                    if (saleDate.equals(today)) {
+                        todayTotal += totalValue;
+                    }
+                } catch (NumberFormatException | java.time.format.DateTimeParseException e) {
+                    // If parsing fails, skip this row's calculations
+                }
             }
         }
     } catch (IOException e) {
         JOptionPane.showMessageDialog(this, "Error loading sales report: " + e.getMessage());
     }
+
+    // Update the labels with formatted currency strings
+    totalsales.setText(String.format("₱%.2f", grandTotal));
+    salestoday.setText(String.format("₱%.2f", todayTotal));
 }
-    
-    
+   
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -179,12 +232,27 @@ public class SALESREPORT extends javax.swing.JFrame {
         getContentPane().add(enddate, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 700, 80, -1));
 
         cstartdate.setText("jButton2");
+        cstartdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cstartdateActionPerformed(evt);
+            }
+        });
         getContentPane().add(cstartdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 670, 40, -1));
 
         cenddate.setText("jButton3");
+        cenddate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cenddateActionPerformed(evt);
+            }
+        });
         getContentPane().add(cenddate, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 700, 30, -1));
 
         printr.setText("jButton2");
+        printr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printrActionPerformed(evt);
+            }
+        });
         getContentPane().add(printr, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 750, 180, -1));
 
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/SALES REPORT.png"))); // NOI18N
@@ -259,11 +327,131 @@ public class SALESREPORT extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_logoutActionPerformed
 
+    private void cstartdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cstartdateActionPerformed
+       Date selectedDate = showDatePickerDialog(startDateChooser, "Select Start Date");
+    if (selectedDate != null) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        startdate.setText(sdf.format(selectedDate));
+        
+        // Optional: reset end date if it is before start date
+        String endDateText = enddate.getText();
+        if (!endDateText.isEmpty()) {
+            try {
+                Date endDate = sdf.parse(endDateText);
+                if (endDate.before(selectedDate)) {
+                    enddate.setText("");
+                }
+            } catch (Exception ex) { }
+        }
+    }
+    }//GEN-LAST:event_cstartdateActionPerformed
+
+    private void cenddateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cenddateActionPerformed
+       String startDateText = startdate.getText();
+    if (startDateText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select the Start Date first.");
+        return;
+    }
+    Date selectedDate = showDatePickerDialog(endDateChooser, "Select End Date");
+    if (selectedDate != null) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date startDate = sdf.parse(startDateText);
+            if (selectedDate.before(startDate)) {
+                JOptionPane.showMessageDialog(this, "End Date cannot be before Start Date.");
+                return;
+            }
+            enddate.setText(sdf.format(selectedDate));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Invalid Start Date.");
+        }
+    }
+    }//GEN-LAST:event_cenddateActionPerformed
+
+    private void printrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printrActionPerformed
+         String startDateStr = startdate.getText();
+    String endDateStr = enddate.getText();
+
+    if (startDateStr.isEmpty() || endDateStr.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select both Start Date and End Date.");
+        return;
+    }
+
+    try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(startDateStr, formatter);
+        LocalDate endDate = LocalDate.parse(endDateStr, formatter);
+
+        if (endDate.isBefore(startDate)) {
+            JOptionPane.showMessageDialog(this, "End Date cannot be before Start Date.");
+            return;
+        }
+
+        generatePdfReport(startDate, endDate);
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Invalid date format.");
+    }
+    }//GEN-LAST:event_printrActionPerformed
+
+    
+    private Date showDatePickerDialog(JDateChooser dateChooser, String title) {
+    int result = JOptionPane.showConfirmDialog(
+        this, 
+        dateChooser, 
+        title, 
+        JOptionPane.OK_CANCEL_OPTION,
+        JOptionPane.PLAIN_MESSAGE);
+    if (result == JOptionPane.OK_OPTION) {
+        return dateChooser.getDate();
+    }
+    return null;
+}
     
     
-    
-    
-    
+    private void generatePdfReport(LocalDate startDate, LocalDate endDate) {
+    try {
+        String dest = "sales_report_" + startDate + "_to_" + endDate + ".pdf";
+        PdfWriter writer = new PdfWriter(new FileOutputStream(dest));
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document doc = new Document(pdfDoc);
+
+        // Add title
+        doc.add(new Paragraph("Sales Report from " + startDate + " to " + endDate).setBold().setFontSize(16));
+
+        // Create table with 8 columns (matching your JTable columns)
+        Table table = new Table(8);
+        // Add headers
+        String[] headers = {"Cashier Name", "Transaction Number", "Customer ID", "Product ID", "Price", "Quantity", "Total", "Date"};
+        for (String header : headers) {
+            table.addHeaderCell(new Cell().add(new Paragraph(header).setBold()));
+        }
+
+        DefaultTableModel model = (DefaultTableModel) salesreport.getModel();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        ZoneId phZone = ZoneId.of("Asia/Manila");
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String dateStr = model.getValueAt(i, 7).toString();
+            LocalDate rowDate = LocalDate.parse(dateStr, formatter);
+
+            if ((rowDate.isEqual(startDate) || rowDate.isAfter(startDate)) &&
+                (rowDate.isEqual(endDate) || rowDate.isBefore(endDate))) {
+                // Add the row cells
+                IntStream.range(0, model.getColumnCount())
+                    .forEach(col -> table.addCell(model.getValueAt(i, col).toString()));
+            }
+        }
+
+        doc.add(table);
+        doc.close();
+
+        JOptionPane.showMessageDialog(this, "PDF Report generated:\n" + dest);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error generating PDF: " + e.getMessage());
+    }
+}
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
