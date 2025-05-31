@@ -19,13 +19,17 @@ import javax.swing.table.TableModel;
 
 public class CUSTOMER extends javax.swing.JFrame {
         private static final String FILE_PATH = "src/file_storage/txtxt.txt"; // Path to your data file
+        
+        private static final String COUNTER_FILE_PATH = "src/file_storage/customer_counter.txt";
+private static final String DATA_FILE_PATH = "src/file_storage/txtxt.txt";
+private int customerCounter = 1;
     
-        private javax.swing.JTextField jTextField1; 
         
     public CUSTOMER() {
         initComponents();
         loadTableFromTextFile(customerdetails, "src/file_storage/txtxt.txt");
-        
+         loadCustomerCounter();  // load counter and update id label
+    loadTableFromTextFile(customerdetails, DATA_FILE_PATH);
         
         // Block non-digit input in contact number
         contactnumber.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -50,13 +54,40 @@ public class CUSTOMER extends javax.swing.JFrame {
                  }
              }
          });
-
-    
-        
-        
-        
     }
 
+    private void loadCustomerCounter() {
+    File file = new File(COUNTER_FILE_PATH);
+    if (file.exists()) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line = br.readLine();
+            if (line != null) {
+                customerCounter = Integer.parseInt(line.trim());
+            }
+        } catch (IOException | NumberFormatException e) {
+            customerCounter = 1;
+        }
+    } else {
+        customerCounter = 1;
+    }
+    updateIdLabel();
+}
+
+private void updateIdLabel() {
+    // ID format 1112050 + customerCounter with leading zeros (if you want fixed width)
+    // Assuming you want just concatenate: "1112050" + customerCounter
+    String idValue = "1112050" + String.format("%02d", customerCounter);
+    id.setText(idValue);
+}
+    
+    
+    private void saveCustomerCounter() {
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(COUNTER_FILE_PATH))) {
+        bw.write(String.valueOf(customerCounter));
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Error saving customer counter: " + e.getMessage());
+    }
+}
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -460,7 +491,63 @@ public class CUSTOMER extends javax.swing.JFrame {
     }//GEN-LAST:event_CreportActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        
+        // Validate checkbox
+    if (!jCheckBox1.isSelected()) {
+        JOptionPane.showMessageDialog(this, "You must agree to the terms to proceed.");
+        return;
+    }
+
+    String n = name.getText().trim();
+    String c = contactnumber.getText().trim();
+    String e = email.getText().trim();
+    String a = address.getText().trim();
+
+    // Validations:
+    if (n.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Name is empty. Please provide a name.");
+        return;
+    }
+
+    if (!c.matches("^09\\d{9}$")) {
+        JOptionPane.showMessageDialog(this, "Contact Number must start with 09 and be exactly 11 digits.");
+        return;
+    }
+
+    if (!e.contains("@gmail.com")) {
+        JOptionPane.showMessageDialog(this, "Email must contain @gmail.com.");
+        return;
+    }
+
+    if (a.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Address must be filled.");
+        return;
+    }
+
+    // All validations passed: add to JTable and save to file
+    String idValue = id.getText();
+
+    Object[] newRow = { idValue, n, c, e, a };
+    DefaultTableModel model = (DefaultTableModel) customerdetails.getModel();
+    model.addRow(newRow);
+
+    // Save table to file
+    saveTableToTextFile(customerdetails, DATA_FILE_PATH);
+
+    // Increment and save counter
+    customerCounter++;
+    saveCustomerCounter();
+
+    // Update ID label for next input
+    updateIdLabel();
+
+    // Clear fields and reset checkbox
+    name.setText("");
+    contactnumber.setText("");
+    email.setText("");
+    address.setText("");
+    jCheckBox1.setSelected(false);
+
+    JOptionPane.showMessageDialog(this, "Customer added successfully.");
     }//GEN-LAST:event_saveActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
