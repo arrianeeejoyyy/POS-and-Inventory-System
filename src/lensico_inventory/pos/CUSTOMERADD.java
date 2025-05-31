@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,13 +26,17 @@ public class CUSTOMERADD extends javax.swing.JFrame {
         private static int customerCounter = 1;
         private static final String COUNTER_FILE = "src/file_storage/customer_counter.txt";
        
+private ACCHISTORY accHistory;
 
 
-public CUSTOMERADD(CUSTOMER customer, ACCHISTORY accHistory) {
+public CUSTOMERADD(ACCHISTORY accHistory) {
     initComponents();
-   
-    // your other init code here...
-}    
+    this.accHistory = accHistory;
+    // load counter, generate ID, etc.
+    loadCustomerCounter();
+    generateCustomerId();
+    // Your existing input listeners...
+}
         
     public CUSTOMERADD() {
         initComponents();
@@ -198,62 +205,81 @@ public CUSTOMERADD(CUSTOMER customer, ACCHISTORY accHistory) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SAVEActionPerformed
-       
-        if (!jCheckBox1.isSelected()) {
-            JOptionPane.showMessageDialog(null, "You must agree to the terms to proceed.");
-            return;
-        }
+       if (!jCheckBox1.isSelected()) {
+        JOptionPane.showMessageDialog(null, "You must agree to the terms to proceed.");
+        return;
+    }
 
-        String n = name.getText();
-        String c = contactnumber.getText();
-        String e = email.getText();
-        String a = address.getText();
+    String n = name.getText().trim();
+    String c = contactnumber.getText().trim();
+    String e = email.getText().trim();
+    String a = address.getText().trim();
 
-        if (n.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Name is empty. Please provide a name.");
-            name.setText("");
-            return;
-        }
-        if (!c.matches("^09\\d{9}$")) {
-            JOptionPane.showMessageDialog(null, "Contact Number must be 11 digits only and start with 09.");
-            contactnumber.setText("");
-            return;
-        }
-        if (!e.contains("@gmail.com")) {
-            JOptionPane.showMessageDialog(null, "Email must be a Gmail address.");
-            email.setText("");
-            return;
-        }
-        if (a.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Address must be filled in.");
-            return;
-        }
-
-        int confirm = JOptionPane.showConfirmDialog(
-            null,
-            "Are you sure to proceed?",
-            "Confirmation",
-            JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirm != JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(null, "Operation cancelled.");
-            return;
-        }
-
-        // At this point, you would save customer info (not shown here)
-
-        // Increment and save counter
-        incrementCustomerCounter();
-
-        generateCustomerId();
+    // Validate inputs
+    if (n.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Name is empty. Please provide a name.");
         name.setText("");
+        return;
+    }
+    if (!c.matches("^09\\d{9}$")) {
+        JOptionPane.showMessageDialog(null, "Contact Number must be 11 digits only and start with 09.");
         contactnumber.setText("");
+        return;
+    }
+    if (!e.contains("@gmail.com")) {
+        JOptionPane.showMessageDialog(null, "Email must be a Gmail address.");
         email.setText("");
-        address.setText("");
-        jCheckBox1.setSelected(false);
+        return;
+    }
+    if (a.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Address must be filled in.");
+        return;
+    }
 
-        JOptionPane.showMessageDialog(null, "Information saved successfully!");
+    // Confirm save
+    int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure to proceed?",
+        "Confirmation",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirm != JOptionPane.YES_OPTION) {
+        JOptionPane.showMessageDialog(null, "Operation cancelled.");
+        return;
+    }
+
+    // TODO: Save the customer info to your database or file here
+
+    // Increment and save the customer counter
+    incrementCustomerCounter();
+
+    // Add to ACCHISTORY's historyC table and file if accHistory is not null
+    if (accHistory != null) {
+        String customerId = id.getText().trim();
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String status = "ACTIVE";
+
+        // Add row to JTable
+        DefaultTableModel model = (DefaultTableModel) accHistory.historyC.getModel();
+        model.addRow(new Object[]{customerId, date, time, status});
+
+        // Append to file
+        accHistory.appendToHistoryCFile(customerId, date, time, status);
+    }
+
+    // Generate next customer ID
+    generateCustomerId();
+
+    // Clear form fields
+    name.setText("");
+    contactnumber.setText("");
+    email.setText("");
+    address.setText("");
+    jCheckBox1.setSelected(false);
+
+    JOptionPane.showMessageDialog(null, "Information saved successfully!");
     
     }//GEN-LAST:event_SAVEActionPerformed
 

@@ -2,7 +2,10 @@
 package lensico_inventory.pos;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -12,9 +15,43 @@ import javax.swing.table.DefaultTableModel;
 
     public ACCHISTORY() {
         initComponents();
+        
+         loadHistoryCFromFile();
     }
 
+ public void appendToHistoryCFile(String customerId, String date, String time, String status) {
+    String filePath = "src/file_storage/historyC.txt";
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
+        // Format: customerId,date,time,status
+        String line = customerId + "," + date + "," + time + "," + status;
+        bw.write(line);
+        bw.newLine();
+    } catch (IOException ex) {
+        System.err.println("Failed to write to historyC.txt: " + ex.getMessage());
+    }
+}
  
+ 
+ public void loadHistoryCFromFile() {
+    String filePath = "src/file_storage/historyC.txt";
+    DefaultTableModel model = (DefaultTableModel) historyC.getModel();
+    model.setRowCount(0); // clear existing rows
+
+    File file = new File(filePath);
+    if (file.exists()) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 4) {
+                    model.addRow(new Object[]{parts[0], parts[1], parts[2], parts[3]});
+                }
+            }
+        } catch (IOException ex) {
+            System.err.println("Failed to load historyC.txt: " + ex.getMessage());
+        }
+    }
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
