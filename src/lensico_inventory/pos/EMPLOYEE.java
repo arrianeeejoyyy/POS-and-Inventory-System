@@ -134,19 +134,19 @@ public class EMPLOYEE extends javax.swing.JFrame {
         clear = new javax.swing.JButton();
         mobilenumber = new javax.swing.JTextField();
         name = new javax.swing.JTextField();
-        sex = new javax.swing.JTextField();
         email = new javax.swing.JTextField();
         bankacc = new javax.swing.JTextField();
         accno = new javax.swing.JTextField();
         cpnumber = new javax.swing.JTextField();
         cperson = new javax.swing.JTextField();
-        position = new javax.swing.JTextField();
         efd = new javax.swing.JButton();
         save = new javax.swing.JButton();
         ereport = new javax.swing.JButton();
         age = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         eid = new javax.swing.JTextField();
+        sex = new javax.swing.JComboBox<>();
+        position = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -248,13 +248,6 @@ public class EMPLOYEE extends javax.swing.JFrame {
         getContentPane().add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 180, 330, 30));
         name.setOpaque(false);
 
-        sex.setBackground(new java.awt.Color(0, 0, 0));
-        sex.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        sex.setForeground(new java.awt.Color(255, 255, 255));
-        sex.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 352, 120, 30));
-        sex.setOpaque(false);
-
         email.setBackground(new java.awt.Color(0, 0, 0));
         email.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         email.setForeground(new java.awt.Color(255, 255, 255));
@@ -289,13 +282,6 @@ public class EMPLOYEE extends javax.swing.JFrame {
         cperson.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(cperson, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 481, 330, 30));
         cperson.setOpaque(false);
-
-        position.setBackground(new java.awt.Color(0, 0, 0));
-        position.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        position.setForeground(new java.awt.Color(255, 255, 255));
-        position.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(position, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 223, 330, 30));
-        position.setOpaque(false);
 
         efd.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         efd.setContentAreaFilled(false);
@@ -350,6 +336,12 @@ public class EMPLOYEE extends javax.swing.JFrame {
         });
         getContentPane().add(eid, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 140, 330, 30));
         eid.setOpaque(false);
+
+        sex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select", "Male", "Female" }));
+        getContentPane().add(sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 350, 120, 30));
+
+        position.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Position", "Counter", "Bagger", "Manager" }));
+        getContentPane().add(position, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 230, 330, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/EMPLOYEE.png"))); // NOI18N
         jLabel1.setToolTipText("");
@@ -426,15 +418,15 @@ public class EMPLOYEE extends javax.swing.JFrame {
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         String id = eid.getText().trim();
         String user = name.getText().trim();
-        String poss = position.getText().trim();
         String num = mobilenumber.getText().trim();
         String mail = email.getText().trim();
         String aa = age.getText().trim();
-        String ge = sex.getText().trim();
         String ba = bankacc.getText().trim();
         String an = accno.getText().trim();
         String cp = cperson.getText().trim();
         String cpn = cpnumber.getText().trim();
+        String poss = position.getSelectedItem();
+        String ge = sex.getSelectedItem();
 
         // Validation patterns
         String namePattern = "^[a-zA-Z ]+$";
@@ -444,15 +436,6 @@ public class EMPLOYEE extends javax.swing.JFrame {
         if (user.isEmpty() || !user.matches(namePattern)) {
             JOptionPane.showMessageDialog(null, "Name must not be empty and contain only letters and spaces.");
             name.setText("");
-        } else if (poss.isEmpty() || !poss.matches(namePattern)) {
-            JOptionPane.showMessageDialog(null, "Position must not be empty and contain only letters and spaces.");
-            position.setText("");
-        } else if (ge.isEmpty() || !ge.matches(namePattern)) {
-            JOptionPane.showMessageDialog(null, "Sex must not be empty and contain only letters and spaces.");
-            sex.setText("");
-        } else if (!ge.equalsIgnoreCase("male") && !ge.equalsIgnoreCase("female")) {
-            JOptionPane.showMessageDialog(null, "Sex must be either 'Male' or 'Female' .");
-            sex.setText("");
         }else if (ba.isEmpty() || !ba.matches(namePattern)) {
             JOptionPane.showMessageDialog(null, "Bank Account name must not be empty and contain only letters and spaces.");
             bankacc.setText("");
@@ -498,11 +481,9 @@ public class EMPLOYEE extends javax.swing.JFrame {
                 generateCustomerId();  // Update the ID display
            // Clear fields
            name.setText("");
-           position.setText("");
            mobilenumber.setText("");
            email.setText("");
            age.setText("");
-           sex.setText("");
            bankacc.setText("");
            accno.setText("");
            cperson.setText("");
@@ -597,10 +578,10 @@ private void loadEmployeeCounter() {
     private javax.swing.JButton logout;
     private javax.swing.JTextField mobilenumber;
     private javax.swing.JTextField name;
-    private javax.swing.JTextField position;
+    private javax.swing.JComboBox<String> position;
     private javax.swing.JButton product;
     private javax.swing.JButton save;
-    private javax.swing.JTextField sex;
+    private javax.swing.JComboBox<String> sex;
     private javax.swing.JButton stockmanagement;
     private javax.swing.JButton usersetting;
     // End of variables declaration//GEN-END:variables
