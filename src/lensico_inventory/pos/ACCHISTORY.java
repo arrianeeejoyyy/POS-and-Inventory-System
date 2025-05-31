@@ -126,15 +126,7 @@ import javax.swing.table.DefaultTableModel;
             new String [] {
                 "Customer ID", "Date", "Time", "Status"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         jScrollPane2.setViewportView(historyC);
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 420));
@@ -290,6 +282,45 @@ import javax.swing.table.DefaultTableModel;
     }//GEN-LAST:event_creturnActionPerformed
 
    
+    public void saveHistoryCTableToFile() {
+    String filePath = "src/file_storage/historyC.txt";
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        DefaultTableModel model = (DefaultTableModel) historyC.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                writer.write(model.getValueAt(i, j).toString());
+                if (j < model.getColumnCount() - 1) {
+                    writer.write("%%");
+                }
+            }
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Error saving historyC to file: " + e.getMessage());
+    }
+}
+
+public void loadHistoryCTableFromFile() {
+    String filePath = "src/file_storage/historyC.txt";
+    DefaultTableModel model = (DefaultTableModel) historyC.getModel();
+    model.setRowCount(0); // Clear existing rows
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] rowData = line.split("%%");
+            model.addRow(rowData);
+        }
+    } catch (IOException e) {
+        // Possibly first run, file not found is ok
+    }
+}
+
+    
+    
+    
+    
+    
     public static void main(String args[]) {
        
         java.awt.EventQueue.invokeLater(new Runnable() {

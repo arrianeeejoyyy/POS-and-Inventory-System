@@ -12,6 +12,9 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -491,8 +494,7 @@ private void updateIdLabel() {
     }//GEN-LAST:event_CreportActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        // Validate checkbox
-    if (!jCheckBox1.isSelected()) {
+        if (!jCheckBox1.isSelected()) {
         JOptionPane.showMessageDialog(this, "You must agree to the terms to proceed.");
         return;
     }
@@ -539,6 +541,9 @@ private void updateIdLabel() {
 
     // Update ID label for next input
     updateIdLabel();
+
+    // Add entry to ACCHISTORY's historyC table and save it
+    addToHistoryC(idValue);
 
     // Clear fields and reset checkbox
     name.setText("");
@@ -609,6 +614,36 @@ public void loadTableFromTextFile(JTable table, String filePath) {
 }
 
 
+
+
+public void addToHistoryC(String customerId) {
+    try {
+        // Load the ACCHISTORY JFrame or create instance
+        ACCHISTORY historyFrame = new ACCHISTORY();
+
+        // Load existing data first (optional but recommended to keep data in sync)
+        historyFrame.loadHistoryCTableFromFile();
+
+        DefaultTableModel historyModel = (DefaultTableModel) historyFrame.historyC.getModel();
+
+        // Get current date/time
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String status = "ACTIVE";
+
+        Object[] newRow = { customerId, date, time, status };
+        historyModel.addRow(newRow);
+
+        // Save back to file
+        historyFrame.saveHistoryCTableToFile();
+
+        // Optional: If you want to keep ACCHISTORY UI updated (if it is visible somewhere)
+        // historyFrame.setVisible(true);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Failed to add historyC record: " + e.getMessage());
+    }
+}
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
