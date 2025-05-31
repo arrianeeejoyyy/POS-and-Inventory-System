@@ -188,7 +188,7 @@ public class LOG_IN extends javax.swing.JFrame {
         loginAttempts = 0;
         JOptionPane.showMessageDialog(null, "LOGIN SUCCESSFUL!");
         this.setVisible(false);
-        if (username.equals("admin") && password.equals("123456")) {
+        if (username.equals("admin")) {
             new ADMIN().setVisible(true);
         } else {
              CASHIER_EMPLOYEE cashierFrame = new CASHIER_EMPLOYEE(username);

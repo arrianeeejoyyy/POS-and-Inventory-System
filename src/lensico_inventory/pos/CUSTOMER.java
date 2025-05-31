@@ -57,6 +57,21 @@ private int customerCounter = 1;
                  }
              }
          });
+         
+          id.setOpaque(false);
+        id.setBackground(new java.awt.Color (0,0,0,0));
+        
+        name.setOpaque(false);
+        name.setBackground(new java.awt.Color (0,0,0,0));
+        
+         contactnumber.setOpaque(false);
+        contactnumber.setBackground(new java.awt.Color (0,0,0,0));
+        
+        email.setOpaque(false);
+        email.setBackground(new java.awt.Color (0,0,0,0));
+        
+        address.setOpaque(false);
+        address.setBackground(new java.awt.Color (0,0,0,0));
     }
 
     private void loadCustomerCounter() {
@@ -96,8 +111,6 @@ private void updateIdLabel() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btn_addcus = new javax.swing.JButton();
-        Creport = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         customerdetails = new javax.swing.JTable();
         invoice = new javax.swing.JButton();
@@ -123,24 +136,6 @@ private void updateIdLabel() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(400, 100, 1215, 838));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btn_addcus.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btn_addcus.setContentAreaFilled(false);
-        btn_addcus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_addcusActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btn_addcus, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 730, 240, 40));
-
-        Creport.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        Creport.setContentAreaFilled(false);
-        Creport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CreportActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Creport, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 730, 250, 40));
 
         customerdetails.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         customerdetails.setModel(new javax.swing.table.DefaultTableModel(
@@ -259,7 +254,10 @@ private void updateIdLabel() {
             }
         });
         getContentPane().add(btn_deletecus, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 740, 130, 20));
-        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, 280, 30));
+
+        id.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        id.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 110, 280, 30));
 
         name.setOpaque(false);
         name.setBackground(new java.awt.Color(0, 0, 0));
@@ -290,7 +288,7 @@ private void updateIdLabel() {
         getContentPane().add(address, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 270, 320, 30));
 
         jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 250, -1, -1));
+        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 245, -1, -1));
 
         save.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         save.setContentAreaFilled(false);
@@ -315,10 +313,6 @@ private void updateIdLabel() {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_addcusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addcusActionPerformed
-
-    }//GEN-LAST:event_btn_addcusActionPerformed
 
     private void customerdetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerdetailsMouseClicked
 
@@ -489,10 +483,6 @@ private void updateIdLabel() {
         
     }//GEN-LAST:event_btn_deletecusActionPerformed
 
-    private void CreportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreportActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CreportActionPerformed
-
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         if (!jCheckBox1.isSelected()) {
         JOptionPane.showMessageDialog(this, "You must agree to the terms to proceed.");
@@ -647,10 +637,8 @@ public void addToHistoryC(String customerId) {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Creport;
     private javax.swing.JButton accounthistory;
     private javax.swing.JTextField address;
-    private javax.swing.JButton btn_addcus;
     private javax.swing.JButton btn_deletecus;
     private javax.swing.JButton btn_editcus;
     private javax.swing.JButton clear;

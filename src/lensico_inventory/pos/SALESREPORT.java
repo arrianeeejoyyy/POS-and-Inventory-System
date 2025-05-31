@@ -52,6 +52,7 @@ public class SALESREPORT extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         customer = new javax.swing.JButton();
         invoice = new javax.swing.JButton();
         product = new javax.swing.JButton();
@@ -62,8 +63,13 @@ public class SALESREPORT extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         salesreport = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        SALES = new javax.swing.JLabel();
+        SALES1 = new javax.swing.JLabel();
+        startdate = new javax.swing.JLabel();
+        enddate = new javax.swing.JLabel();
         icon = new javax.swing.JLabel();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(400, 100, 1215, 838));
@@ -151,10 +157,23 @@ public class SALESREPORT extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(salesreport);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 910, 440));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 49, 865, 590));
 
-        jLabel2.setText("total sales of tye day ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1007, 510, 120, 30));
+        SALES.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        SALES.setForeground(new java.awt.Color(255, 255, 255));
+        SALES.setText("jLabel1");
+        getContentPane().add(SALES, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 690, 120, 30));
+
+        SALES1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        SALES1.setForeground(new java.awt.Color(255, 255, 255));
+        SALES1.setText("jLabel1");
+        getContentPane().add(SALES1, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 690, 120, 30));
+
+        startdate.setText("Start Date");
+        getContentPane().add(startdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 670, 170, -1));
+
+        enddate.setText("End Date");
+        getContentPane().add(enddate, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 700, 130, -1));
 
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/SALES REPORT.png"))); // NOI18N
         getContentPane().add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -270,17 +289,21 @@ public class SALESREPORT extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel SALES;
+    private javax.swing.JLabel SALES1;
     private javax.swing.JButton accounthistory;
     private javax.swing.JButton creturn;
     private javax.swing.JButton customer;
     private javax.swing.JButton employeee;
+    private javax.swing.JLabel enddate;
     private javax.swing.JLabel icon;
     private javax.swing.JButton invoice;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logout;
     private javax.swing.JButton product;
     public javax.swing.JTable salesreport;
+    private javax.swing.JLabel startdate;
     private javax.swing.JButton usersetting;
     // End of variables declaration//GEN-END:variables
 }

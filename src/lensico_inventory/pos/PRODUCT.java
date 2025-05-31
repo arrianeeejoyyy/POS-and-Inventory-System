@@ -148,7 +148,7 @@ public class PRODUCT extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(product);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 870, 680));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 870, 690));
 
         edit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         edit.setContentAreaFilled(false);
@@ -168,7 +168,7 @@ public class PRODUCT extends javax.swing.JFrame {
         });
         getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 750, 100, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/PRODUCT.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/product.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();

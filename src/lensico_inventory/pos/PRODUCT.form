@@ -181,7 +181,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="300" y="100" width="870" height="680"/>
+          <AbsoluteConstraints x="300" y="90" width="870" height="690"/>
         </Constraint>
       </Constraints>
 
@@ -254,7 +254,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagesss_panel/PRODUCT.png"/>
+          <Image iconType="3" name="/imagesss_panel/product.png"/>
         </Property>
       </Properties>
       <Constraints>
