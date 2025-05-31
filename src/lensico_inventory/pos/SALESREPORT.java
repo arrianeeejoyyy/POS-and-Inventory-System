@@ -417,8 +417,11 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
         Document doc = new Document(pdfDoc);
 
         // Add title
-        doc.add(new Paragraph("Sales Report from " + startDate + " to " + endDate).setBold().setFontSize(16));
-
+        doc.add(new Paragraph(" DISPLAY hu").setBold().setFontSize(20));
+        doc.add(new Paragraph("           ").setBold().setFontSize(16));
+        doc.add(new Paragraph("Sales Report from " + startDate + " to " + endDate + " of DISPLAY HUB ").setBold().setFontSize(16));
+         doc.add(new Paragraph("           ").setBold().setFontSize(16));
+         doc.add(new Paragraph("           ").setBold().setFontSize(16));
         // Create table with 8 columns (matching your JTable columns)
         Table table = new Table(8);
         // Add headers
@@ -428,18 +431,27 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
         }
 
         DefaultTableModel model = (DefaultTableModel) salesreport.getModel();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        ZoneId phZone = ZoneId.of("Asia/Manila");
+
+        DateTimeFormatter isoFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter longFormatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
 
         for (int i = 0; i < model.getRowCount(); i++) {
             String dateStr = model.getValueAt(i, 7).toString();
-            LocalDate rowDate = LocalDate.parse(dateStr, formatter);
+            LocalDate rowDate;
+
+            // Try parsing with ISO format, fallback to long format
+            try {
+                rowDate = LocalDate.parse(dateStr, isoFormatter);
+            } catch (java.time.format.DateTimeParseException e) {
+                rowDate = LocalDate.parse(dateStr, longFormatter);
+            }
 
             if ((rowDate.isEqual(startDate) || rowDate.isAfter(startDate)) &&
                 (rowDate.isEqual(endDate) || rowDate.isBefore(endDate))) {
                 // Add the row cells
-                IntStream.range(0, model.getColumnCount())
-                    .forEach(col -> table.addCell(model.getValueAt(i, col).toString()));
+                for (int col = 0; col < model.getColumnCount(); col++) {
+                    table.addCell(model.getValueAt(i, col).toString());
+                }
             }
         }
 
@@ -447,6 +459,19 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
         doc.close();
 
         JOptionPane.showMessageDialog(this, "PDF Report generated:\n" + dest);
+
+        // Open the generated PDF automatically
+        try {
+            java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+            java.io.File pdfFile = new java.io.File(dest);
+            if (pdfFile.exists()) {
+                desktop.open(pdfFile);
+            } else {
+                JOptionPane.showMessageDialog(this, "Cannot find generated PDF to open.");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Could not open PDF file automatically:\n" + ex.getMessage());
+        }
 
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error generating PDF: " + e.getMessage());
