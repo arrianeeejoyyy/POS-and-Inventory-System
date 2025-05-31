@@ -25,6 +25,36 @@ public class CUSTOMER extends javax.swing.JFrame {
     public CUSTOMER() {
         initComponents();
         loadTableFromTextFile(customerdetails, "src/file_storage/txtxt.txt");
+        
+        
+        // Block non-digit input in contact number
+        contactnumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) && !Character.isISOControl(c)) {
+                    e.consume(); // Prevent input
+                    JOptionPane.showMessageDialog(null, "Only numeric values are allowed for Contact Number.");
+                }
+            }
+        });
+  
+                // name: no digits
+         name.addKeyListener(new java.awt.event.KeyAdapter() {
+             @Override
+             public void keyTyped(java.awt.event.KeyEvent e) {
+                 char c = e.getKeyChar();
+                 if (Character.isDigit(c)) {
+                     e.consume();
+                     JOptionPane.showMessageDialog(null, "Numbers are not allowed in the Name field.");
+                 }
+             }
+         });
+
+    
+        
+        
+        
     }
 
     
@@ -46,6 +76,14 @@ public class CUSTOMER extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
         btn_editcus = new javax.swing.JButton();
         btn_deletecus = new javax.swing.JButton();
+        id = new javax.swing.JLabel();
+        name = new javax.swing.JTextField();
+        contactnumber = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
+        address = new javax.swing.JTextField();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        save = new javax.swing.JButton();
+        clear = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -96,7 +134,7 @@ public class CUSTOMER extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(customerdetails);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 860, 580));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, 830, 300));
 
         invoice.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         invoice.setContentAreaFilled(false);
@@ -177,7 +215,7 @@ public class CUSTOMER extends javax.swing.JFrame {
                 btn_editcusActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_editcus, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 720, 130, 50));
+        getContentPane().add(btn_editcus, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 740, 130, 20));
 
         btn_deletecus.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btn_deletecus.setContentAreaFilled(false);
@@ -186,7 +224,57 @@ public class CUSTOMER extends javax.swing.JFrame {
                 btn_deletecusActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_deletecus, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 720, 130, 50));
+        getContentPane().add(btn_deletecus, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 740, 130, 20));
+        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, 280, 30));
+
+        name.setOpaque(false);
+        name.setBackground(new java.awt.Color(0, 0, 0));
+        name.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        name.setForeground(new java.awt.Color(255, 255, 255));
+        name.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, 320, 30));
+
+        contactnumber.setOpaque(false);
+        contactnumber.setBackground(new java.awt.Color(0, 0, 0));
+        contactnumber.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        contactnumber.setForeground(new java.awt.Color(255, 255, 255));
+        contactnumber.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(contactnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 190, 320, 30));
+
+        email.setOpaque(false);
+        email.setBackground(new java.awt.Color(0, 0, 0));
+        email.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        email.setForeground(new java.awt.Color(255, 255, 255));
+        email.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 320, 30));
+
+        address.setOpaque(false);
+        address.setBackground(new java.awt.Color(0, 0, 0));
+        address.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        address.setForeground(new java.awt.Color(255, 255, 255));
+        address.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(address, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 270, 320, 30));
+
+        jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 250, -1, -1));
+
+        save.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        save.setContentAreaFilled(false);
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
+        getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 310, 130, 40));
+
+        clear.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        clear.setContentAreaFilled(false);
+        clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearActionPerformed(evt);
+            }
+        });
+        getContentPane().add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 310, 130, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/CUSTOMER.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 800));
@@ -195,14 +283,6 @@ public class CUSTOMER extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_addcusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addcusActionPerformed
-
-      CUSTOMERADD add = new CUSTOMERADD();
-    add.setVisible(true);
-    add.addWindowListener(new java.awt.event.WindowAdapter() {
-        public void windowClosed(java.awt.event.WindowEvent e) {
-            loadTableFromTextFile(customerdetails, FILE_PATH); // Reload to reflect changes
-        }
-    });
 
     }//GEN-LAST:event_btn_addcusActionPerformed
 
@@ -379,6 +459,14 @@ public class CUSTOMER extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CreportActionPerformed
 
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        
+    }//GEN-LAST:event_saveActionPerformed
+
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clearActionPerformed
+
     
     public static void main(String args[]) {
        
@@ -439,17 +527,25 @@ public void loadTableFromTextFile(JTable table, String filePath) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Creport;
     private javax.swing.JButton accounthistory;
+    private javax.swing.JTextField address;
     private javax.swing.JButton btn_addcus;
     private javax.swing.JButton btn_deletecus;
     private javax.swing.JButton btn_editcus;
+    private javax.swing.JButton clear;
+    private javax.swing.JTextField contactnumber;
     private javax.swing.JButton creturn;
     private static javax.swing.JTable customerdetails;
+    private javax.swing.JTextField email;
     private javax.swing.JButton employeee;
+    private javax.swing.JLabel id;
     private javax.swing.JButton invoice;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logout;
+    private javax.swing.JTextField name;
     private javax.swing.JButton product;
+    private javax.swing.JButton save;
     private javax.swing.JButton stockmanagement;
     private javax.swing.JButton usersetting;
     // End of variables declaration//GEN-END:variables
