@@ -33,6 +33,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.properties.TextAlignment;
 
 
 public class SALESREPORT extends javax.swing.JFrame {
@@ -417,26 +418,33 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 }
     
     
-    private void generatePdfReport(LocalDate startDate, LocalDate endDate) {
+  private void generatePdfReport(LocalDate startDate, LocalDate endDate) {
     try {
         String dest = "sales_report_" + startDate + "_to_" + endDate + ".pdf";
         PdfWriter writer = new PdfWriter(new FileOutputStream(dest));
         PdfDocument pdfDoc = new PdfDocument(writer);
         Document doc = new Document(pdfDoc);
 
-        // Add title
-        doc.add(new Paragraph(" DISPLAY hu").setBold().setFontSize(20));
-        doc.add(new Paragraph("           ").setBold().setFontSize(16));
-        doc.add(new Paragraph("Sales Report from " + startDate + " to " + endDate + " of DISPLAY HUB ").setBold().setFontSize(16));
-         doc.add(new Paragraph("           ").setBold().setFontSize(16));
-         doc.add(new Paragraph("           ").setBold().setFontSize(16));
-        // Create table with 8 columns (matching your JTable columns)
-        Table table = new Table(8);
-        // Add headers
-        String[] headers = {"Cashier Name", "Transaction Number", "Customer ID", "Product ID", "Price", "Quantity", "Total", "Date"};
-        for (String header : headers) {
-            table.addHeaderCell(new Cell().add(new Paragraph(header).setBold()));
-        }
+        // Centered Title
+        Paragraph title = new Paragraph("DISPLAY HUB")
+            .setFontSize(20)
+            .setBold()
+            .setTextAlignment(TextAlignment.CENTER);
+        doc.add(title);
+
+        // Empty line
+        doc.add(new Paragraph(" "));
+
+        // Centered Subtitle with dates
+        String subtitleText = "Sales Report (" + startDate + ") to (" + endDate + ")";
+        Paragraph subtitle = new Paragraph(subtitleText)
+            .setFontSize(16)
+            .setBold()
+            .setTextAlignment(TextAlignment.CENTER);
+        doc.add(subtitle);
+
+        // Empty line after subtitle
+        doc.add(new Paragraph(" "));
 
         DefaultTableModel model = (DefaultTableModel) salesreport.getModel();
 
@@ -447,7 +455,7 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
             String dateStr = model.getValueAt(i, 7).toString();
             LocalDate rowDate;
 
-            // Try parsing with ISO format, fallback to long format
+            // Parse date with fallback
             try {
                 rowDate = LocalDate.parse(dateStr, isoFormatter);
             } catch (java.time.format.DateTimeParseException e) {
@@ -456,14 +464,22 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 
             if ((rowDate.isEqual(startDate) || rowDate.isAfter(startDate)) &&
                 (rowDate.isEqual(endDate) || rowDate.isBefore(endDate))) {
-                // Add the row cells
-                for (int col = 0; col < model.getColumnCount(); col++) {
-                    table.addCell(model.getValueAt(i, col).toString());
-                }
+
+                // Add each field vertically with label
+                doc.add(new Paragraph("Cashier Name: " + model.getValueAt(i, 0).toString()));
+                doc.add(new Paragraph("Transaction Number: " + model.getValueAt(i, 1).toString()));
+                doc.add(new Paragraph("Customer ID: " + model.getValueAt(i, 2).toString()));
+                doc.add(new Paragraph("Product ID: " + model.getValueAt(i, 3).toString()));
+                doc.add(new Paragraph("Price: " + model.getValueAt(i, 4).toString()));
+                doc.add(new Paragraph("Quantity: " + model.getValueAt(i, 5).toString()));
+                doc.add(new Paragraph("Total: " + model.getValueAt(i, 6).toString()));
+                doc.add(new Paragraph("Date: " + model.getValueAt(i, 7).toString()));
+                 doc.add(new Paragraph("_______________________________________________________________________"));
+                // Blank line between records
+                doc.add(new Paragraph(" "));
             }
         }
 
-        doc.add(table);
         doc.close();
 
         JOptionPane.showMessageDialog(this, "PDF Report generated:\n" + dest);

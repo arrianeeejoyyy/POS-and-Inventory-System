@@ -51,8 +51,9 @@ public class PRODUCT extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         product = new javax.swing.JTable();
-        edit = new javax.swing.JButton();
-        delete = new javax.swing.JButton();
+        selecttype = new javax.swing.JComboBox<>();
+        quantitiystatus = new javax.swing.JComboBox<>();
+        PRINT = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -148,25 +149,16 @@ public class PRODUCT extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(product);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 870, 690));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 870, 560));
 
-        edit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        edit.setContentAreaFilled(false);
-        edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editActionPerformed(evt);
-            }
-        });
-        getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 743, 90, 30));
+        selecttype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Type", "Laptop", "Tablet", "Screen Monitor", "KeyBoard ", "Mouse ", " " }));
+        getContentPane().add(selecttype, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 720, 180, -1));
 
-        delete.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        delete.setContentAreaFilled(false);
-        delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteActionPerformed(evt);
-            }
-        });
-        getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 750, 100, 30));
+        quantitiystatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Quantity Status", "High Stock", "Medium Stock", "Low Stock" }));
+        getContentPane().add(quantitiystatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 710, 170, -1));
+
+        PRINT.setText("jButton1");
+        getContentPane().add(PRINT, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 720, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/product.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -242,31 +234,6 @@ public class PRODUCT extends javax.swing.JFrame {
     private void productMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_productMouseClicked
-
-    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        int selectedRow = product.getSelectedRow();
-
-        
-
-    }//GEN-LAST:event_editActionPerformed
-
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-     int selectedRow = product.getSelectedRow();
-
-    if (selectedRow != -1) {
-        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this row?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-
-        if (confirm == JOptionPane.YES_OPTION) {
-            DefaultTableModel model = (DefaultTableModel) employeee.getModel();
-            model.removeRow(selectedRow);
-
-            // Save updated table to file
-            saveTableToTextFile(product, FILE_PATH);
-        }
-    } else {
-        JOptionPane.showMessageDialog(null, "Please select a row to delete.");
-    }
-    }//GEN-LAST:event_deleteActionPerformed
 
  public void AddRowToJTable(Object[] dataRow) {
         DefaultTableModel model = (DefaultTableModel) product.getModel();
@@ -426,17 +393,18 @@ public JTable getProductTable() {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton PRINT;
     private javax.swing.JButton accounthistory;
     private javax.swing.JButton creturn;
     private javax.swing.JButton customer;
-    private javax.swing.JButton delete;
-    private javax.swing.JButton edit;
     private javax.swing.JButton employeee;
     private javax.swing.JButton invoice;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logout;
     private static javax.swing.JTable product;
+    private javax.swing.JComboBox<String> quantitiystatus;
+    private javax.swing.JComboBox<String> selecttype;
     private javax.swing.JButton stockmanagement;
     private javax.swing.JButton usersetting;
     // End of variables declaration//GEN-END:variables

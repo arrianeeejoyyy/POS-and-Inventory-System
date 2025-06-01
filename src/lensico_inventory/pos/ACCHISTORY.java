@@ -229,6 +229,11 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 
         printU.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         printU.setContentAreaFilled(false);
+        printU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printUActionPerformed(evt);
+            }
+        });
         jPanel5.add(printU, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 623, 190, 50));
 
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/historyU.png"))); // NOI18N
@@ -271,6 +276,11 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 
         printP.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         printP.setContentAreaFilled(false);
+        printP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printPActionPerformed(evt);
+            }
+        });
         jPanel6.add(printP, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 623, 190, 50));
 
         startdateP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -319,6 +329,11 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 
         printR.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         printR.setContentAreaFilled(false);
+        printR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printRActionPerformed(evt);
+            }
+        });
         jPanel1.add(printR, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 623, 190, 50));
 
         startdateR.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -367,6 +382,11 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 
         printC.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         printC.setContentAreaFilled(false);
+        printC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printCActionPerformed(evt);
+            }
+        });
         jPanel3.add(printC, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 623, 190, 50));
 
         startdateC.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -804,8 +824,415 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
     }//GEN-LAST:event_cenddateEActionPerformed
 
     private void printEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printEActionPerformed
-        // TODO add your handling code here:
+         String startDateStr = startdateE.getText();
+    String endDateStr = enddateE.getText();
+
+    if (startDateStr.isEmpty() || endDateStr.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select both Start Date and End Date.");
+        return;
+    }
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    try {
+        Date startDate = sdf.parse(startDateStr);
+        Date endDate = sdf.parse(endDateStr);
+
+        if (endDate.before(startDate)) {
+            JOptionPane.showMessageDialog(this, "End Date cannot be before Start Date.");
+            return;
+        }
+
+        String filePath = "EmployeeHistory_" + startDateStr + "_to_" + endDateStr + ".pdf";
+
+        PdfWriter writer = new PdfWriter(filePath);
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
+
+        // Title - DISPLAY HUB centered, 20 font
+        Paragraph title = new Paragraph("DISPLAY HUB")
+            .setFontSize(20)
+            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER);
+        document.add(title);
+
+        // Subtitle - Employee History (startdate) to (enddate) centered
+        Paragraph subtitle = new Paragraph("Employee History (" + startDateStr + ") to (" + endDateStr + ")")
+            .setFontSize(12)
+            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+            .setMarginBottom(20);
+        document.add(subtitle);
+
+        DefaultTableModel model = (DefaultTableModel) historyE.getModel();
+
+        // Iterate through rows filtered by date range (Date column index 1)
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Object dateObj = model.getValueAt(i, 1); // Date column
+            if (dateObj == null) continue;
+
+            Date rowDate = sdf.parse(dateObj.toString());
+            if (!rowDate.before(startDate) && !rowDate.after(endDate)) {
+                // For each row, add fields in vertical block format
+                String employeeId = model.getValueAt(i, 0) == null ? "" : model.getValueAt(i, 0).toString();
+                String date = model.getValueAt(i, 1) == null ? "" : model.getValueAt(i, 1).toString();
+                String time = model.getValueAt(i, 2) == null ? "" : model.getValueAt(i, 2).toString();
+                String status = model.getValueAt(i, 3) == null ? "" : model.getValueAt(i, 3).toString();
+
+                Paragraph record = new Paragraph()
+                    .add("Employee ID: " + employeeId + "\n")
+                    .add("Date: " + date + "\n")
+                    .add("Time: " + time + "\n")
+                    .add("Status: " + status + "\n\n");
+
+                document.add(record);
+            }
+        }
+
+        document.close();
+
+        JOptionPane.showMessageDialog(this, "PDF generated successfully:\n" + filePath);
+
+        // Open PDF automatically
+        try {
+            if (java.awt.Desktop.isDesktopSupported()) {
+                java.awt.Desktop.getDesktop().open(new File(filePath));
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Could not open PDF automatically: " + e.getMessage());
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error generating PDF: " + ex.getMessage());
+        ex.printStackTrace();
+    }
     }//GEN-LAST:event_printEActionPerformed
+
+    private void printUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printUActionPerformed
+         String startDateStr = startdateU.getText();
+    String endDateStr = enddateU.getText();
+
+    if (startDateStr.isEmpty() || endDateStr.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select both Start Date and End Date.");
+        return;
+    }
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    try {
+        Date startDate = sdf.parse(startDateStr);
+        Date endDate = sdf.parse(endDateStr);
+
+        if (endDate.before(startDate)) {
+            JOptionPane.showMessageDialog(this, "End Date cannot be before Start Date.");
+            return;
+        }
+
+        String filePath = "UserSettingHistory_" + startDateStr + "_to_" + endDateStr + ".pdf";
+
+        PdfWriter writer = new PdfWriter(filePath);
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
+
+        // Title - DISPLAY HUB (20 font, centered)
+        Paragraph title = new Paragraph("DISPLAY HUB")
+            .setFontSize(20)
+            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER);
+        document.add(title);
+
+        // Subtitle - User Setting History (startdate) to (enddate) centered
+        Paragraph subtitle = new Paragraph("User Setting History (" + startDateStr + ") to (" + endDateStr + ")")
+            .setFontSize(12)
+            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+            .setMarginBottom(20);
+        document.add(subtitle);
+
+        DefaultTableModel model = (DefaultTableModel) historyU.getModel();
+
+        // Loop through filtered rows by date (Date column index 1)
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Object dateObj = model.getValueAt(i, 1);
+            if (dateObj == null) continue;
+
+            Date rowDate = sdf.parse(dateObj.toString());
+            if (!rowDate.before(startDate) && !rowDate.after(endDate)) {
+                String userId = model.getValueAt(i, 0) == null ? "" : model.getValueAt(i, 0).toString();
+                String date = model.getValueAt(i, 1) == null ? "" : model.getValueAt(i, 1).toString();
+                String time = model.getValueAt(i, 2) == null ? "" : model.getValueAt(i, 2).toString();
+                String status = model.getValueAt(i, 3) == null ? "" : model.getValueAt(i, 3).toString();
+
+                Paragraph record = new Paragraph()
+                    .add("User ID: " + userId + "\n")
+                    .add("Date: " + date + "\n")
+                    .add("Time: " + time + "\n")
+                    .add("Status: " + status + "\n\n");
+
+                document.add(record);
+            }
+        }
+
+        document.close();
+
+        JOptionPane.showMessageDialog(this, "PDF generated successfully:\n" + filePath);
+
+        // Open the PDF automatically
+        try {
+            if (java.awt.Desktop.isDesktopSupported()) {
+                java.awt.Desktop.getDesktop().open(new File(filePath));
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Could not open PDF automatically: " + e.getMessage());
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error generating PDF: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+    }//GEN-LAST:event_printUActionPerformed
+
+    private void printPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printPActionPerformed
+        String startDateStr = startdateP.getText();
+    String endDateStr = enddateP.getText();
+
+    if (startDateStr.isEmpty() || endDateStr.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select both Start Date and End Date.");
+        return;
+    }
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    try {
+        Date startDate = sdf.parse(startDateStr);
+        Date endDate = sdf.parse(endDateStr);
+
+        if (endDate.before(startDate)) {
+            JOptionPane.showMessageDialog(this, "End Date cannot be before Start Date.");
+            return;
+        }
+
+        String filePath = "ProductHistory_" + startDateStr + "_to_" + endDateStr + ".pdf";
+
+        PdfWriter writer = new PdfWriter(filePath);
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
+
+        // Title - DISPLAY HUB (20 font, centered)
+        Paragraph title = new Paragraph("DISPLAY HUB")
+            .setFontSize(20)
+            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER);
+        document.add(title);
+
+        // Subtitle - Product History (startdate) to (enddate) centered
+        Paragraph subtitle = new Paragraph("Product History (" + startDateStr + ") to (" + endDateStr + ")")
+            .setFontSize(12)
+            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+            .setMarginBottom(20);
+        document.add(subtitle);
+
+        DefaultTableModel model = (DefaultTableModel) historyP.getModel();
+
+        // Loop through rows filtered by date (Date column index 1)
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Object dateObj = model.getValueAt(i, 1);
+            if (dateObj == null) continue;
+
+            Date rowDate = sdf.parse(dateObj.toString());
+            if (!rowDate.before(startDate) && !rowDate.after(endDate)) {
+                String productId = model.getValueAt(i, 0) == null ? "" : model.getValueAt(i, 0).toString();
+                String date = model.getValueAt(i, 1) == null ? "" : model.getValueAt(i, 1).toString();
+                String time = model.getValueAt(i, 2) == null ? "" : model.getValueAt(i, 2).toString();
+                String status = model.getValueAt(i, 3) == null ? "" : model.getValueAt(i, 3).toString();
+
+                Paragraph record = new Paragraph()
+                    .add("Product ID: " + productId + "\n")
+                    .add("Date: " + date + "\n")
+                    .add("Time: " + time + "\n")
+                    .add("Status: " + status + "\n\n");
+
+                document.add(record);
+            }
+        }
+
+        document.close();
+
+        JOptionPane.showMessageDialog(this, "PDF generated successfully:\n" + filePath);
+
+        // Open the PDF automatically
+        try {
+            if (java.awt.Desktop.isDesktopSupported()) {
+                java.awt.Desktop.getDesktop().open(new File(filePath));
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Could not open PDF automatically: " + e.getMessage());
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error generating PDF: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+    }//GEN-LAST:event_printPActionPerformed
+
+    private void printRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printRActionPerformed
+        String startDateStr = startdateR.getText();
+    String endDateStr = enddateR.getText();
+
+    if (startDateStr.isEmpty() || endDateStr.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select both Start Date and End Date.");
+        return;
+    }
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    try {
+        Date startDate = sdf.parse(startDateStr);
+        Date endDate = sdf.parse(endDateStr);
+
+        if (endDate.before(startDate)) {
+            JOptionPane.showMessageDialog(this, "End Date cannot be before Start Date.");
+            return;
+        }
+
+        String filePath = "ReturnProductHistory_" + startDateStr + "_to_" + endDateStr + ".pdf";
+
+        PdfWriter writer = new PdfWriter(filePath);
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
+
+        // Title - DISPLAY HUB (20 font, centered)
+        Paragraph title = new Paragraph("DISPLAY HUB")
+            .setFontSize(20)
+            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER);
+        document.add(title);
+
+        // Subtitle - Return Product History (startdate) to (enddate) centered
+        Paragraph subtitle = new Paragraph("Return Product History (" + startDateStr + ") to (" + endDateStr + ")")
+            .setFontSize(12)
+            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+            .setMarginBottom(20);
+        document.add(subtitle);
+
+        DefaultTableModel model = (DefaultTableModel) historyR.getModel();
+
+        // Loop through filtered rows by date (Date column index 1)
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Object dateObj = model.getValueAt(i, 1);
+            if (dateObj == null) continue;
+
+            Date rowDate = sdf.parse(dateObj.toString());
+            if (!rowDate.before(startDate) && !rowDate.after(endDate)) {
+                String productId = model.getValueAt(i, 0) == null ? "" : model.getValueAt(i, 0).toString();
+                String date = model.getValueAt(i, 1) == null ? "" : model.getValueAt(i, 1).toString();
+                String time = model.getValueAt(i, 2) == null ? "" : model.getValueAt(i, 2).toString();
+                String status = model.getValueAt(i, 3) == null ? "" : model.getValueAt(i, 3).toString();
+
+                Paragraph record = new Paragraph()
+                    .add("Product ID: " + productId + "\n")
+                    .add("Date: " + date + "\n")
+                    .add("Time: " + time + "\n")
+                    .add("Status: " + status + "\n\n");
+
+                document.add(record);
+            }
+        }
+
+        document.close();
+
+        JOptionPane.showMessageDialog(this, "PDF generated successfully:\n" + filePath);
+
+        // Open the PDF automatically
+        try {
+            if (java.awt.Desktop.isDesktopSupported()) {
+                java.awt.Desktop.getDesktop().open(new File(filePath));
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Could not open PDF automatically: " + e.getMessage());
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error generating PDF: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+    }//GEN-LAST:event_printRActionPerformed
+
+    private void printCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printCActionPerformed
+       String startDateStr = startdateC.getText();
+    String endDateStr = enddateC.getText();
+
+    if (startDateStr.isEmpty() || endDateStr.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select both Start Date and End Date.");
+        return;
+    }
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    try {
+        Date startDate = sdf.parse(startDateStr);
+        Date endDate = sdf.parse(endDateStr);
+
+        if (endDate.before(startDate)) {
+            JOptionPane.showMessageDialog(this, "End Date cannot be before Start Date.");
+            return;
+        }
+
+        String filePath = "CustomerHistory_" + startDateStr + "_to_" + endDateStr + ".pdf";
+
+        PdfWriter writer = new PdfWriter(filePath);
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
+
+        // Title - DISPLAY HUB (20 font, center)
+        Paragraph title = new Paragraph("DISPLAY HUB")
+            .setFontSize(20)
+            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER);
+        document.add(title);
+
+        // Subtitle - Customer History (startdate) to (enddate) centered
+        Paragraph subtitle = new Paragraph("Customer History (" + startDateStr + ") to (" + endDateStr + ")")
+            .setFontSize(12)
+            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+            .setMarginBottom(20);
+        document.add(subtitle);
+
+        DefaultTableModel model = (DefaultTableModel) historyC.getModel();
+
+        // Loop through rows filtered by date range (Date column index 1)
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Object dateObj = model.getValueAt(i, 1);
+            if (dateObj == null) continue;
+
+            Date rowDate = sdf.parse(dateObj.toString());
+            if (!rowDate.before(startDate) && !rowDate.after(endDate)) {
+                String customerId = model.getValueAt(i, 0) == null ? "" : model.getValueAt(i, 0).toString();
+                String date = model.getValueAt(i, 1) == null ? "" : model.getValueAt(i, 1).toString();
+                String time = model.getValueAt(i, 2) == null ? "" : model.getValueAt(i, 2).toString();
+                String status = model.getValueAt(i, 3) == null ? "" : model.getValueAt(i, 3).toString();
+
+                Paragraph record = new Paragraph()
+                    .add("Customer ID: " + customerId + "\n")
+                    .add("Date: " + date + "\n")
+                    .add("Time: " + time + "\n")
+                    .add("Status: " + status + "\n\n");
+
+                document.add(record);
+            }
+        }
+
+        document.close();
+
+        JOptionPane.showMessageDialog(this, "PDF generated successfully:\n" + filePath);
+
+        // Open the PDF automatically
+        try {
+            if (java.awt.Desktop.isDesktopSupported()) {
+                java.awt.Desktop.getDesktop().open(new File(filePath));
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Could not open PDF automatically: " + e.getMessage());
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error generating PDF: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+    }//GEN-LAST:event_printCActionPerformed
 
    
  private Date showDatePickerDialog(JDateChooser dateChooser, String title) {
@@ -821,7 +1248,8 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
     return null;
 }
     
-    
+   
+
     
     
     
