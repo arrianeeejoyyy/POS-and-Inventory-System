@@ -251,7 +251,7 @@ int selectedRow = cashiersAccList.getSelectedRow();
         JOptionPane.showMessageDialog(null, "Error loading data: " + e.getMessage());
     }
 }
-    
+ 
     
     public static void main(String args[]) {
        
@@ -264,7 +264,7 @@ int selectedRow = cashiersAccList.getSelectedRow();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back;
-    public static javax.swing.JTable cashiersAccList;
+    public javax.swing.JTable cashiersAccList;
     private javax.swing.JButton delete;
     private javax.swing.JButton edit;
     private javax.swing.JLabel jLabel1;

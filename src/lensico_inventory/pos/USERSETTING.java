@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
-import static lensico_inventory.pos.USERSETTINGCASHIERACC.cashiersAccList;
+
 
 public class USERSETTING extends javax.swing.JFrame {
 
