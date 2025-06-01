@@ -2,16 +2,39 @@
 package lensico_inventory.pos;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 
 public class USERSETTINGCHANGEPASS extends javax.swing.JFrame {
 
+    private USERSETTINGCASHIERACC userAccFrame;
+    
+    public USERSETTINGCHANGEPASS(USERSETTINGCASHIERACC userAccFrame) {
+    this.userAccFrame = userAccFrame;
+    initComponents();
+    loadCurrentPassword();  // your method to load existing password if you have it
+}
     
     public USERSETTINGCHANGEPASS() {
         initComponents();
+        loadCurrentPassword();
     }
 
-   
+   private void loadCurrentPassword() {
+    try {
+        // Access row 0, col 2 (password)
+        TableModel model = USERSETTINGCASHIERACC.cashiersAccList.getModel();
+        String currentPass = model.getValueAt(0, 2).toString(); // row 0 = first row
+        pass.setText(currentPass);
+        // Set npass and rnpass empty initially
+        npass.setText("");
+        rnpass.setText("");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error loading current password: " + e.getMessage());
+    }
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -33,6 +56,11 @@ public class USERSETTINGCHANGEPASS extends javax.swing.JFrame {
 
         jButtonSAVE.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButtonSAVE.setContentAreaFilled(false);
+        jButtonSAVE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSAVEActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButtonSAVE, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 150, 30));
 
         jButtonCLEAR.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -154,6 +182,67 @@ public class USERSETTINGCHANGEPASS extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButtonSAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSAVEActionPerformed
+        savePasswordChange();
+    }//GEN-LAST:event_jButtonSAVEActionPerformed
+
+    private void savePasswordChange() {
+    String currentPass = new String(pass.getPassword());
+    String newPass = new String(npass.getPassword());
+    String reNewPass = new String(rnpass.getPassword());
+
+    // Check newPass and reNewPass are the same
+    if (!newPass.equals(reNewPass)) {
+        JOptionPane.showMessageDialog(this, "New password and confirmation do not match.");
+        return;
+    }
+
+    // Check if newPass is actually different from current password, else no change
+    if (newPass.equals(currentPass)) {
+        JOptionPane.showMessageDialog(this, "New password must be different from the current password.");
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to change the password?",
+            "Confirm Password Change",
+            JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        try {
+            // Update password in USERSETTINGCASHIERACC cashiersAccList row 0, col 2
+            DefaultTableModel model = (DefaultTableModel) USERSETTINGCASHIERACC.cashiersAccList.getModel();
+            model.setValueAt(newPass, 0, 2); // update password column
+
+            // Optionally update your backing storage if applicable, e.g.,
+            USERSETTINGCASHIERACC userAccFrame = getUserCashierAccInstance();
+            userAccFrame.saveTableToTextFile(USERSETTINGCASHIERACC.cashiersAccList, USERSETTINGCASHIERACC.FILE_PATH);
+
+            // Update pass field to new password
+            pass.setText(newPass);
+            npass.setText("");
+            rnpass.setText("");
+
+            JOptionPane.showMessageDialog(this, "Password changed successfully.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Failed to change password: " + ex.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Password change canceled.");
+    }
+}
+
+// Helper method to get instance of USERSETTINGCASHIERACC if needed
+private USERSETTINGCASHIERACC getUserCashierAccInstance() {
+    for (java.awt.Window window : java.awt.Window.getWindows()) {
+        if (window instanceof USERSETTINGCASHIERACC) {
+            return (USERSETTINGCASHIERACC) window;
+        }
+    }
+    // Or create new instance if not found (depends on your app logic)
+    return null;
+}
+    
     
     public static void main(String args[]) {
        
