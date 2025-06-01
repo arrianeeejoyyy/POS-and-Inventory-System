@@ -542,6 +542,7 @@ private void setupTableModelListeners() {
                     String total = checkoutModel.getValueAt(i, 4).toString();
 
                     writer.write(String.join("%%",
+                        CASHIER1.getText(),
                         referencenumber.getText(),
                         customerID.getText(),
                         productID,
@@ -563,6 +564,7 @@ private void setupTableModelListeners() {
                 DefaultTableModel salesModel = (DefaultTableModel) SALESREPORT.instance.salesreport.getModel();
                 for (int i = 0; i < checkoutModel.getRowCount(); i++) {
                     Object[] rowData = new Object[] {
+                        CASHIER1.getText(),
                         referencenumber.getText(),
                         customerID.getText(),
                         checkoutModel.getValueAt(i, 0),

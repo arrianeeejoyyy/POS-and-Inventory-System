@@ -213,7 +213,7 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 
             },
             new String [] {
-                "Transaction Number", "Customer ID", "Product ID", "Price", "Quantity", "Total", "Date"
+                "Cashier Name", "Transaction Number", "Customer ID", "Product ID", "Price", "Quantity", "Total", "Date"
             }
         ));
         jScrollPane1.setViewportView(salesreport);
@@ -507,14 +507,14 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
             if ((rowDate.isEqual(startDate) || rowDate.isAfter(startDate)) &&
                 (rowDate.isEqual(endDate) || rowDate.isBefore(endDate))) {
 
-                
-                doc.add(new Paragraph("Transaction Number: " + model.getValueAt(i, 0).toString()));
-                doc.add(new Paragraph("Customer ID: " + model.getValueAt(i, 1).toString()));
-                doc.add(new Paragraph("Product ID: " + model.getValueAt(i, 2).toString()));
-                doc.add(new Paragraph("Price: " + model.getValueAt(i, 3).toString()));
-                doc.add(new Paragraph("Quantity: " + model.getValueAt(i, 4).toString()));
-                doc.add(new Paragraph("Total: " + model.getValueAt(i, 5).toString()));
-                doc.add(new Paragraph("Date: " + model.getValueAt(i, 6).toString()));
+                doc.add(new Paragraph("Cashier Name: " + model.getValueAt(i, 0).toString()));
+                doc.add(new Paragraph("Transaction Number: " + model.getValueAt(i, 1).toString()));
+                doc.add(new Paragraph("Customer ID: " + model.getValueAt(i, 2).toString()));
+                doc.add(new Paragraph("Product ID: " + model.getValueAt(i, 3).toString()));
+                doc.add(new Paragraph("Price: " + model.getValueAt(i, 4).toString()));
+                doc.add(new Paragraph("Quantity: " + model.getValueAt(i, 5).toString()));
+                doc.add(new Paragraph("Total: " + model.getValueAt(i, 6).toString()));
+                doc.add(new Paragraph("Date: " + model.getValueAt(i, 7).toString()));
 
                 doc.add(new Paragraph("----------------------------------------------------------------------------------------"));
                 doc.add(new Paragraph(" "));
