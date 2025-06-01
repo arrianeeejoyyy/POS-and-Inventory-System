@@ -172,10 +172,10 @@ public class EMPLOYEE extends javax.swing.JFrame {
         save = new javax.swing.JButton();
         ereport = new javax.swing.JButton();
         age = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
         eid = new javax.swing.JTextField();
         sex = new javax.swing.JComboBox<>();
         position = new javax.swing.JComboBox<>();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -346,14 +346,6 @@ public class EMPLOYEE extends javax.swing.JFrame {
         getContentPane().add(age, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 352, 120, 30));
         age.setOpaque(false);
 
-        jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 690, 20, 20));
-
         eid.setBackground(new java.awt.Color(0, 0, 0));
         eid.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         eid.setForeground(new java.awt.Color(255, 255, 255));
@@ -369,16 +361,19 @@ public class EMPLOYEE extends javax.swing.JFrame {
         sex.setBackground(new java.awt.Color(102, 102, 102));
         sex.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         sex.setForeground(new java.awt.Color(255, 255, 255));
-        sex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select", "Male", "Female" }));
+        sex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Male", "Female" }));
         sex.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 354, 110, -1));
+        getContentPane().add(sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 356, 110, 22));
 
         position.setBackground(new java.awt.Color(102, 102, 102));
         position.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         position.setForeground(new java.awt.Color(255, 255, 255));
-        position.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Position", "Counter", "Bagger", "Manager" }));
+        position.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Position", "Cashier", "Bagger", "Manager" }));
         position.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(position, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 225, 330, -1));
+        getContentPane().add(position, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 227, 330, 22));
+
+        jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 690, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/EMPLOYEE.png"))); // NOI18N
         jLabel1.setToolTipText("");
@@ -482,8 +477,8 @@ public class EMPLOYEE extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Please select a valid Position.");
         return;
     }
-    if (ge.equals("Please Select")) {
-        JOptionPane.showMessageDialog(null, "Please select a valid Sex.");
+    if (ge.equals("Select")) {
+        JOptionPane.showMessageDialog(null, "Select a valid Sex.");
         return;
     }
 
@@ -588,10 +583,6 @@ public class EMPLOYEE extends javax.swing.JFrame {
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_clearActionPerformed
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void efdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_efdActionPerformed
         EMPLOYEEFULLD efd = new EMPLOYEEFULLD();

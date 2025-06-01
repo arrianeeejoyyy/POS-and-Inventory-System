@@ -181,7 +181,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="300" y="90" width="870" height="560"/>
+          <AbsoluteConstraints x="310" y="90" width="850" height="610"/>
         </Constraint>
       </Constraints>
 
@@ -217,15 +217,22 @@
     </Container>
     <Component class="javax.swing.JComboBox" name="selecttype">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="99" red="ff" type="rgb"/>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="14" style="0"/>
+        </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="7">
+          <StringArray count="8">
             <StringItem index="0" value="Select Type"/>
-            <StringItem index="1" value="Laptop"/>
-            <StringItem index="2" value="Tablet"/>
-            <StringItem index="3" value="Screen Monitor"/>
-            <StringItem index="4" value="KeyBoard "/>
-            <StringItem index="5" value="Mouse "/>
-            <StringItem index="6" value=" "/>
+            <StringItem index="1" value="All"/>
+            <StringItem index="2" value="Laptop"/>
+            <StringItem index="3" value="Tablet"/>
+            <StringItem index="4" value="Screen Monitor"/>
+            <StringItem index="5" value="KeyBoard "/>
+            <StringItem index="6" value="Mouse "/>
+            <StringItem index="7" value=" "/>
           </StringArray>
         </Property>
       </Properties>
@@ -234,18 +241,25 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="580" y="720" width="180" height="-1"/>
+          <AbsoluteConstraints x="650" y="720" width="285" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JComboBox" name="quantitiystatus">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="99" red="ff" type="rgb"/>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="14" style="0"/>
+        </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
+          <StringArray count="5">
             <StringItem index="0" value="Select Quantity Status"/>
-            <StringItem index="1" value="High Stock"/>
-            <StringItem index="2" value="Medium Stock"/>
-            <StringItem index="3" value="Low Stock"/>
+            <StringItem index="1" value="All"/>
+            <StringItem index="2" value="High Stock"/>
+            <StringItem index="3" value="Medium Stock"/>
+            <StringItem index="4" value="Low Stock"/>
           </StringArray>
         </Property>
       </Properties>
@@ -254,17 +268,25 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="380" y="710" width="170" height="-1"/>
+          <AbsoluteConstraints x="350" y="720" width="285" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="PRINT">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+            <EmptyBorder/>
+          </Border>
+        </Property>
+        <Property name="contentAreaFilled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PRINTActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="870" y="720" width="-1" height="-1"/>
+          <AbsoluteConstraints x="950" y="710" width="180" height="50"/>
         </Constraint>
       </Constraints>
     </Component>

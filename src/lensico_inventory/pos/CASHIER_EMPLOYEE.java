@@ -241,12 +241,10 @@ discount.addActionListener(e -> applyDiscount());
 
         CASHIER1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         CASHIER1.setForeground(new java.awt.Color(255, 255, 255));
-        CASHIER1.setText("11");
         getContentPane().add(CASHIER1, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 770, 190, 20));
 
         customername.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         customername.setForeground(new java.awt.Color(255, 255, 255));
-        customername.setText("11");
         getContentPane().add(customername, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 765, 230, 20));
 
         customerID.setBackground(new java.awt.Color(0, 0, 51));

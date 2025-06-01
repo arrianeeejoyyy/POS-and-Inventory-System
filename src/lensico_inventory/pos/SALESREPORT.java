@@ -220,7 +220,7 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
         totalsales.setForeground(new java.awt.Color(255, 255, 255));
         totalsales.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totalsales.setToolTipText("");
-        getContentPane().add(totalsales, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 680, 180, 60));
+        getContentPane().add(totalsales, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 680, 180, 50));
 
         salestoday.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         salestoday.setForeground(new java.awt.Color(255, 255, 255));
@@ -418,54 +418,91 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 }
     
     
-  private void generatePdfReport(LocalDate startDate, LocalDate endDate) {
+ private void generatePdfReport(LocalDate startDate, LocalDate endDate) {
     try {
         String dest = "sales_report_" + startDate + "_to_" + endDate + ".pdf";
         PdfWriter writer = new PdfWriter(new FileOutputStream(dest));
         PdfDocument pdfDoc = new PdfDocument(writer);
         Document doc = new Document(pdfDoc);
 
-        // Centered Title
-        Paragraph title = new Paragraph("DISPLAY HUB")
+        // Title
+        doc.add(new Paragraph("DISPLAY HUB")
             .setFontSize(20)
             .setBold()
-            .setTextAlignment(TextAlignment.CENTER);
-        doc.add(title);
-
-        // Empty line
+            .setTextAlignment(TextAlignment.CENTER));
         doc.add(new Paragraph(" "));
 
-        // Centered Subtitle with dates
-        String subtitleText = "Sales Report (" + startDate + ") to (" + endDate + ")";
-        Paragraph subtitle = new Paragraph(subtitleText)
-            .setFontSize(16)
-            .setBold()
-            .setTextAlignment(TextAlignment.CENTER);
-        doc.add(subtitle);
-
-        // Empty line after subtitle
+        // Subtitle
+        String subtitleText = "Sales Report " + startDate + " to " + endDate;
+        doc.add(new Paragraph(subtitleText)
+            .setFontSize(18)
+            .setTextAlignment(TextAlignment.CENTER));
         doc.add(new Paragraph(" "));
 
         DefaultTableModel model = (DefaultTableModel) salesreport.getModel();
 
+        double totalSalesInRange = 0.0;
+
         DateTimeFormatter isoFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter longFormatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+        DateTimeFormatter altFormatter = DateTimeFormatter.ofPattern("MMM d, yyyy"); // fallback if needed
 
+        // First, accumulate total sales of filtered rows
         for (int i = 0; i < model.getRowCount(); i++) {
-            String dateStr = model.getValueAt(i, 7).toString();
-            LocalDate rowDate;
+            String dateStrRaw = model.getValueAt(i, 7).toString().trim();
+            LocalDate rowDate = null;
 
-            // Parse date with fallback
+            // Try parsing with isoFormatter first
             try {
-                rowDate = LocalDate.parse(dateStr, isoFormatter);
-            } catch (java.time.format.DateTimeParseException e) {
-                rowDate = LocalDate.parse(dateStr, longFormatter);
+                rowDate = LocalDate.parse(dateStrRaw, isoFormatter);
+            } catch (Exception e1) {
+                // try fallback format
+                try {
+                    rowDate = LocalDate.parse(dateStrRaw, altFormatter);
+                } catch (Exception e2) {
+                    // skip this row if date can't be parsed
+                    continue;
+                }
+            }
+
+            if ((rowDate.isEqual(startDate) || rowDate.isAfter(startDate)) &&
+                (rowDate.isEqual(endDate) || rowDate.isBefore(endDate))) {
+                try {
+                    double rowTotal = Double.parseDouble(model.getValueAt(i, 6).toString());
+                    totalSalesInRange += rowTotal;
+                } catch (NumberFormatException ex) {
+                    // skip total parse error
+                }
+            }
+        }
+
+        // Add total sales paragraph
+        Paragraph totalSalesParagraph = new Paragraph()
+            .add("TOTAL SALES: ")
+            .setFontSize(16)
+            .setBold()
+            .setTextAlignment(TextAlignment.LEFT);
+        totalSalesParagraph.add(String.format("₱%.2f", totalSalesInRange));
+        doc.add(totalSalesParagraph);
+        doc.add(new Paragraph(" "));
+
+        // Add the filtered rows with details
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String dateStrRaw = model.getValueAt(i, 7).toString().trim();
+            LocalDate rowDate = null;
+
+            try {
+                rowDate = LocalDate.parse(dateStrRaw, isoFormatter);
+            } catch (Exception e1) {
+                try {
+                    rowDate = LocalDate.parse(dateStrRaw, altFormatter);
+                } catch (Exception e2) {
+                    continue;
+                }
             }
 
             if ((rowDate.isEqual(startDate) || rowDate.isAfter(startDate)) &&
                 (rowDate.isEqual(endDate) || rowDate.isBefore(endDate))) {
 
-                // Add each field vertically with label
                 doc.add(new Paragraph("Cashier Name: " + model.getValueAt(i, 0).toString()));
                 doc.add(new Paragraph("Transaction Number: " + model.getValueAt(i, 1).toString()));
                 doc.add(new Paragraph("Customer ID: " + model.getValueAt(i, 2).toString()));
@@ -474,8 +511,8 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
                 doc.add(new Paragraph("Quantity: " + model.getValueAt(i, 5).toString()));
                 doc.add(new Paragraph("Total: " + model.getValueAt(i, 6).toString()));
                 doc.add(new Paragraph("Date: " + model.getValueAt(i, 7).toString()));
-                 doc.add(new Paragraph("_______________________________________________________________________"));
-                // Blank line between records
+
+                doc.add(new Paragraph("----------------------------------------------------------------------------------------"));
                 doc.add(new Paragraph(" "));
             }
         }
@@ -484,7 +521,7 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 
         JOptionPane.showMessageDialog(this, "PDF Report generated:\n" + dest);
 
-        // Open the generated PDF automatically
+        // Open PDF automatically
         try {
             java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
             java.io.File pdfFile = new java.io.File(dest);
@@ -501,6 +538,7 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
         JOptionPane.showMessageDialog(this, "Error generating PDF: " + e.getMessage());
     }
 }
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

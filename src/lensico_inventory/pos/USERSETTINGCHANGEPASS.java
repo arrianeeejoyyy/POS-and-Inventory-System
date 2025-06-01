@@ -1,6 +1,8 @@
 
 package lensico_inventory.pos;
 
+import javax.swing.JButton;
+
 
 public class USERSETTINGCHANGEPASS extends javax.swing.JFrame {
 
@@ -79,10 +81,20 @@ public class USERSETTINGCHANGEPASS extends javax.swing.JFrame {
 
         jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton5.setContentAreaFilled(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 160, 40, 30));
 
         jButton6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton6.setContentAreaFilled(false);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, 40, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/CHANGE ADMIN  PASSWORD.png"))); // NOI18N
@@ -107,8 +119,40 @@ public class USERSETTINGCHANGEPASS extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCLEARActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+           JButton clickedButton = (JButton) evt.getSource();
+
+    if (rnpass.getEchoChar() == '\u0000') {
+        rnpass.setEchoChar('•');
+        clickedButton.setText("");
+    } else {
+        rnpass.setEchoChar('\u0000');
+        clickedButton.setText("");
+    }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+           JButton clickedButton = (JButton) evt.getSource();
+
+    if (npass.getEchoChar() == '\u0000') {
+        npass.setEchoChar('•');
+        clickedButton.setText("");
+    } else {
+        npass.setEchoChar('\u0000');
+        clickedButton.setText("");
+    }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+             JButton clickedButton = (JButton) evt.getSource();
+
+    if (pass.getEchoChar() == '\u0000') {
+        pass.setEchoChar('•');
+        clickedButton.setText("");
+    } else {
+        pass.setEchoChar('\u0000');
+        clickedButton.setText("");
+    }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     
     public static void main(String args[]) {

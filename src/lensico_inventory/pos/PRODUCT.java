@@ -21,6 +21,23 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
+
+import com.itextpdf.layout.element.LineSeparator;
+import com.itextpdf.layout.element.AreaBreak;
+import com.itextpdf.layout.properties.TextAlignment;
+
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 public class PRODUCT extends javax.swing.JFrame {
@@ -149,16 +166,26 @@ public class PRODUCT extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(product);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 870, 560));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 850, 610));
 
-        selecttype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Type", "Laptop", "Tablet", "Screen Monitor", "KeyBoard ", "Mouse ", " " }));
-        getContentPane().add(selecttype, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 720, 180, -1));
+        selecttype.setBackground(new java.awt.Color(255, 153, 0));
+        selecttype.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        selecttype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Type", "All", "Laptop", "Tablet", "Screen Monitor", "KeyBoard ", "Mouse ", " " }));
+        getContentPane().add(selecttype, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 720, 285, 30));
 
-        quantitiystatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Quantity Status", "High Stock", "Medium Stock", "Low Stock" }));
-        getContentPane().add(quantitiystatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 710, 170, -1));
+        quantitiystatus.setBackground(new java.awt.Color(255, 153, 0));
+        quantitiystatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        quantitiystatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Quantity Status", "All", "High Stock", "Medium Stock", "Low Stock" }));
+        getContentPane().add(quantitiystatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 720, 285, 30));
 
-        PRINT.setText("jButton1");
-        getContentPane().add(PRINT, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 720, -1, -1));
+        PRINT.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        PRINT.setContentAreaFilled(false);
+        PRINT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PRINTActionPerformed(evt);
+            }
+        });
+        getContentPane().add(PRINT, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 710, 180, 50));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/product.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -234,6 +261,10 @@ public class PRODUCT extends javax.swing.JFrame {
     private void productMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_productMouseClicked
+
+    private void PRINTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PRINTActionPerformed
+      generateFilteredPdf();
+    }//GEN-LAST:event_PRINTActionPerformed
 
  public void AddRowToJTable(Object[] dataRow) {
         DefaultTableModel model = (DefaultTableModel) product.getModel();
@@ -389,6 +420,117 @@ private void updateQuantityInFileAdd(String filePath, String productId, int qtyT
 
 public JTable getProductTable() {
     return product;
+}
+
+private void generateFilteredPdf() {
+    String typeSelected = (String) selecttype.getSelectedItem();
+    String qtyStatusSelected = (String) quantitiystatus.getSelectedItem();
+
+    if (typeSelected == null || qtyStatusSelected == null
+        || typeSelected.equals("Select Type") || qtyStatusSelected.equals("Select Quantity Status")) {
+        JOptionPane.showMessageDialog(this, "Please select valid options in both Type and Quantity Status.", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    DefaultTableModel model = (DefaultTableModel) product.getModel();
+
+    // Collect filtered rows
+    ArrayList<String[]> filteredRows = new ArrayList<>();
+
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String type = model.getValueAt(i, 0).toString();
+        String productId = model.getValueAt(i, 1).toString();
+        String productModel = model.getValueAt(i, 2).toString();
+        String barcode = model.getValueAt(i, 3).toString();
+        String unitPrice = model.getValueAt(i, 4).toString();
+        String brandname = model.getValueAt(i, 5).toString();
+
+        int quantity = 0;
+        try {
+            quantity = Integer.parseInt(model.getValueAt(i, 6).toString());
+        } catch (NumberFormatException e) {
+            quantity = 0;
+        }
+
+        String description = model.getValueAt(i, 7).toString();
+
+        boolean typeMatch = typeSelected.equalsIgnoreCase("All") || type.equalsIgnoreCase(typeSelected);
+
+        boolean qtyMatch = false;
+        if (qtyStatusSelected.equalsIgnoreCase("All")) {
+            qtyMatch = true;
+        } else if (qtyStatusSelected.equalsIgnoreCase("High Stock")) {
+            qtyMatch = quantity >= 15;
+        } else if (qtyStatusSelected.equalsIgnoreCase("Medium Stock")) {
+            qtyMatch = quantity >= 8 && quantity <= 14;
+        } else if (qtyStatusSelected.equalsIgnoreCase("Low Stock")) {
+            qtyMatch = quantity <= 7;
+        }
+
+        if (typeMatch && qtyMatch) {
+            filteredRows.add(new String[] {
+                type, productId, productModel, barcode, unitPrice, brandname, String.valueOf(quantity), description
+            });
+        }
+    }
+
+    if (filteredRows.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No products found for the selected filters.", "Info", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    String fileName = "ProductList_" + System.currentTimeMillis() + ".pdf";
+
+    // Fix: ensure Desktop folder exists
+    String userHome = System.getProperty("user.home");
+    File desktopDir = new File(userHome, "Desktop");
+    if (!desktopDir.exists()) {
+        desktopDir.mkdirs();
+    }
+    File pdfFile = new File(desktopDir, fileName);
+
+    try {
+        PdfWriter writer = new PdfWriter(pdfFile.getAbsolutePath());
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
+
+        Paragraph title = new Paragraph("DISPLAY HUB")
+                .setBold()
+                .setFontSize(20)
+                .setTextAlignment(TextAlignment.CENTER);
+        document.add(title);
+
+        document.add(new Paragraph(" "));
+
+        Paragraph subTitle = new Paragraph("Product List")
+                .setFontSize(18)
+                .setTextAlignment(TextAlignment.CENTER);
+        document.add(subTitle);
+
+        document.add(new Paragraph(" "));
+
+        for (String[] row : filteredRows) {
+            document.add(new Paragraph("Type: " + row[0]));
+            document.add(new Paragraph("Product ID: " + row[1]));
+            document.add(new Paragraph("Product Model: " + row[2]));
+            document.add(new Paragraph("Barcode: " + row[3]));
+            document.add(new Paragraph("Unit Price: " + row[4]));
+            document.add(new Paragraph("Brandname: " + row[5]));
+            document.add(new Paragraph("Quantity: " + row[6]));
+            document.add(new Paragraph("Description: " + row[7]));
+            document.add(new Paragraph("----------------------------------------------------------------------------------------"));
+        }
+
+        document.close();
+
+        if (Desktop.isDesktopSupported()) {
+            Desktop.getDesktop().open(pdfFile);
+        }
+
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, "Error generating PDF: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
 }
 
 

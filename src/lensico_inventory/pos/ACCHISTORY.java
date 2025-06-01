@@ -219,9 +219,11 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
         jPanel5.add(cstartdateU, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 620, 40, 30));
 
         startdateU.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        startdateU.setText("Start Date");
         jPanel5.add(startdateU, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 620, 170, 25));
 
         enddateU.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        enddateU.setText("End Date");
         jPanel5.add(enddateU, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 655, 170, 25));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -284,9 +286,11 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
         jPanel6.add(printP, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 623, 190, 50));
 
         startdateP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        startdateP.setText("Start Date");
         jPanel6.add(startdateP, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 620, 170, 25));
 
         enddateP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        enddateP.setText("End Date");
         jPanel6.add(enddateP, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 655, 170, 25));
 
         iconp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/historyP.png"))); // NOI18N
@@ -337,9 +341,11 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
         jPanel1.add(printR, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 623, 190, 50));
 
         startdateR.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        startdateR.setText("Start Date");
         jPanel1.add(startdateR, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 620, 170, 25));
 
         enddateR.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        enddateR.setText("End Date");
         jPanel1.add(enddateR, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 655, 170, 25));
 
         iconr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/historyR.png"))); // NOI18N
@@ -390,9 +396,12 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
         jPanel3.add(printC, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 623, 190, 50));
 
         startdateC.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        startdateC.setText("Start Date");
+        startdateC.setToolTipText("");
         jPanel3.add(startdateC, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 620, 170, 25));
 
         enddateC.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        enddateC.setText("End Date");
         jPanel3.add(enddateC, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 655, 170, 25));
 
         iconc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/historyC.png"))); // NOI18N
@@ -444,9 +453,11 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
         jPanel4.add(printE, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 623, 190, 50));
 
         startdateE.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        startdateE.setText("Start Date");
         jPanel4.add(startdateE, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 620, 170, 25));
 
         enddateE.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        enddateE.setText("End Date");
         jPanel4.add(enddateE, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 655, 170, 25));
 
         icone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/historyE.png"))); // NOI18N

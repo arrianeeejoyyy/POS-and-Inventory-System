@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import static lensico_inventory.pos.USERSETTINGCASHIERACC.cashiersAccList;
 
@@ -100,6 +101,8 @@ public class USERSETTING extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
         changepassword1 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -256,6 +259,25 @@ public class USERSETTING extends javax.swing.JFrame {
         jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 610, -1, -1));
 
+        jButton1.setToolTipText("");
+        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 360, 30, 20));
+
+        jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton2.setContentAreaFilled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 390, 30, 20));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/USER SETTING.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
 
@@ -400,6 +422,30 @@ public class USERSETTING extends javax.swing.JFrame {
                 confirmpassword.setText("");
     }//GEN-LAST:event_clearActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+              JButton clickedButton = (JButton) evt.getSource();
+
+    if (password.getEchoChar() == '\u0000') {
+        password.setEchoChar('•');
+        clickedButton.setText("");
+    } else {
+        password.setEchoChar('\u0000');
+        clickedButton.setText("");
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+           JButton clickedButton = (JButton) evt.getSource();
+
+    if (confirmpassword.getEchoChar() == '\u0000') {
+        confirmpassword.setEchoChar('•');
+        clickedButton.setText("");
+    } else {
+        confirmpassword.setEchoChar('\u0000');
+        clickedButton.setText("");
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
             // Method to check if the employee is valid
         private boolean isEmployeeValid(String eid) {
             // Load employee data from the file
@@ -466,6 +512,8 @@ public class USERSETTING extends javax.swing.JFrame {
     private javax.swing.JTextField eid;
     private javax.swing.JButton employeee;
     private javax.swing.JButton invoice;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton logout;
