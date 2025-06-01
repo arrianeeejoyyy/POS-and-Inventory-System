@@ -31,9 +31,6 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 public class PRODUCTSTATUS extends javax.swing.JFrame {
-    
-    
-    
           private static final int baseProductId = 202500;
         private static int ProductCounter = 1;
     
@@ -643,7 +640,7 @@ private void saveAllPanelQuantitiesToFile() {
     }//GEN-LAST:event_idActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        int confirm = JOptionPane.showConfirmDialog(
+       int confirm = JOptionPane.showConfirmDialog(
         this,
         "Are you sure you want to save this product?",
         "Save Confirmation",
@@ -665,44 +662,54 @@ private void saveAllPanelQuantitiesToFile() {
     String des = description.getText();
     String iconpath = imagepath.getText();
 
-    // Validate quantity only if editing
-    if (isEditing) {
-        int quantityValue;
-        try {
-            quantityValue = Integer.parseInt(quanti);
-            if (quantityValue < 0) {
-                JOptionPane.showMessageDialog(null, "Quantity cannot be negative.");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Quantity must be a valid integer number.");
+    // Basic empty field checks
+    if (barcode.isEmpty() || uprice.isEmpty() || brandn.isEmpty() || quanti.isEmpty() || des.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "All fields must be filled in.");
+        return;
+    }
+
+    // Length checks
+    if (barcode.length() < 2 || barcode.length() > 500 ||
+        uprice.length() < 1 || uprice.length() > 500 ||
+        brandn.length() < 2 || brandn.length() > 500 ||
+        quanti.length() < 1 || quanti.length() > 500 ||
+        des.length() < 2 || des.length() > 500) {
+        JOptionPane.showMessageDialog(null, "Fields must contain appropriate number of characters.");
+        return;
+    }
+
+    // Validate price is a valid number (double or int)
+    double priceValue;
+    try {
+        priceValue = Double.parseDouble(uprice);
+        if (priceValue < 0) {
+            JOptionPane.showMessageDialog(null, "Price cannot be negative.");
             return;
         }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Price must be a valid number.");
+        return;
+    }
 
-        // Update only quantity in product.txt and productstatus.txt and cashierproduct.txt
-        updateQuantityInFile("src/file_storage/product.txt", pid, quantityValue, true);
-        updateQuantityInFile("src/file_storage/productstatus.txt", pid, quantityValue, true);
-        updateQuantityInFile("src/file_storage/cashierproduct.txt", pid, quantityValue, true);
-
-        // Update the panel quantity text too
-        if (selectedPanel != null) {
-            selectedPanel.quantity.setText(String.valueOf(quantityValue));
-
-            // Update panel color based on quantity
-            if (quantityValue >= 15) {
-                selectedPanel.setStockLevelColor(Color.GREEN);
-            } else if (quantityValue >= 8) {
-                selectedPanel.setStockLevelColor(Color.YELLOW);
-            } else if (quantityValue >= 1) {
-                selectedPanel.setStockLevelColor(Color.RED);
-            } else {
-                selectedPanel.setStockLevelColor(null);
-            }
+    // Validate quantity is an integer number
+    int quantityValue;
+    try {
+        quantityValue = Integer.parseInt(quanti);
+        if (quantityValue < 0) {
+            JOptionPane.showMessageDialog(null, "Quantity cannot be negative.");
+            return;
         }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Quantity must be a valid integer number.");
+        return;
+    }
 
-        JOptionPane.showMessageDialog(null, "Quantity updated successfully.");
+    // If all validations pass, continue with save/update
+    if (isEditing) {
+        updateProductData(editingProductId, selectedtext, pid, pmodel, barcode, uprice, brandn, quanti, des, iconpath);
+        JOptionPane.showMessageDialog(null, "Product updated successfully.");
+        addToProductHistory(pid);
     } else {
-        // Your existing full product add logic here
         addNewProduct(selectedtext, pid, pmodel, barcode, uprice, brandn, quanti, des, iconpath);
         JOptionPane.showMessageDialog(null, "Successfully saved.");
         addToProductHistory(pid);
@@ -868,120 +875,10 @@ private void saveAllPanelQuantitiesToFile() {
     }//GEN-LAST:event_deletetypeActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       if (selectedPanel == null) {
-        JOptionPane.showMessageDialog(this, "Please select a product panel first.");
-        return;
-    }
-
-    // Load data from selected panel into form fields
-    model.setText(selectedPanel.model.getText());
-    code.setText("");  // Will load from product.txt next
-    price.setText(selectedPanel.price.getText());
-    brand.setText("");
-    description.setText("");
-    icon.setIcon(null);
-    
-    quantity.setText(selectedPanel.quantity.getText());
-    id.setText(selectedPanel.proID.getText());
-
-    // Load other details (barcode, brand, description, icon) from product.txt by product id
-    loadProductDetailsToFormById(selectedPanel.proID.getText());
-
-    // Set editable states:
-    model.setEditable(false);
-    code.setEditable(false);
-    price.setEditable(false);
-    brand.setEditable(false);
-    description.setEditable(false);
-    quantity.setEditable(true); // Only quantity editable
-
-    // Disable user interaction on icon JLabel (just to be sure)
-    icon.setEnabled(false);
-
-    // Disable type combobox to avoid changing product type during quantity edit
-    type.setEnabled(false);
-
-    // Set editing mode flags
-    isEditing = true;
-    editingProductId = selectedPanel.proID.getText();
-
-    JOptionPane.showMessageDialog(this, "Only quantity is editable now. Change it and click Save.");
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void loadProductDetailsToFormById(String productId) {
-    try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/product.txt"))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split("%%");
-            if (parts.length >= 8 && parts[1].equals(productId)) {
-                // parts: type%%productId%%model%%barcode%%price%%brand%%quantity%%description
-                code.setText(parts[3]);
-                brand.setText(parts[5]);
-                description.setText(parts[7]);
-
-                // Load image path from productstatus.txt if needed
-                loadIconPathToIcon(parts[2]);
-
-                break;
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error loading product details: " + e.getMessage());
-    }
-}
-    
-   private void updateQuantityInFile(String filePath, String productId, int newQuantity, boolean replace) {
-    File inputFile = new File(filePath);
-    File tempFile = new File(filePath + "_temp.txt");
-
-    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split("%%");
-
-            if (parts.length > 1 && parts[1].equals(productId)) {
-                int quantityIndex = 6; // Adjust based on your file format
-
-                if (parts.length > quantityIndex) {
-                    if (replace) {
-                        // Replace quantity with newQuantity
-                        parts[quantityIndex] = String.valueOf(newQuantity);
-                    } else {
-                        // Subtract quantity (existing logic)
-                        int currentQty = 0;
-                        try {
-                            currentQty = Integer.parseInt(parts[quantityIndex]);
-                        } catch (NumberFormatException e) {
-                            currentQty = 0;
-                        }
-                        int updatedQty = currentQty - newQuantity;
-                        if (updatedQty < 0) updatedQty = 0;
-                        parts[quantityIndex] = String.valueOf(updatedQty);
-                    }
-                    String updatedLine = String.join("%%", parts);
-                    writer.write(updatedLine);
-                } else {
-                    writer.write(line);
-                }
-            } else {
-                writer.write(line);
-            }
-            writer.newLine();
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error updating quantity in file: " + filePath);
-    }
-
-    if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
-        JOptionPane.showMessageDialog(null, "Failed to update file: " + filePath);
-    }
-}
-    
-    
-    
+   
 private void generateProductId() {
     String prefix = "";
 
