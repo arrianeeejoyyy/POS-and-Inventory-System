@@ -1,5 +1,6 @@
 package lensico_inventory.pos;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -23,6 +24,16 @@ public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
     public USERSETTINGCASHIERACC() {
         initComponents();
         loadTableFromTextFile(cashiersAccList, FILE_PATH);
+        
+         pass.setOpaque(false);
+        pass.setBackground(new Color (0,0,0,0));
+        
+         npass.setOpaque(false);
+        npass.setBackground(new Color (0,0,0,0));
+        
+        rnpass.setOpaque(false);
+        rnpass.setBackground(new Color (0,0,0,0));
+        
     }
 
    
@@ -36,6 +47,14 @@ public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
         delete = new javax.swing.JButton();
         back = new javax.swing.JButton();
         edit = new javax.swing.JButton();
+        pass = new javax.swing.JPasswordField();
+        npass = new javax.swing.JPasswordField();
+        rnpass = new javax.swing.JPasswordField();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButtonSAVE = new javax.swing.JButton();
+        jButtonCLEAR = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
@@ -74,7 +93,7 @@ public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(cashiersAccList);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 940, 550));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 480, 560));
 
         delete.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         delete.setContentAreaFilled(false);
@@ -104,7 +123,72 @@ public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
         });
         getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(675, 640, 100, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/cashier’ Account list.png"))); // NOI18N
+        pass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        pass.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        pass.setOpaque(false);
+        getContentPane().add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 280, 280, 24));
+
+        npass.setOpaque(false);
+        npass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        npass.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(npass, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 280, 24));
+
+        rnpass.setOpaque(false);
+        rnpass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        rnpass.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        rnpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rnpassActionPerformed(evt);
+            }
+        });
+        getContentPane().add(rnpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 400, 280, 24));
+
+        jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton5.setContentAreaFilled(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 280, 40, 30));
+
+        jButton6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton6.setContentAreaFilled(false);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 340, 40, 30));
+
+        jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton4.setContentAreaFilled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 400, 40, 30));
+
+        jButtonSAVE.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButtonSAVE.setContentAreaFilled(false);
+        jButtonSAVE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSAVEActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonSAVE, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 440, 110, 30));
+
+        jButtonCLEAR.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButtonCLEAR.setContentAreaFilled(false);
+        jButtonCLEAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCLEARActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonCLEAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 440, 110, 30));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/cashier’ Account list .png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -198,6 +282,56 @@ int selectedRow = cashiersAccList.getSelectedRow();
     }
     }//GEN-LAST:event_editActionPerformed
 
+    private void rnpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rnpassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rnpassActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        JButton clickedButton = (JButton) evt.getSource();
+
+        if (pass.getEchoChar() == '\u0000') {
+            pass.setEchoChar('•');
+            clickedButton.setText("");
+        } else {
+            pass.setEchoChar('\u0000');
+            clickedButton.setText("");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        JButton clickedButton = (JButton) evt.getSource();
+
+        if (npass.getEchoChar() == '\u0000') {
+            npass.setEchoChar('•');
+            clickedButton.setText("");
+        } else {
+            npass.setEchoChar('\u0000');
+            clickedButton.setText("");
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        JButton clickedButton = (JButton) evt.getSource();
+
+        if (rnpass.getEchoChar() == '\u0000') {
+            rnpass.setEchoChar('•');
+            clickedButton.setText("");
+        } else {
+            rnpass.setEchoChar('\u0000');
+            clickedButton.setText("");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButtonSAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSAVEActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSAVEActionPerformed
+
+    private void jButtonCLEARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCLEARActionPerformed
+        pass.setText("");
+        npass.setText("");
+        rnpass.setText("");
+    }//GEN-LAST:event_jButtonCLEARActionPerformed
+
     public void AddRowToJTable(Object[] dataRow) {
         DefaultTableModel model = (DefaultTableModel) cashiersAccList.getModel();
         model.addRow(dataRow);
@@ -267,9 +401,17 @@ int selectedRow = cashiersAccList.getSelectedRow();
     public javax.swing.JTable cashiersAccList;
     private javax.swing.JButton delete;
     private javax.swing.JButton edit;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButtonCLEAR;
+    private javax.swing.JButton jButtonSAVE;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPasswordField npass;
+    private javax.swing.JPasswordField pass;
+    private javax.swing.JPasswordField rnpass;
     // End of variables declaration//GEN-END:variables
 
     private void loadTableFromTextFile(String cashierlist, String cUsersAiriDocumentscashierlisttxt) {

@@ -99,7 +99,6 @@ public class USERSETTING extends javax.swing.JFrame {
         employeee = new javax.swing.JButton();
         accounthistory = new javax.swing.JButton();
         logout = new javax.swing.JButton();
-        changepassword1 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -173,7 +172,7 @@ public class USERSETTING extends javax.swing.JFrame {
                 cashierAccActionPerformed(evt);
             }
         });
-        getContentPane().add(cashierAcc, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 650, 330, 40));
+        getContentPane().add(cashierAcc, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 660, 480, 40));
 
         customer.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         customer.setContentAreaFilled(false);
@@ -246,15 +245,6 @@ public class USERSETTING extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 270, 30));
-
-        changepassword1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        changepassword1.setContentAreaFilled(false);
-        changepassword1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changepassword1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(changepassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 650, 320, 40));
 
         jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 610, -1, -1));
@@ -410,11 +400,6 @@ public class USERSETTING extends javax.swing.JFrame {
         cs.setVisible(true);
     }//GEN-LAST:event_cashierAccActionPerformed
 
-    private void changepassword1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changepassword1ActionPerformed
-       USERSETTINGCHANGEPASS CP = new USERSETTINGCHANGEPASS();
-       CP.setVisible(true);
-    }//GEN-LAST:event_changepassword1ActionPerformed
-
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
                 name.setText("");
                 eid.setText("");
@@ -504,7 +489,6 @@ public class USERSETTING extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accounthistory;
     private javax.swing.JButton cashierAcc;
-    private javax.swing.JButton changepassword1;
     private javax.swing.JButton clear;
     private javax.swing.JPasswordField confirmpassword;
     private javax.swing.JButton creturn;
