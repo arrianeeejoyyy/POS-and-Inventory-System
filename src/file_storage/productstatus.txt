@@ -1,4 +1,4 @@
-C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\ASUS TUF Gaming A15.png%%TUF Gaming A15%%57,594%%10%%L202501
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\ASUS TUF Gaming A15.png%%TUF Gaming A15%%57,594%%9%%L202501
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\ASUS Vivobook S15 OLED.png%%Vivobook S15 OLED%%79,999%%15%%L202502
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\ASUS Vivobook Go 14.png%%Vivobook Go 14%%33,599%%10%%L202503
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\MSI Thin A15.png%%Thin A15 %%42,995%%5%%L202504
@@ -28,4 +28,4 @@ C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\imag
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Xiaomi Monitor A22i 21.45 inch.png%%A22i Monitor%%4,073%%15%%S202528
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 22 24 27 Inch IPS Monitor 100Hz Framless Flat.png%%IPS Monitor 100Hz Framless Flat%%3,559%%13%%S202529
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 27''_ 31.5'' Curved Gaming Monitor.png%% Curved Gaming Monitor 180HZ%%7,835%%7%%S202530
-C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 24 Inch Monitor.png%%24 Inch Monitor 100Hz Framless Flat%%4,079%%20%%S202531
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 24 Inch Monitor.png%%24 Inch Monitor 100Hz Framless Flat%%4,079%%12%%S202531

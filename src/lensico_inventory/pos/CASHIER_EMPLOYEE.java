@@ -31,7 +31,7 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
     public CASHIER_EMPLOYEE(String username) {
     initComponents();  // initialize UI components
     CASHIER1.setText(username);  // set username on the label
-    // Add any other initialization here if needed
+     setupListenersAndLoadData();
 }
     
     public CASHIER_EMPLOYEE() {
@@ -42,6 +42,12 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
     searchProductById(searchId);
 });
         
+        // Listen for changes in CHECKOUT table to recalculate totals
+CHECKOUT.getModel().addTableModelListener(e -> recalculateTotals());
+
+// Listen for discount combo box changes
+discount.addActionListener(e -> recalculateTotals());
+        
         loadTableFromTextFile(productlist, FILE_PATH);
         
         generateReferenceNumber();
@@ -50,8 +56,10 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
         updateItemsCount();
         
         discount.addActionListener(e -> applyDiscount());
+        
         productid.setOpaque(false);
         productid.setBackground(new Color (0,0,0,0));
+        
         quanti.setOpaque(false);
         quanti.setBackground(new Color (0,0,0,0));
         
@@ -90,12 +98,43 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
         });
     }
 
+    
    
     public void updateProductStatusPanelsAfterSale() {
     PRODUCTSTATUS ps = new PRODUCTSTATUS();
     ps.loadProductStatusPanels(); // This reloads panels with latest file quantities
 }
+   
+        private void setupListenersAndLoadData() {
+        loadTableFromTextFile(productlist, FILE_PATH);
+        setupKeyBindings();
+        setupTableModelListeners();
+        // any other initialization or listener setup
+    }
+
+    // call this when opening from login
+    public void refreshProductList() {
+        loadTableFromTextFile(productlist, FILE_PATH);
+    }
+
     
+     private void setupKeyBindings() {
+    // Put all your key bindings here
+    this.getRootPane().getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("SPACE"), "addAction");
+    this.getRootPane().getActionMap().put("addAction", new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            add.doClick();
+        }
+    });
+    // Similarly for other keys: BACK_SPACE, ESCAPE, SHIFT, etc.
+}
+
+private void setupTableModelListeners() {
+    // Put your table model listener registration here, for example:
+    CHECKOUT.getModel().addTableModelListener(e -> recalculateTotals());
+    discount.addActionListener(e -> recalculateTotals());
+}
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -157,7 +196,7 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Product Name", "Quantity", "Price"
+                "ID", "Product Name", "Price", "Quantity"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -176,7 +215,7 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(productlist);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 410, 660));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 410, 670));
 
         referencenumber.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         getContentPane().add(referencenumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 57, 190, 20));
@@ -249,7 +288,7 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
         discount.setBackground(new java.awt.Color(0, 0, 51));
         discount.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         discount.setForeground(new java.awt.Color(255, 255, 255));
-        discount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "5%", "10%", "15%", "20%", "25%", "30%", " " }));
+        discount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "5%", "10%", "15%", "20%", "25%", "30%" }));
         discount.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(discount, new org.netbeans.lib.awtextra.AbsoluteConstraints(1055, 587, 220, 20));
 
@@ -319,63 +358,94 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
     }//GEN-LAST:event_productlistMouseClicked
 
     private void productidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productidActionPerformed
-       
+              String searchId = productid.getText().trim();
+    if (!searchId.isEmpty()) {
+        searchProductById(searchId);
+    } else {
+        productn.setText("");
+        value.setText("");
+        quanti.setToolTipText(null);
+    }
     }//GEN-LAST:event_productidActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-         
-
-        
-        try {
+          try {
         String productId = productid.getText().trim();
         String productModel = productn.getText().trim();
         String priceText = value.getText().trim();
         String quantityText = quanti.getText().trim();
 
         if (productId.isEmpty() || productModel.isEmpty() || priceText.isEmpty() || quantityText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all product fields (ID, Model, Price, Quantity).");
+            JOptionPane.showMessageDialog(this, "Please fill in all product fields.");
             return;
         }
 
-        double price = Double.parseDouble(priceText);
-        int quantity = Integer.parseInt(quantityText);
+        // Remove commas before parsing price
+        String cleanedPrice = priceText.replaceAll(",", "").trim();
+        double priceValue;
+        try {
+            priceValue = Double.parseDouble(cleanedPrice);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid numeric price.");
+            return;
+        }
 
-        double total = price * quantity;
+        // Remove commas before parsing quantity
+        String cleanedQuantity = quantityText.replaceAll(",", "").trim();
+        int quantityValue;
+        try {
+            quantityValue = Integer.parseInt(cleanedQuantity);
+            if (quantityValue < 0) {
+                JOptionPane.showMessageDialog(this, "Quantity cannot be negative.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid numeric quantity.");
+            return;
+        }
 
-        DefaultTableModel checkoutModel = (DefaultTableModel) CHECKOUT.getModel();
-        Object[] rowData = { productId, productModel, price, quantity, total };
-        checkoutModel.addRow(rowData);
+        // Check available stock in productlist JTable
+        DefaultTableModel productModelTable = (DefaultTableModel) productlist.getModel();
+        int availableQty = 0;
+        boolean found = false;
 
-        // Calculate grand total from the 5th column of all rows
-        double grandTotal = 0;
-        for (int i = 0; i < checkoutModel.getRowCount(); i++) {
-            Object value = checkoutModel.getValueAt(i, 4);
-            if (value != null) {
-                grandTotal += Double.parseDouble(value.toString());
+        for (int i = 0; i < productModelTable.getRowCount(); i++) {
+            if (productModelTable.getValueAt(i, 0).toString().equalsIgnoreCase(productId)) {
+                availableQty = Integer.parseInt(productModelTable.getValueAt(i, 3).toString()); // col 3 is stock qty
+                found = true;
+                break;
             }
         }
 
-        // Show grand total in jTextField5
-        subtotal.setText(String.format("%.2f", grandTotal));
-         applyDiscount();
+        if (!found) {
+            JOptionPane.showMessageDialog(this, "Product ID not found.");
+            return;
+        }
 
-         
-         
-        // Clear quantity input for next entry
-        quanti.setText("");
+        if (quantityValue > availableQty) {
+            JOptionPane.showMessageDialog(this, "Quantity entered exceeds available stock (" + availableQty + ").");
+            return;
+        }
+
+        double total = priceValue * quantityValue;
+
+        // Add row to CHECKOUT JTable (no stock subtraction here)
+        DefaultTableModel checkoutModel = (DefaultTableModel) CHECKOUT.getModel();
+        Object[] rowData = { productId, productModel, priceValue, quantityValue, total };
+        checkoutModel.addRow(rowData);
+
+        // Clear input fields
         productid.setText("");
         productn.setText("");
         value.setText("");
-        
-        updateItemsCount(); //updatecountitem
+        quanti.setText("");
+        quanti.setToolTipText(null);
 
-       
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Please enter valid numeric values for Price and Quantity.");
+        updateItemsCount();
+
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error adding to checkout: " + e.getMessage());
     }
-          
     }//GEN-LAST:event_addActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
@@ -410,20 +480,19 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
     }//GEN-LAST:event_removeActionPerformed
 
     private void payandprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payandprintActionPerformed
-    
-        if (customerID.getText().trim().isEmpty() || customername.getText().trim().isEmpty()) {
+      if (customerID.getText().trim().isEmpty() || customername.getText().trim().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please enter valid Customer ID and ensure customer name is displayed.", "Missing Customer Information", JOptionPane.WARNING_MESSAGE);
         return;
     }
-        
+    
     try {
         String paymentStr = JOptionPane.showInputDialog(this, "Enter payment amount:");
         if (paymentStr == null) return; // User cancelled
-
+    
         double payment = Double.parseDouble(paymentStr);
-
+    
         DefaultTableModel checkoutModel = (DefaultTableModel) CHECKOUT.getModel();
-
+    
         double grandTotalValue = 0;
         try {
             grandTotalValue = Double.parseDouble(grandtotal.getText());
@@ -431,42 +500,42 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Invalid grand total amount.");
             return;
         }
-
+    
         if (payment < grandTotalValue) {
             JOptionPane.showMessageDialog(this, "Payment amount is less than total. Please enter a valid amount.");
             return;
         }
-
+    
         double change = payment - grandTotalValue;
         double vatRate = 0.12;
         double vatAmount = grandTotalValue * vatRate;
         double vatSalesValue = grandTotalValue - vatAmount;
-
+    
         int printConfirm = JOptionPane.showConfirmDialog(this, "Do you want to Save and Print your Receipt?", "Print", JOptionPane.YES_NO_OPTION);
-
+    
         if (printConfirm == JOptionPane.YES_OPTION) {
             // Loop through checkout items to update quantities and files
             for (int i = 0; i < checkoutModel.getRowCount(); i++) {
                 String productId = checkoutModel.getValueAt(i, 0).toString();
                 int quantitySold = Integer.parseInt(checkoutModel.getValueAt(i, 3).toString());
-
+    
                 // Update quantity in product.txt and cashierproduct.txt files
                 updateProductQuantity(productId, quantitySold);
-
+    
                 // Update quantity in productlist JTable UI
                 subtractQuantityInProductList(productId, quantitySold);
-
+    
                 // Update quantity in productstatus.txt file WITHOUT opening PRODUCTSTATUS JFrame
                 PRODUCTSTATUS ps = PRODUCTSTATUS.getInstance();
                 ps.updateQuantityInProductStatusFileWithoutTemp(productId, quantitySold);
-
+    
                 // Update UI panel only if PRODUCTSTATUS window is visible; won't open the frame
                 ps.updatePanelQuantityByProductId(productId, quantitySold);
             }
-
+    
             // Save updated productlist JTable to file
             saveTableToTextFile(productlist, "src/file_storage/cashierproduct.txt");
-
+    
             // Prepare and display receipt
             Reciept receiptFrame = new Reciept();
             receiptFrame.fillReceiptFromCheckout(CHECKOUT);
@@ -486,15 +555,15 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
                 String.format("%.2f", vatAmount),
                 customername.getText()
             );
-
-            // Save sales report to file
+    
+            // Save sales report to file and update SALESREPORT UI
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/salesreport.txt", true))) {
                 for (int i = 0; i < checkoutModel.getRowCount(); i++) {
                     String productID = checkoutModel.getValueAt(i, 0).toString();
                     String price = checkoutModel.getValueAt(i, 2).toString();
                     String quantity = checkoutModel.getValueAt(i, 3).toString();
                     String total = checkoutModel.getValueAt(i, 4).toString();
-
+    
                     Object[] row = {
                         CASHIER1.getText(),
                         referencenumber.getText(),
@@ -505,12 +574,12 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
                         total,
                         date.getText()
                     };
-
+    
                     // Optionally update SALESREPORT UI (if open)
                     SALESREPORT reportFrame = new SALESREPORT();
                     DefaultTableModel salesModel = (DefaultTableModel) reportFrame.salesreport.getModel();
                     salesModel.addRow(row);
-
+    
                     writer.write(String.join("%%", row[0].toString(), row[1].toString(), row[2].toString(),
                             row[3].toString(), row[4].toString(), row[5].toString(), row[6].toString(), row[7].toString()));
                     writer.newLine();
@@ -518,23 +587,26 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Error saving to salesreport.txt: " + e.getMessage());
             }
-
+    
             receiptFrame.setVisible(true);
-
+    
             boolean opened = receiptFrame.savePanelImageAsPDFWithCustomNameAndAutoClose();
             if (opened) {
                 receiptFrame.setVisible(false);
                 this.setVisible(true);
+    
+                // <-- Clear all inputs and checkout table after successful print
+                clearTransactionData();
             } else {
                 receiptFrame.setVisible(true);
             }
-
+    
             JOptionPane.showMessageDialog(this, "Receipt Saved and Printed.");
-
+    
         } else {
             JOptionPane.showMessageDialog(this, "Transaction cancelled.");
         }
-
+    
     } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(this, "Invalid number entered.");
     } catch (Exception ex) {
@@ -668,27 +740,59 @@ public void loadTableFromTextFile(javax.swing.JTable table, String filePath) {
     }
 }
     
+  private void clearTransactionData() {
+    // Clear all input fields except the cashier label
+    productid.setText("");
+    productn.setText("");
+    value.setText("");
+    quanti.setText("");
+    customerID.setText("");
+    customername.setText("");
     
+    // Clear CHECKOUT table
+    DefaultTableModel checkoutModel = (DefaultTableModel) CHECKOUT.getModel();
+    checkoutModel.setRowCount(0);
+
+    // Reset labels and combo box
+    subtotal.setText("0.00");
+    grandtotal.setText("0.00");
+    items.setText("0");
+    discount.setSelectedIndex(0);
+    
+    // Reload product list JTable to sync UI quantities
+    loadTableFromTextFile(productlist, "src/file_storage/cashierproduct.txt");
+
+    // Reload product status panels to show updated stock
+    PRODUCTSTATUS ps = PRODUCTSTATUS.getInstance();
+    ps.loadProductStatusPanels();
+}
+
     
     private void searchProductById(String id) {
     DefaultTableModel model = (DefaultTableModel) productlist.getModel();
 
     for (int i = 0; i < model.getRowCount(); i++) {
         String pid = model.getValueAt(i, 0).toString();
-        if (pid.equals(id)) {
-            // Found matching product ID
-            String productName = model.getValueAt(i, 1).toString(); // Column 1
-            String quantity = model.getValueAt(i, 2).toString();    // Column 2
+        if (pid.equalsIgnoreCase(id)) {
+            String productName = model.getValueAt(i, 1).toString();  // product model
+            String priceStr = model.getValueAt(i, 2).toString();     // price
+            String stockStr = model.getValueAt(i, 3).toString();     // available stock
 
             productn.setText(productName);
-            value.setText(quantity);
+            value.setText(priceStr);
+            quanti.setToolTipText("Available stock: " + stockStr);
+
             return;
         }
     }
-    // If no match found, clear the text fields
+
+    // Clear fields if not found
     productn.setText("");
     value.setText("");
+    quanti.setToolTipText(null);
 }
+
+
     
     
     
@@ -874,6 +978,40 @@ public String searchCustomerNameById(String customerId) {
 }
 
 
+private void recalculateTotals() {
+    DefaultTableModel model = (DefaultTableModel) CHECKOUT.getModel();
+    double subtotalValue = 0;
+
+    for (int i = 0; i < model.getRowCount(); i++) {
+        Object val = model.getValueAt(i, 4);  // column 4 is Total per row
+        if (val != null) {
+            try {
+                subtotalValue += Double.parseDouble(val.toString());
+            } catch (NumberFormatException ex) {
+                // ignore invalid number formats
+            }
+        }
+    }
+
+    subtotal.setText(String.format("%.2f", subtotalValue));
+
+    // Compute discount
+    String discountStr = (String) discount.getSelectedItem();
+    double discountPercent = 0;
+    if (discountStr != null && discountStr.endsWith("%")) {
+        try {
+            discountPercent = Double.parseDouble(discountStr.substring(0, discountStr.length() - 1));
+        } catch (NumberFormatException e) {
+            discountPercent = 0;
+        }
+    }
+
+    double discountAmount = subtotalValue * (discountPercent / 100.0);
+    double grandTotalValue = subtotalValue - discountAmount;
+
+    grandtotal.setText(String.format("%.2f", grandTotalValue));
+}
+
 public JTable getProductListTable() {
     return productlist;
 }
@@ -917,4 +1055,5 @@ public JTable getProductListTable() {
     private javax.swing.JLabel value;
     // End of variables declaration//GEN-END:variables
 
+    
 }

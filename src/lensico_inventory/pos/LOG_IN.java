@@ -193,6 +193,8 @@ public class LOG_IN extends javax.swing.JFrame {
         } else {
              CASHIER_EMPLOYEE cashierFrame = new CASHIER_EMPLOYEE(username);
     cashierFrame.setVisible(true);
+    cashierFrame.refreshProductList();  
+    
         }
     
     }//GEN-LAST:event_enterActionPerformed
@@ -242,6 +244,10 @@ public class LOG_IN extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    
+    
+    
+    
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
