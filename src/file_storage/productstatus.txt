@@ -2,3 +2,4 @@
 %%ausu%%45%%10%%S202510
 %%SBN%%20%%9%%S202511SS
 %%bgngh%%12%%1%%202514
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\ASUS Vivobook S15 OLED.png%%A4tech%%200%%12%%S202518

@@ -643,7 +643,51 @@ private void saveAllPanelQuantitiesToFile() {
     }//GEN-LAST:event_idActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        int confirm = JOptionPane.showConfirmDialog(
+      // === VALIDATION ===
+    if (!model.getText().matches("[a-zA-Z0-9 ]{1,500}")) {
+        JOptionPane.showMessageDialog(this, "Product Model must contain letters and numbers only (max 500 characters).");
+        model.requestFocus();
+        return;
+    }
+
+    if (!code.getText().matches("\\d{1,500}")) {
+        JOptionPane.showMessageDialog(this, "Barcode must contain numbers only (max 500 digits).");
+        code.requestFocus();
+        return;
+    }
+
+    if (!price.getText().matches("\\d+(\\.\\d+)?")) {
+        JOptionPane.showMessageDialog(this, "Unit Price must be a valid number (decimals allowed).");
+        price.requestFocus();
+        return;
+    }
+
+    if (!brand.getText().matches("[a-zA-Z ]{2,500}")) {
+        JOptionPane.showMessageDialog(this, "Brand Name must contain letters only and length must be between 2 and 500 characters.");
+        brand.requestFocus();
+        return;
+    }
+
+    if (!quantity.getText().matches("\\d{1,10}")) {
+        JOptionPane.showMessageDialog(this, "Quantity must be a number containing 1 to 10 digits only.");
+        quantity.requestFocus();
+        return;
+    }
+
+    if (description.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Specification cannot be empty.");
+        description.requestFocus();
+        return;
+    }
+
+    if (imagepath.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Icon/Image path cannot be empty. Please select an image.");
+        imagepath.requestFocus();
+        return;
+    }
+
+    // === CONFIRM SAVE ===
+    int confirm = JOptionPane.showConfirmDialog(
         this,
         "Are you sure you want to save this product?",
         "Save Confirmation",
@@ -655,6 +699,7 @@ private void saveAllPanelQuantitiesToFile() {
         return;
     }
 
+    // === GATHER FIELDS ===
     String selectedtext = type.getSelectedItem() != null ? type.getSelectedItem().toString() : "";
     String pid = id.getText();
     String pmodel = model.getText();
@@ -665,7 +710,6 @@ private void saveAllPanelQuantitiesToFile() {
     String des = description.getText();
     String iconpath = imagepath.getText();
 
-    // Validate quantity only if editing
     if (isEditing) {
         int quantityValue;
         try {
@@ -678,17 +722,16 @@ private void saveAllPanelQuantitiesToFile() {
             JOptionPane.showMessageDialog(null, "Quantity must be a valid integer number.");
             return;
         }
+        
+         loadProductStatusPanels();
+        // Update files fully (including all fields)
+        updateProductData(pid, selectedtext, pid, pmodel, barcode, uprice, brandn, quanti, des, iconpath);
 
-        // Update only quantity in product.txt and productstatus.txt and cashierproduct.txt
-        updateQuantityInFile("src/file_storage/product.txt", pid, quantityValue, true);
-        updateQuantityInFile("src/file_storage/productstatus.txt", pid, quantityValue, true);
-        updateQuantityInFile("src/file_storage/cashierproduct.txt", pid, quantityValue, true);
+        // Update matching panel UI inside jPanel1 based on proID == pid
+        updatePanelByProductId(pid, pmodel, uprice, brandn, quanti);
 
-        // Update the panel quantity text too
-        if (selectedPanel != null) {
-            selectedPanel.quantity.setText(String.valueOf(quantityValue));
-
-            // Update panel color based on quantity
+        // If quantity field is editable, update selectedPanel's stock color
+        if (quantity.isEditable() && selectedPanel != null) {
             if (quantityValue >= 15) {
                 selectedPanel.setStockLevelColor(Color.GREEN);
             } else if (quantityValue >= 8) {
@@ -700,14 +743,15 @@ private void saveAllPanelQuantitiesToFile() {
             }
         }
 
-        JOptionPane.showMessageDialog(null, "Quantity updated successfully.");
+        JOptionPane.showMessageDialog(null, "Product updated successfully.");
     } else {
-        // Your existing full product add logic here
+        // Add new product
         addNewProduct(selectedtext, pid, pmodel, barcode, uprice, brandn, quanti, des, iconpath);
         JOptionPane.showMessageDialog(null, "Successfully saved.");
         addToProductHistory(pid);
     }
 
+    // Clear and reset
     clearForm();
     isEditing = false;
     editingProductId = null;
@@ -716,7 +760,7 @@ private void saveAllPanelQuantitiesToFile() {
     type.setEnabled(true);
     quantity.setEditable(true);
 
-    loadProductStatusPanels();
+   
     }//GEN-LAST:event_saveActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -739,19 +783,19 @@ private void saveAllPanelQuantitiesToFile() {
     }//GEN-LAST:event_imagepathActionPerformed
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-    if (selectedPanel == null) {
+     if (selectedPanel == null) {
         JOptionPane.showMessageDialog(this, "Please select a product panel first.");
         return;
     }
 
-    String selectedModel = selectedPanel.model.getText();
+    String selectedProductId = selectedPanel.proID.getText();
 
     try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/product.txt"))) {
         String line;
         boolean found = false;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split("%%");
-            if (parts.length >= 8 && parts[2].equals(selectedModel)) {
+            if (parts.length >= 8 && parts[1].equals(selectedProductId)) {
                 // Populate form fields with data for editing
                 type.setSelectedItem(parts[0]);
                 id.setText(parts[1]);
@@ -764,12 +808,16 @@ private void saveAllPanelQuantitiesToFile() {
 
                 loadIconPathToIcon(parts[2]);
 
-                // Disable editing on ID, Type, Quantity fields
+                // Editable settings
                 id.setEditable(false);
-                type.setEnabled(false);
-                quantity.setEditable(false);
+                type.setEnabled(true);
+                quantity.setEditable(false);  // BLOCK quantity editing here
+                model.setEditable(true);
+                code.setEditable(true);
+                price.setEditable(true);
+                brand.setEditable(true);
+                description.setEditable(true);
 
-                // Enter edit mode
                 isEditing = true;
                 editingProductId = id.getText();
 
@@ -873,41 +921,93 @@ private void saveAllPanelQuantitiesToFile() {
         return;
     }
 
-    // Load data from selected panel into form fields
-    model.setText(selectedPanel.model.getText());
-    code.setText("");  // Will load from product.txt next
-    price.setText(selectedPanel.price.getText());
-    brand.setText("");
-    description.setText("");
-    icon.setIcon(null);
-    
-    quantity.setText(selectedPanel.quantity.getText());
-    id.setText(selectedPanel.proID.getText());
+    // Load selected panel data to form fields
+    String productId = selectedPanel.proID.getText();
 
-    // Load other details (barcode, brand, description, icon) from product.txt by product id
-    loadProductDetailsToFormById(selectedPanel.proID.getText());
+    try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/product.txt"))) {
+        String line;
+        boolean found = false;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split("%%");
+            if (parts.length >= 8 && parts[1].equals(productId)) {
+                type.setSelectedItem(parts[0]);
+                id.setText(parts[1]);
+                model.setText(parts[2]);
+                code.setText(parts[3]);
+                price.setText(parts[4]);
+                brand.setText(parts[5]);
+                quantity.setText(parts[6]);
+                description.setText(parts[7]);
 
-    // Set editable states:
+                loadIconPathToIcon(parts[2]);
+                
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            JOptionPane.showMessageDialog(this, "Product details not found.");
+            return;
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading product details.");
+        return;
+    }
+
+    // Set editable states: only quantity editable
     model.setEditable(false);
     code.setEditable(false);
     price.setEditable(false);
     brand.setEditable(false);
     description.setEditable(false);
-    quantity.setEditable(true); // Only quantity editable
-
-    // Disable user interaction on icon JLabel (just to be sure)
-    icon.setEnabled(false);
-
-    // Disable type combobox to avoid changing product type during quantity edit
+    quantity.setEditable(true);
+    id.setEditable(false);
     type.setEnabled(false);
+
+    icon.setEnabled(false);
 
     // Set editing mode flags
     isEditing = true;
-    editingProductId = selectedPanel.proID.getText();
+    editingProductId = productId;
 
     JOptionPane.showMessageDialog(this, "Only quantity is editable now. Change it and click Save.");
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void updatePanelByProductId(String productId, String newModel, String newPrice, String newBrand, String newQuantity) {
+    for (int i = 0; i < jPanel1.getComponentCount(); i++) {
+        java.awt.Component comp = jPanel1.getComponent(i);
+        if (comp instanceof PRODUCTSTATUSPPP) {
+            PRODUCTSTATUSPPP panel = (PRODUCTSTATUSPPP) comp;
+            String panelProductId = panel.proID.getText();
+            if (panelProductId.equals(productId)) {
+                panel.model.setText(newModel);
+                panel.price.setText(newPrice);
+                // If you have brand displayed on panel, update it here as well
+                panel.quantity.setText(newQuantity);
+
+                // Update stock color based on quantity
+                try {
+                    int qty = Integer.parseInt(newQuantity);
+                    if (qty >= 15) {
+                        panel.setStockLevelColor(Color.GREEN);
+                    } else if (qty >= 8) {
+                        panel.setStockLevelColor(Color.YELLOW);
+                    } else if (qty >= 1) {
+                        panel.setStockLevelColor(Color.RED);
+                    } else {
+                        panel.setStockLevelColor(null);
+                    }
+                } catch (NumberFormatException e) {
+                    panel.setStockLevelColor(null);
+                }
+                break;  // Found and updated, exit loop
+            }
+        }
+    }
+}
+    
+    
     private void loadProductDetailsToFormById(String productId) {
     try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/product.txt"))) {
         String line;
