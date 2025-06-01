@@ -153,7 +153,7 @@ private void saveTableToFile(DefaultTableModel model, String filePath) {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     String date = dateFormat.format(new Date());
 
-    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm: a");
     String time = timeFormat.format(new Date());
 
     String status = "Returned";

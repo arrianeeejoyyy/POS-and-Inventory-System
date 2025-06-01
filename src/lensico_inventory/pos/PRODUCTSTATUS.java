@@ -680,11 +680,6 @@ private void saveAllPanelQuantitiesToFile() {
         return;
     }
 
-    if (imagepath.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Icon/Image path cannot be empty. Please select an image.");
-        imagepath.requestFocus();
-        return;
-    }
 
     // === CONFIRM SAVE ===
     int confirm = JOptionPane.showConfirmDialog(
@@ -1520,7 +1515,7 @@ public void addToProductHistory(String productId) {
     try {
         // Get current date and time
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm a"));
         String status = "Active";
 
         // Access ACCHISTORY instance and its historyP JTable
@@ -1534,7 +1529,7 @@ public void addToProductHistory(String productId) {
         DefaultTableModel model = (DefaultTableModel) accHistory.historyP.getModel();
 
         // Add new row to JTable
-        model.addRow(new Object[] { productId, date, time, status });
+        model.addRow(new Object[] { productId, date, currentTime, status });
 
         // Save JTable data to file src/file_storage/historyP.txt
         saveHistoryPToFile(accHistory.historyP, "src/file_storage/historyP.txt");

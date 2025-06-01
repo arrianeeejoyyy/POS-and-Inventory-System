@@ -67,7 +67,7 @@ public class USERSETTING extends javax.swing.JFrame {
 
         // Prepare current date and time strings
         String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm a"));
 
         String status = "Active";  // or any default status you want to show
 

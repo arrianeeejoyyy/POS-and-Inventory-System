@@ -618,10 +618,10 @@ public void addToHistoryC(String customerId) {
 
         // Get current date/time
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm a"));
         String status = "ACTIVE";
 
-        Object[] newRow = { customerId, date, time, status };
+        Object[] newRow = { customerId, date, currentTime, status };
         historyModel.addRow(newRow);
 
         // Save back to file

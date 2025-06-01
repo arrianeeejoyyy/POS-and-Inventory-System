@@ -218,7 +218,7 @@ discount.addActionListener(e -> applyDiscount());
         getContentPane().add(grandtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 650, 200, 20));
 
         discount.setBackground(new java.awt.Color(0, 0, 51));
-        discount.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        discount.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         discount.setForeground(new java.awt.Color(255, 255, 255));
         discount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "5%", "10%", "15%", "20%", "25%", "30%", " " }));
         discount.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -234,7 +234,7 @@ discount.addActionListener(e -> applyDiscount());
         });
         getContentPane().add(newtransaction, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 180, 150, 30));
 
-        TAX.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        TAX.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         TAX.setForeground(new java.awt.Color(255, 255, 255));
         TAX.setText("12%");
         getContentPane().add(TAX, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 620, -1, -1));

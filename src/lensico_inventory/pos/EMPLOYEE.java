@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -548,11 +550,11 @@ public class EMPLOYEE extends javax.swing.JFrame {
 
             // Prepare row data: id, date, time, status "Active"
             String date = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            String time = java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
+            String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm a"));
             String status = "Active";
 
             javax.swing.table.DefaultTableModel historyModel = (javax.swing.table.DefaultTableModel) historyWindow.historyE.getModel();
-            historyModel.addRow(new Object[] { id, date, time, status });
+            historyModel.addRow(new Object[] { id, date, currentTime, status });
 
             saveHistoryETableToFile(historyWindow);
 
