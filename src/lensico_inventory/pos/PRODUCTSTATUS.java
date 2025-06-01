@@ -29,6 +29,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import lensico_inventory.pos.PRODUCTSTATUSPPP;
 
 public class PRODUCTSTATUS extends javax.swing.JFrame {
           private static final int baseProductId = 202500;
@@ -39,6 +40,8 @@ private String editingProductId = null;       // Stores the Product ID currently
         
          private static PRODUCTSTATUS instance;
 
+         private ProductStatusPanelHelper panelHelper;
+         
     public static PRODUCTSTATUS getInstance() {
         if (instance == null) {
             instance = new PRODUCTSTATUS();
@@ -69,6 +72,9 @@ private String editingProductId = null;       // Stores the Product ID currently
                  }
              }
          });
+         
+         panelHelper = new ProductStatusPanelHelper(this, jPanel1);
+panelHelper.loadPanelsFromFile("src/file_storage/productstatus.txt");
          
           // Block non-digit input in contact number
         price.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -136,7 +142,7 @@ private String editingProductId = null;       // Stores the Product ID currently
         addtype.setBackground(new Color (0,0,0,0));
         
  
-    loadProductStatusPanels(); 
+    panelHelper.loadPanelsFromFile("src/file_storage/productstatus.txt");
     
       type.addActionListener(e -> generateProductId());
     }
@@ -640,7 +646,7 @@ private void saveAllPanelQuantitiesToFile() {
     }//GEN-LAST:event_idActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-       int confirm = JOptionPane.showConfirmDialog(
+      int confirm = JOptionPane.showConfirmDialog(
         this,
         "Are you sure you want to save this product?",
         "Save Confirmation",
@@ -704,7 +710,6 @@ private void saveAllPanelQuantitiesToFile() {
         return;
     }
 
-    // If all validations pass, continue with save/update
     if (isEditing) {
         updateProductData(editingProductId, selectedtext, pid, pmodel, barcode, uprice, brandn, quanti, des, iconpath);
         JOptionPane.showMessageDialog(null, "Product updated successfully.");
@@ -723,7 +728,14 @@ private void saveAllPanelQuantitiesToFile() {
     type.setEnabled(true);
     quantity.setEditable(true);
 
-    loadProductStatusPanels();
+    // Use panelHelper to reload panels and update UI
+    panelHelper.loadPanelsFromFile("src/file_storage/productstatus.txt");
+
+    // Update the quantity in the specific product panel
+    panelHelper.updatePanelQuantity(pid, quantityValue);
+
+    // Select and highlight the updated/added product panel
+    panelHelper.selectPanelByProductId(pid);
     }//GEN-LAST:event_saveActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -746,19 +758,23 @@ private void saveAllPanelQuantitiesToFile() {
     }//GEN-LAST:event_imagepathActionPerformed
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-    if (selectedPanel == null) {
+         if (selectedPanel == null) {
         JOptionPane.showMessageDialog(this, "Please select a product panel first.");
         return;
     }
 
-    String selectedModel = selectedPanel.model.getText();
+    String selectedProductId = selectedPanel.proID.getText();
 
     try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/product.txt"))) {
         String line;
         boolean found = false;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split("%%");
-            if (parts.length >= 8 && parts[2].equals(selectedModel)) {
+
+            // Debug
+            System.out.println("Checking product.txt ID: '" + parts[1] + "' vs selectedPanel ID: '" + selectedProductId + "'");
+
+            if (parts.length >= 8 && parts[1].trim().equalsIgnoreCase(selectedProductId.trim())) {
                 // Populate form fields with data for editing
                 type.setSelectedItem(parts[0]);
                 id.setText(parts[1]);
@@ -771,12 +787,10 @@ private void saveAllPanelQuantitiesToFile() {
 
                 loadIconPathToIcon(parts[2]);
 
-                // Disable editing on ID, Type, Quantity fields
                 id.setEditable(false);
                 type.setEnabled(false);
                 quantity.setEditable(false);
 
-                // Enter edit mode
                 isEditing = true;
                 editingProductId = id.getText();
 
