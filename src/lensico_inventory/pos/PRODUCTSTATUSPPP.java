@@ -30,8 +30,8 @@ public class PRODUCTSTATUSPPP extends javax.swing.JPanel {
 
   
   public void setStockLevelColor(Color color) {
-    jLabel1.setOpaque(true);  // Make sure background color will show
-    jLabel1.setBackground(color);
+    ICON.setOpaque(true);  // Make sure background color will show
+    ICON.setBackground(color);
     repaint();
 }
     @SuppressWarnings("unchecked")
@@ -43,31 +43,39 @@ public class PRODUCTSTATUSPPP extends javax.swing.JPanel {
         quantity = new javax.swing.JLabel();
         price = new javax.swing.JLabel();
         proID = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        ICON = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        image.setBackground(new java.awt.Color(102, 102, 102));
         add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 16, 155, 95));
+        add(model, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 48, 190, 18));
 
-        model.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        model.setForeground(new java.awt.Color(255, 255, 255));
-        add(model, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 140, 18));
+        quantity.setBackground(new java.awt.Color(255, 255, 255));
+        add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 88, 150, 20));
+        add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 68, 110, 18));
+        add(proID, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 28, 180, 20));
 
-        quantity.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        quantity.setForeground(new java.awt.Color(255, 255, 255));
-        add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 150, 20));
+        jLabel2.setText("MODEL :");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 80, -1));
 
-        price.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        price.setForeground(new java.awt.Color(255, 255, 255));
-        add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 70, 18));
+        jLabel3.setText("PRICE : ");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 70, -1));
 
-        proID.setForeground(new java.awt.Color(255, 255, 255));
-        proID.setText("jLabel2");
-        add(proID, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 180, 20));
+        jLabel4.setText("QUANTITY : ");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, -1));
 
-        jLabel1.setBackground(new java.awt.Color(0, 0, 255));
-        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 130));
+        jLabel5.setText("PRODUCT ID : ");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, -1, -1));
+
+        ICON.setBackground(new java.awt.Color(0, 0, 255));
+        ICON.setForeground(new java.awt.Color(153, 153, 153));
+        ICON.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        add(ICON, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 130));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -85,8 +93,12 @@ public class PRODUCTSTATUSPPP extends javax.swing.JPanel {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ICON;
     public javax.swing.JLabel image;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     public javax.swing.JLabel model;
     public javax.swing.JLabel price;
     public javax.swing.JLabel proID;

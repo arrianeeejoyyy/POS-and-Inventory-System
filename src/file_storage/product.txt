@@ -1,0 +1,483 @@
+Laptop%%L202501%%TUF Gaming A15%%2134549876543%%57,594%%ASUS%%10%%Operating System : Windows 11 Home
+
+Processor : AMD Ryzen™ 7-7435HS
+
+Graphics : GeForce RTX™ 2050
+
+Display : 15.6” Full-HD 144Hz
+
+Memory : 8GB 5600MHz DDR5
+
+Storage : 512GB M.2 PCIe NVMe SSD
+
+Keyboard : Backlit Chiclet Keyboard, 1-Zone RGB
+
+Touchpad : Yes
+
+Webcam : 720P HD camera
+Laptop%%L202502%%Vivobook S15 OLED%%987654302134%%79,999%%ASUS%%15%%Operating System: Windows 11 Home
+
+Model: S5507QA-MA032WSM (90NB14Q2-M009D0)
+
+Processor: Snapdragon® X Elite X1E 78 100
+
+Graphics: Qualcomm® Adreno™ Graphics
+
+Display: 15” 120Hz OLED
+
+Memory: 16GB LPDDR5X
+
+Storage: 1TB M.2 PCIe NVMe SSD
+
+Microsoft Office: MS Office Home and Student 2021
+Laptop%%L202503%%Vivobook Go 14%%874563470341%%33,599%%ASUS%%10%%Operating System: Windows 11 Home
+
+Processor: Intel® Core™ i3-N305
+
+Graphics: Intel® Iris® X Graphics
+
+Display: 14” Full-HD
+
+Memory: 8GB LDDR5
+
+Storage: 512GB M.2 PCIe NVMe SSD
+Laptop%%L202504%%Thin A15 %%1324098765%%42,995%%MSI%%5%%CPU: AMD Ryzen™ 5 7535HS Processor; 6 cores, Max Boost Clock 4.55 GHz
+
+OPERATING SYSTEMS: Windows 11 Home (MSI recommends Windows 11 Pro for business.)
+
+DISPLAY: 15.6" FHD(1920x1080), 144Hz Refresh Rate, IPS-Level
+
+CHIPSET: Integrated SoC
+
+DISCRETE GRAPHICS: NVIDIA® GeForce RTX™ 2050 Laptop GPU; Up to 1170MHz Boost Clock 45W Maximum Graphics Power with Dynamic Boost. *May vary by scenario
+
+VIDEO MEMORY: 4GB GDDR6
+
+MEMORY: 8GB*1, DDR5-4800
+
+MEMORY SLOT AND MAX CAPACITY: 2 Slots, Max 64GB
+
+STORAGE: 512GB*1 NVMe SSD PCIe Gen4
+
+STORAGE SLOT: 1x M.2 SSD slot (NVMe PCIe Gen4)
+Laptop%%L202505%% Sword 16 HX%%98764321245%%74,995%%MSI%%7%%CPU: Intel® Core™ i5 processor 14450HX, 10 cores (6 P-cores + 4 E-cores), Max Turbo Frequency 4.8 GHz
+
+Operating Systems: Windows 11 Home (MSI recommends Windows 11 Pro for business.)
+
+Display: 16" FHD+(1920x1200), 144Hz Refresh Rate, IPS-Level
+
+Chipset: Intel® HM770
+
+Discrete Graphics: NVIDIA® GeForce RTX™ 4060 Laptop GPU powers advanced AI with 233 AI TOPS. Up to 2340MHz Boost Clock 115W Maximum Graphics Power with Dynamic Boost. *May vary by scenario
+
+Video Memory: 8GB GDDR6
+
+Memory: 8GB*1, Up to DDR5-5600 *Vary by Memory capacity
+
+Memory Slot and Max Capacity: 2 Slots, Max 96GB
+
+Storage: 512GB*1 NVMe SSD PCIe Gen4
+
+Storage Slot: 1x M.2 SSD slot (NVMe PCIe Gen4), 1x M.2 SSD slot (NVMe PCIe Gen5) Compatible
+
+Keyboard: 24-Zone RGB Gaming Keyboard with Copilot Key
+Laptop%%L202506%% IdeaPad Slim 3 %%86786756234328%%36,995%%LENOVO%%10%%Processor	Intel Core i5-12450H, 8C (4P + 4E) / 12T, P-core 2.0 / 4.4GHz, E-core 1.5 / 3.3GHz, 12MB
+
+Graphics	Integrated Intel UHD Graphics
+
+Chipset	Intel SoC Platform
+
+Memory	16GB Soldered LPDDR5-4800
+
+Memory Slots	Memory soldered to systemboard, no slots, dual-channel (16GB models)
+
+Max Memory	16GB soldered memory, not upgradable
+
+Storage	512GB SSD M.2 2242 PCIe 4.0x4 NVMe
+
+Storage Support	One drive, up to 1TB M.2 2242 SSD
+
+Storage Slot	One M.2 PCIe 4.0 x4 slot
+Laptop%%L202507%%Ideapad Flex 5i%%1455986765406%%42,995%%LENOVO%%17%%Processor	Intel Core i3-1215U, 6C (2P + 4E) / 8T, P-core 1.2 / 4.4GHz, E-core 0.9 / 3.3GHz, 10MB
+
+Graphics	Integrated Intel UHD Graphics
+
+Chipset	Intel SoC Platform
+
+Memory	8GB Soldered LPDDR4x-4266
+
+Memory Slots	Memory soldered to systemboard, no slots, dual-channel (8GB or 16GB models)
+
+Max Memory	8GB soldered memory, not upgradable
+
+Storage	512GB SSD M.2 2280 PCIe 3.0x4 NVMe
+
+Storage Support	One drive, up to 1TB M.2 2242 SSD or 512GB M.2 2280 SSD
+
+Storage Slot	One M.2 2280 PCIe 4.0 x4 slot
+Laptop%%L202508%%MacBook Air  M1%%400981123246%%45,990%%APPLE%%20%%Key feature bullets
+
+M1 chip for capable performance
+
+8-core CPU and 7-core GPU to devour everyday tasks
+
+16-core Neural Engine for advanced machine learning tasks
+
+8GB of unified memory makes everything you do fast and fluid
+
+Go all day with up to 18 hours of battery life1
+
+Superfast SSD storage launches apps and opens files in an instant
+
+Fanless design for silent operation
+
+13.3-inch Retina display with P3 wide color for vibrant images and incredible detail2
+Laptop%%L202509%%MacBook Air M2%%34567098245%%49,990%%APPLE%%13%%M2 chip for amazing performance
+
+8-core CPU and up to 10-core GPU to power through complex tasks
+
+16-core Neural Engine for advanced machine learning tasks
+
+Up to 24GB of unified memory makes everything you do fast and fluid
+
+Up to 20 percent faster for applying image filters and effects
+
+Up to 40 percent faster for editing complex video timelines
+
+Go all day with up to 18 hours of battery life
+
+Fanless design for silent operation
+
+13.6-inch Liquid Retina display with 500 nits of brightness and P3 wide color for vibrant images and incredible detail
+Laptop%%L202510%%MacBook Pro  M3%%313009876534%%100,390%%APPLE%%5%%  SUPERCHARGED BY M3 — With an 8-core CPU and 10-core GPU using hardware-accelerated ray tracing, the Apple M3 chip can help you blaze through everyday multitasking and take on pro projects like editing thousands of photos or 4K video.
+
+
+
+•  UP TO 22 HOURS OF BATTERY LIFE — Go all day thanks to the power-efficient design of Apple silicon. MacBook Pro delivers the same exceptional performance whether it’s running on battery or plugged in.
+
+
+
+•  RESPONSIVE UNIFIED MEMORY AND STORAGE — Up to 24GB of unified memory makes everything you do fast and fluid. Up to 2TB of superfast SSD storage launches apps and opens files in an instant.²
+
+
+
+•  BRILLIANT PRO DISPLAY — The 14.2-inch Liquid Retina XDR display³ features Extreme Dynamic Range, 1,000 nits of sustained brightness for stunning HDR content, up to 600 nits of brightness for SDR content, and pro reference modes for doing your best work on the go.
+
+
+
+•  FULLY COMPATIBLE — All your pro apps run lightning fast — including Adobe Creative Cloud, Apple Xcode, Microsoft 365, Medivis SurgicalAR, and many of your favorite iPhone and iPad apps.⁴ And with macOS, work and play on your Mac are even more powerful. Elevate your presence on video calls. Access information in 
+
+
+
+all-new ways. And discover even more ways to personalize your Mac. 
+Screen Monitor%%S202511%%Gaming Monitor AGON%%3129875665412%%18,399%%AOC%%10%%• Model Name: AG275QXR
+
+	• Panel: 27" (IPS LCD )
+
+	• EAN: 697 398523 091 2
+
+	• Pixel Pitch (mm): 0.2331 (H) × 0.2331 (V)
+
+	• Effective Viewing Area (mm): 596.736 (H) × 335.664 (V)
+
+	• Brightness (typical): 350 cd/m²
+
+	• Contrast Ratio: 1000 : 1 (Typical) 80 Million: 1 (DCR)
+
+	• Response Time: 1ms (GtG)
+
+	• Viewing Angle: 178° (H) / 178° (V) (CR > 10)
+
+	• Color Gamut: NTSC 106% (CIE1976) / sRGB 104% (CIE1931) / DCI-P3 97% (CIE1976)
+Mouse%%M202512%% M18 RGB Colorful Honeycomb%%1233455687609%%199%%Zeus%%20%%This gaming mouse has four adjustable DPI levels, 1200, 1800, 2400 and 3600, suitable for different scenarios. The 1.5-meter-long wired USB cable ensures stable connection and fast data transmission during use. The mouse supports four-level DPI instantaneous switching, which can easily cope with a variety of operation needs.
+KeyBoard %%K202513%%LIMEIDE V2%%234559876543%%399%%ZEUS%%12%%Anti-slip and sweat-proof design, smooth scrolling without lag, easier web page/document page turning, comfortable and long-lasting feel.
+
+Click crisp rebound fast, no lag delay, combo operation is as stable as a rock, helping you control the whole scene.
+
+Colorful streamer light effects, support multi-color switching, inject a cool atmosphere into the game, and make the operation more exciting!
+
+KeyBoard %%K202514%%35 Keys One Handed%%5098765299872234%%249%%ZEUS%%20%%Brand: Zeus
+
+Model: K-68
+
+Product Type: One-handed keyboard
+
+Upper and lower cover material: ABS injection molding material
+
+Support N-key rollover: Yes
+
+Light effect: Multipl cool light effects, with breathing light
+
+Number of keys: 35
+
+Interface: USB
+
+Working voltage: DC 5.0V±5%
+
+Working current: 80mA (Max.)
+
+Product size: 260*180*35mm/10.24*7.09*1.38"
+
+Product weight: 300g
+
+Support OS: Compatible with IBM PC Win98 SE/ME/2000/XP/VISTA/7/10
+KeyBoard %%K202515%%Slim Quiet Silent Keyboard Purple%%13244568098764%%487%%ZEUS%%20%%· RGB Lighting Keyboard --Zeus purple keyboard with cool RGB lighting. Pudding Keycaps provide crystal clear uniform backlight and ergonomic curves, more advanced technology, clearer fonts and better light transmission.The bottom of the keyboard is designed with a foldable bracket, choose the height you need
+
+· Comfortable Typing Experience and Full 104 Keys Anti-ghosting--Purple keyboard, that responds fast with no lag, this gaming keyboard and mouse combo will offer you wonderful tactile feedback on each keypress. Gives you a comfortable typing experience and improves the accuracy of keystrokes. This purple wired keyboard is ideal for gaming and office work
+
+
+Mouse %%M202516%% M88 Silent Click Wired RGB Mouse%%15677808887%%287%%ZEUS%%8%%Zeus M-88 Silent Click Wired RGB Mouse 2 Colors RGB Mouse 4 DPI Adjustment For Home Office Game
+
+【RGB 7-Color Breathing Light】 The light supports constant on,cycle and turn off.
+
+【4 DPI Options for Games &amp; Work】 800/ 1600/ 2400/ 3200 DPI Resolution Optical Tracking Technology provides sensitivity and precise tracking on a wide range of surfaces. Meet your multiple needs, either for daily work or gaming.
+
+【Comfort &amp; Precision at Your Hands】 The ergonomic shape design plus scroll wheel with rubber and skin-friendly surface provide you the most comfortable feeling in hand for long time. Excellent wired gaming mouse for casual pc gamers.
+
+【Silent Click】Silent Clicking Design For Left And Right Button Fits The Circumstance For Using The Mouse In Public, Such As Library, Dormitory, Office And So On.This Design Results Worry-Free For Disturbing Others
+
+【Plug and Play, Easy to Use】 Easy and quick to use. Support USB: 2.0/3.0 port. 7 programmed buttons and adjustable hyper-fast scroll wheel for fast, accurate maneuvers.
+
+【Universal Compatibility】 Well compatible with PC Laptop Desktop Computer, works perfectly for System of Windows 10, 8, 7, Vista, XP, Mac OS/ Linux or latest operating system. 
+KeyBoard %%K202517%% Wired Gaming Keyboard Multi Colors%%6780965432%%687%%ZEUS%%5%%Product Size: 39.5 x 15.3 x 3.3cm
+
+Weight: 900g
+
+System Compatibility: IBM, PC, Windows, Mac
+
+With its customizable lighting effects, multimedia functions, and compatibility with various gaming platforms, the K77 Mixed LED Light 98 Key Contrast Color Gaming Keyboard offers versatility and performance for gamers.
+KeyBoard %%K202518%%K200 Slim Wireless Keyboard And Mouse%%310978653124%%799%%ZEUS%%7%%· 【Best Cost Performance 2.4G Wireless Keyboard Mouse Set】2.4G wireless technology ensures stable communication and comfortable operation without delays or missing communications. No extra drivers needed, just plug the receiver into your PC's USB port and you're ready to go. Furthermore, it achieves a working distance of up to 32.8 ft
+
+· Comfortable Input & Quiet Design: The 115 keys in a standard Japanese arrangement can be achieved with a perfect 0.07 inch (1.8 mm) keystrokes for a light touch. The wireless mouse adopts silent technology, much quieter than other clicks on mouse, so you can feel free to use it even in a quiet environment without worrying about a click
+
+· Ergonomic & Anti-Slip Design: Ergonomic tilt design reduces stress when typing. There is no type error and a place that makes it easy to enter. The rubber mat also acts as a non-slip surface. Function keys allow quick access to frequently used media and search. Greatly increases your work efficiency
+
+· 【Wide Compatibility】Compatible with Windows 10, Win 11, Win 8, Win7, Win Vista, Win XP, Win 2000 laptop, USB-A port Mac. Operates on PC, Desktop, PC and Laptop. Set Includes: 1 x 2.4G wireless keyboard, 1 x 2.4G wireless mouse, 1 x USB receiver, 1 x 
+KeyBoard %%K202519%% Raiku Wired Rainbow LED%%6798765431456557%%875%%ZEUS%%12%%Light Color: Mixed LED light
+
+Product Size: 39.5 x 15.3 x 3.3cm
+
+Weight: 900g
+
+System Compatibility: IBM, PC, Windows, Mac
+
+With its customizable lighting effects, multimedia functions, and compatibility with various gaming platforms, the K77 Mixed LED Light 98 Key Contrast Color Gaming Keyboard offers versatility and performance for gamers.
+Tablet%%T202520%%MatePad 11 New%%134560987463243%%17,699%%HUAWEI%%15%%HUAWEI MatePad 11.5 is made out of a whole piece of aluminium alloy
+and adopts an integrated design, thanks to its Cavity Slot Magnetic
+(CSM) antennae. It’s even more than meets the eye
+by packing an easy-to-grip micro-curved middle frame.
+
+As light as11
+499 g
+
+As thin as11
+6.85 mm
+
+
+Tablet%%T202521%%MatePad 12 X Tablet%%3425098765432%%31,999%%HUAWEI%%15%%Tablet (built-in battery) × 1
+
+HUAWEI SuperCharge Adaptor × 1
+
+USB Type-C Cable × 1
+
+Quick Start Guide × 1
+
+Warranty Card (Dependent on market) × 1
+
+Polishing cloth (only for PaperMatte Edition)
+
+HUAWEI Smart Magnetic Keyboard (Powered by NearLink) × 1
+
+*Please refer to actual product.
+Tablet%%T202522%%Ipad 11th Gen A16%%34500987654%%24,990%%APPLE%%13%%The 11-inch iPad is now more capable than ever with the superfast A16 chip, Liquid Retina display,1 advanced
+
+cameras, fast Wi-Fi 6 and 5G,2 USB-C connector, and four gorgeous colors. iPad delivers a powerful way to
+
+create, stay connected, and get things done — all for a surprisingly affordable price.
+Tablet%%T202523%% iPad Air 13inch M2%%1099876543323%%62,090%%APPLE%%12%%Now available in a 13-inch model,¹ iPad Air is supercharged by the incredibly fast Apple M2 chip. It features a stunning Liquid Retina display, a new landscape camera perfect for FaceTime and video calls, and superfast
+
+ Wi-Fi 6E² and 5G.³ And it works with the new Apple Pencil Pro and Magic Keyboard, so you can multitask, study, work, play, and create from anywhere.
+Tablet%%T202524%% iPad 10th Gen%%98765434234%%31,990%%APPLE%%15%%Striking 10.9-inch Liquid Retina display (1) with True Tone
+
+. A14 Bionic chip with 6-core CPU and 4-core GPU
+
+. 12MP Wide back camera 
+
+. Landscape 12MP Ultra Wide front camera with Center Stage
+
+. Touch ID for secure authentication 
+
+. Wi-Fi 6 and 5G (sub-6 GHz) cellular (2)
+
+. USB-C connector for charging and accessories
+
+. Go far with all-day battery life (3)
+
+. Works with Apple Pencil (1st generation) (4) and Magic Keyboard Folio
+
+. iPadOS 16 makes your iPad even more capable with powerful new productivity and collaboration features
+Screen Monitor%%S202525%%Curved Gaming Monitor 30 inch%%234545756757%%14,399%%XIAOMI%%11%%Product name:  Xiaomi Curved Gaming Monitor 30 inch
+
+Product model no.: RMMNT30HFCW
+
+Power input: 12V⎓4.0A
+
+Rated power: 48W Max.
+
+Screen size: 30"
+
+Visible area size (diagonal): 749.3mm
+
+Dot pitch: 0.2697 × 0.2697mm
+
+Brightness: 300cd/m² (TYP)
+
+Contrast: 3000:1 (TYP)
+
+Dynamic contrast: 1000000:1
+
+Color: 16.7 million
+Screen Monitor%%S202526%%4K Monitor A27Ui EU%%355647587234%%15,079%%XIAOMI%%5%%Product model P27UCB-RAGL
+
+Aspect ratio 16:9
+
+Power input 24V 5A
+
+Resolution 3840 x 2160
+
+Rated power 120W
+
+Maximum refresh rate 60Hz
+
+Screen dimensions 27 inches
+
+Response time 6ms (typical)
+
+Dot pitch 0.1554 (H) x 0.1554 (V)mm
+
+Product dimensions (including base) 613 x 185 x 511mm
+
+Brightness360nits (typical)
+
+Product net weight (including base)5.5kg
+Screen Monitor%%S202527%%Gaming Monitor G27i%%465567765%%7,699%%XIAOMI%%6%%Product model:P27FBB-RGGL
+
+Power input:12V⎓3.0A
+
+Rated power:36W
+
+Screen size:27"
+
+Viewing angle:178 (H) / 178 (V)
+
+Brightness:250nits (typ)
+
+Contrast ratio:1000:1
+
+Color depth:16.7M
+
+Aspect ratio:16:9
+
+Resolution:1920 × 1080
+
+Panel refresh rate (max.):165Hz
+Screen Monitor%%S202528%%A22i Monitor%%88765431378%%4,073%%XIAOMI%%15%%Product model: A22FAB-RAGL
+
+Power input: 12V⎓2.0A
+
+Rated power*: 24W Max.
+
+Screen size: 21.45"
+
+Brightness: 250 nits (typ) 
+
+Contrast ratio: 3000:1 (typ)
+
+Color depth: 16.7 million
+
+Aspect ratio: 16:9
+
+Maximum resolution: 1920 x 1080
+
+HDMI maximum refresh rate: 75Hz
+
+Dimensions: 493 (L) x 165 (W) x 376 (H) mm
+Screen Monitor%%S202529%%IPS Monitor 100Hz Framless Flat%%766764357%%3,559%%NVISION%%13%%Model:  N2455-PRO 24" Black/White
+
+Display Size: 23.8"
+
+Panel Type:  IPS
+
+Refresh Rate: 100Hz
+
+Response Time: 5Ms
+
+Resolution: 1920*1080 Fhd
+
+Brightness: 230Cd/m2
+
+Contrast Ratio: 1000:1
+
+Display Colors：16.7M
+
+Viewing Angle：170(H) X 170(V)
+
+Interface：HDMI*1 VGA*1,  DC input
+
+Power Adaptor: AC220V, DC 12V/2.5A
+
+Accessories: HDMI Cable *1, Metal Stand&Screw, Screw Driver, Instruction Manual, Warranty Card
+Screen Monitor%%S202530%% Curved Gaming Monitor 180HZ%%9756342424%%7,835%%NVISION%%7%%Model:  ES27G1-PRO 27" 180HZ Black
+
+Display Size: 27"
+
+Panel Type: VA Technology
+
+Refresh Rate: 144HZ/165HZ/180Hz
+
+Response Time: 1Ms G To G
+
+Resolution: 1920*1080P
+
+Brightness: 230Cd/m2
+
+Contrast Ratio: 1500:1
+
+Display Colors：16.7M
+
+Viewing Angle：170(H) X 170(V)
+
+Interface：HDMI*1 DP*1 DVI*1,  DC input
+
+Power Adaptor: AC220V, DC 12V/3A
+
+Accessories:DP Cable *1, Metal Stand&Screw, Screw Driver, Instruction Manual, Warranty Card, Wall Bracket
+Screen Monitor%%S202531%%24 Inch Monitor 100Hz Framless Flat%%33245678%%4,079%%NVISION%%20%%Variation:
+
+Brand: Nvision
+
+Model:  N2410
+
+Color: Black / White
+
+Display Size: 23.8''
+
+Panel Type:  VA
+
+Refresh Rate: 100Hz
+
+Resolution: 1920*1080 FHD
+
+Brightness: 230cd/m2
+
+Contrast Ratio: 1000:1
+
+Display Colors：16.7M
+
+Viewing Angle：170(H) X 170(V)
+
+Interface：HDMI*1 VGA*1,  DC input
+
+Power Adaptor: AC220V, DC 12V/2.5A
+
+Accessories: HDMI Cable *1, Metal Stand&Screw, Screw Driver, Instruction Manual, Warranty Card

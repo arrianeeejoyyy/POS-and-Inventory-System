@@ -74,17 +74,7 @@ private String editingProductId = null;       // Stores the Product ID currently
          });
          
           // Block non-digit input in contact number
-        price.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyTyped(java.awt.event.KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!Character.isDigit(c) && !Character.isISOControl(c)) {
-                    e.consume(); // Prevent input
-                    JOptionPane.showMessageDialog(null, "Only numeric values are allowed for Contact Number.");
-                }
-            }
-        });
-        
+      
          code.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent e) {
@@ -656,7 +646,7 @@ private void saveAllPanelQuantitiesToFile() {
         return;
     }
 
-    if (!price.getText().matches("\\d+(\\.\\d+)?")) {
+    if (!price.getText().matches("\\d+([.,]\\d+)?")) {
         JOptionPane.showMessageDialog(this, "Unit Price must be a valid number (decimals allowed).");
         price.requestFocus();
         return;
