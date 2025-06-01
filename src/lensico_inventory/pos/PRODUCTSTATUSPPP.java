@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 public class PRODUCTSTATUSPPP extends javax.swing.JPanel {
      
 
+    
+   
  
   
     public PRODUCTSTATUSPPP() {

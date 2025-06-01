@@ -31,6 +31,9 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 public class PRODUCTSTATUS extends javax.swing.JFrame {
+    
+    
+    
           private static final int baseProductId = 202500;
         private static int ProductCounter = 1;
     
@@ -58,8 +61,52 @@ private String editingProductId = null;       // Stores the Product ID currently
         generateProductId();  // Generate ID based on that
         id.setEditable(false);
         
-        description.setOpaque(false);
-        description.setBackground(new Color (0,0,0,0));
+         // name: no digits
+         brand.addKeyListener(new java.awt.event.KeyAdapter() {
+             @Override
+             public void keyTyped(java.awt.event.KeyEvent e) {
+                 char c = e.getKeyChar();
+                 if (Character.isDigit(c)) {
+                     e.consume();
+                     JOptionPane.showMessageDialog(null, "Numbers are not allowed in the Name field.");
+                 }
+             }
+         });
+         
+          // Block non-digit input in contact number
+        price.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) && !Character.isISOControl(c)) {
+                    e.consume(); // Prevent input
+                    JOptionPane.showMessageDialog(null, "Only numeric values are allowed for Contact Number.");
+                }
+            }
+        });
+        
+         code.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) && !Character.isISOControl(c)) {
+                    e.consume(); // Prevent input
+                    JOptionPane.showMessageDialog(null, "Only numeric values are allowed for Contact Number.");
+                }
+            }
+        });
+         
+           quantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) && !Character.isISOControl(c)) {
+                    e.consume(); // Prevent input
+                    JOptionPane.showMessageDialog(null, "Only numeric values are allowed for Contact Number.");
+                }
+            }
+        });
+        
         
         imagepath.setOpaque(false);
         imagepath.setBackground(new Color (0,0,0,0));
@@ -413,7 +460,7 @@ private void saveAllPanelQuantitiesToFile() {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
-        description.setBackground(new java.awt.Color(0, 0, 0));
+        description.setBackground(new java.awt.Color(102, 102, 102));
         description.setColumns(20);
         description.setForeground(new java.awt.Color(255, 255, 255));
         description.setRows(5);
@@ -429,11 +476,11 @@ private void saveAllPanelQuantitiesToFile() {
                 saveActionPerformed(evt);
             }
         });
-        getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 750, 130, 30));
+        getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 740, 120, 20));
 
         jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton2.setContentAreaFilled(false);
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 750, 120, 30));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 740, 120, 20));
 
         jPanel1.setAlignmentY(0.0F);
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
@@ -456,7 +503,7 @@ private void saveAllPanelQuantitiesToFile() {
                 editActionPerformed(evt);
             }
         });
-        getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 720, 130, 30));
+        getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 710, 120, 20));
 
         delete.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         delete.setContentAreaFilled(false);
@@ -465,26 +512,41 @@ private void saveAllPanelQuantitiesToFile() {
                 deleteActionPerformed(evt);
             }
         });
-        getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 720, 130, 30));
+        getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 710, 130, 20));
 
         jButton6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton6.setContentAreaFilled(false);
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 688, 130, 20));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 680, 160, 20));
 
         savetype.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         savetype.setContentAreaFilled(false);
-        getContentPane().add(savetype, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 50, 100, 20));
+        savetype.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                savetypeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(savetype, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 50, 110, 20));
 
         deletetype.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         deletetype.setContentAreaFilled(false);
-        getContentPane().add(deletetype, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 90, 100, 20));
+        deletetype.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletetypeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(deletetype, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 80, 100, 20));
 
         addtype.setForeground(new java.awt.Color(255, 255, 255));
         addtype.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         addtype.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(addtype, new org.netbeans.lib.awtextra.AbsoluteConstraints(779, 80, 170, 20));
+        getContentPane().add(addtype, new org.netbeans.lib.awtextra.AbsoluteConstraints(759, 80, 210, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/PRODUCT STATUS_1.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/PRODUCT STATUS.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -581,7 +643,19 @@ private void saveAllPanelQuantitiesToFile() {
     }//GEN-LAST:event_idActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-    String selectedtext = type.getSelectedItem().toString();
+        int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Are you sure you want to save this product?",
+        "Save Confirmation",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirm != JOptionPane.YES_OPTION) {
+        JOptionPane.showMessageDialog(this, "Save operation cancelled.");
+        return;
+    }
+
+    String selectedtext = type.getSelectedItem() != null ? type.getSelectedItem().toString() : "";
     String pid = id.getText();
     String pmodel = model.getText();
     String barcode = code.getText();
@@ -591,53 +665,57 @@ private void saveAllPanelQuantitiesToFile() {
     String des = description.getText();
     String iconpath = imagepath.getText();
 
-    if (barcode.isEmpty() || uprice.isEmpty() || brandn.isEmpty() || quanti.isEmpty() || des.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "All Fields must be filled in.");
-        return;
-    }
-    if (barcode.length() < 2 || barcode.length() > 500 ||
-        uprice.length() < 2 || uprice.length() > 500 ||
-        brandn.length() < 2 || brandn.length() > 500 ||
-        quanti.length() < 2 || quanti.length() > 500 ||
-        des.length() < 2 || des.length() > 500) {
-        JOptionPane.showMessageDialog(null, "Must contain between 2 to 500 characters.");
-        return;
-    }
-
-    int confirm = JOptionPane.showConfirmDialog(
-        null,
-        "Are you sure to proceed?",
-        "Confirmation",
-        JOptionPane.YES_NO_OPTION
-    );
-    if (confirm != JOptionPane.YES_OPTION) {
-        JOptionPane.showMessageDialog(null, "Operation cancelled.");
-        return;
-    }
-
+    // Validate quantity only if editing
     if (isEditing) {
-        updateProductData(editingProductId, selectedtext, pid, pmodel, barcode, uprice, brandn, quanti, des, iconpath);
-        JOptionPane.showMessageDialog(null, "Product updated successfully.");
-        addToProductHistory(pid);  // Add to history on update
+        int quantityValue;
+        try {
+            quantityValue = Integer.parseInt(quanti);
+            if (quantityValue < 0) {
+                JOptionPane.showMessageDialog(null, "Quantity cannot be negative.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Quantity must be a valid integer number.");
+            return;
+        }
+
+        // Update only quantity in product.txt and productstatus.txt and cashierproduct.txt
+        updateQuantityInFile("src/file_storage/product.txt", pid, quantityValue, true);
+        updateQuantityInFile("src/file_storage/productstatus.txt", pid, quantityValue, true);
+        updateQuantityInFile("src/file_storage/cashierproduct.txt", pid, quantityValue, true);
+
+        // Update the panel quantity text too
+        if (selectedPanel != null) {
+            selectedPanel.quantity.setText(String.valueOf(quantityValue));
+
+            // Update panel color based on quantity
+            if (quantityValue >= 15) {
+                selectedPanel.setStockLevelColor(Color.GREEN);
+            } else if (quantityValue >= 8) {
+                selectedPanel.setStockLevelColor(Color.YELLOW);
+            } else if (quantityValue >= 1) {
+                selectedPanel.setStockLevelColor(Color.RED);
+            } else {
+                selectedPanel.setStockLevelColor(null);
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, "Quantity updated successfully.");
     } else {
+        // Your existing full product add logic here
         addNewProduct(selectedtext, pid, pmodel, barcode, uprice, brandn, quanti, des, iconpath);
         JOptionPane.showMessageDialog(null, "Successfully saved.");
-        addToProductHistory(pid);  // Add to history on new product save
+        addToProductHistory(pid);
     }
 
-    // Clear form fields after save
     clearForm();
-
-    // Reset flags
     isEditing = false;
     editingProductId = null;
 
-    // Disable editing on ID, Type, Quantity fields after save
     id.setEditable(false);
     type.setEnabled(true);
     quantity.setEditable(true);
 
-    // Reload product panels to reflect changes
     loadProductStatusPanels();
     }//GEN-LAST:event_saveActionPerformed
 
@@ -713,7 +791,197 @@ private void saveAllPanelQuantitiesToFile() {
        
     }//GEN-LAST:event_deleteActionPerformed
 
-   
+    private void savetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savetypeActionPerformed
+         String newType = addtype.getText().trim();
+
+    if (newType.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter a type to add.");
+        return;
+    }
+
+    // Check if type already exists in combobox
+    for (int i = 0; i < type.getItemCount(); i++) {
+        if (type.getItemAt(i).equalsIgnoreCase(newType)) {
+            JOptionPane.showMessageDialog(this, "This type already exists.");
+            return;
+        }
+    }
+
+    // Generate new product ID for the type
+    char firstLetter = Character.toUpperCase(newType.charAt(0));
+    String newId = firstLetter + String.valueOf(baseProductId + ProductCounter);
+
+    // Add new type to combobox
+    type.addItem(newType);
+
+    // Update ProductCounter and save it
+    ProductCounter++;
+    saveProductCounter();
+    generateProductId(); // Optional: regenerate ID on UI
+
+    // Optionally clear addtype field after adding
+    addtype.setText("");
+
+    JOptionPane.showMessageDialog(this, "Type '" + newType + "' added with ID: " + newId);
+    }//GEN-LAST:event_savetypeActionPerformed
+
+    private void deletetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletetypeActionPerformed
+        String typeToDelete = addtype.getText().trim();
+
+    if (typeToDelete.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter a type to delete.");
+        return;
+    }
+
+    boolean found = false;
+    int indexToDelete = -1;
+
+    // Find index of type to delete
+    for (int i = 0; i < type.getItemCount(); i++) {
+        if (type.getItemAt(i).equalsIgnoreCase(typeToDelete)) {
+            found = true;
+            indexToDelete = i;
+            break;
+        }
+    }
+
+    if (!found) {
+        JOptionPane.showMessageDialog(this, "Type '" + typeToDelete + "' not found in the list.");
+        return;
+    }
+
+    // Confirm deletion
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Are you sure you want to delete the type '" + typeToDelete + "'?",
+        "Confirm Delete",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        type.removeItemAt(indexToDelete);
+        JOptionPane.showMessageDialog(this, "Type '" + typeToDelete + "' deleted.");
+        addtype.setText("");
+    } else {
+        JOptionPane.showMessageDialog(this, "Deletion cancelled.");
+    }
+    }//GEN-LAST:event_deletetypeActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       if (selectedPanel == null) {
+        JOptionPane.showMessageDialog(this, "Please select a product panel first.");
+        return;
+    }
+
+    // Load data from selected panel into form fields
+    model.setText(selectedPanel.model.getText());
+    code.setText("");  // Will load from product.txt next
+    price.setText(selectedPanel.price.getText());
+    brand.setText("");
+    description.setText("");
+    icon.setIcon(null);
+    
+    quantity.setText(selectedPanel.quantity.getText());
+    id.setText(selectedPanel.proID.getText());
+
+    // Load other details (barcode, brand, description, icon) from product.txt by product id
+    loadProductDetailsToFormById(selectedPanel.proID.getText());
+
+    // Set editable states:
+    model.setEditable(false);
+    code.setEditable(false);
+    price.setEditable(false);
+    brand.setEditable(false);
+    description.setEditable(false);
+    quantity.setEditable(true); // Only quantity editable
+
+    // Disable user interaction on icon JLabel (just to be sure)
+    icon.setEnabled(false);
+
+    // Disable type combobox to avoid changing product type during quantity edit
+    type.setEnabled(false);
+
+    // Set editing mode flags
+    isEditing = true;
+    editingProductId = selectedPanel.proID.getText();
+
+    JOptionPane.showMessageDialog(this, "Only quantity is editable now. Change it and click Save.");
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void loadProductDetailsToFormById(String productId) {
+    try (BufferedReader reader = new BufferedReader(new FileReader("src/file_storage/product.txt"))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split("%%");
+            if (parts.length >= 8 && parts[1].equals(productId)) {
+                // parts: type%%productId%%model%%barcode%%price%%brand%%quantity%%description
+                code.setText(parts[3]);
+                brand.setText(parts[5]);
+                description.setText(parts[7]);
+
+                // Load image path from productstatus.txt if needed
+                loadIconPathToIcon(parts[2]);
+
+                break;
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading product details: " + e.getMessage());
+    }
+}
+    
+   private void updateQuantityInFile(String filePath, String productId, int newQuantity, boolean replace) {
+    File inputFile = new File(filePath);
+    File tempFile = new File(filePath + "_temp.txt");
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split("%%");
+
+            if (parts.length > 1 && parts[1].equals(productId)) {
+                int quantityIndex = 6; // Adjust based on your file format
+
+                if (parts.length > quantityIndex) {
+                    if (replace) {
+                        // Replace quantity with newQuantity
+                        parts[quantityIndex] = String.valueOf(newQuantity);
+                    } else {
+                        // Subtract quantity (existing logic)
+                        int currentQty = 0;
+                        try {
+                            currentQty = Integer.parseInt(parts[quantityIndex]);
+                        } catch (NumberFormatException e) {
+                            currentQty = 0;
+                        }
+                        int updatedQty = currentQty - newQuantity;
+                        if (updatedQty < 0) updatedQty = 0;
+                        parts[quantityIndex] = String.valueOf(updatedQty);
+                    }
+                    String updatedLine = String.join("%%", parts);
+                    writer.write(updatedLine);
+                } else {
+                    writer.write(line);
+                }
+            } else {
+                writer.write(line);
+            }
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error updating quantity in file: " + filePath);
+    }
+
+    if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
+        JOptionPane.showMessageDialog(null, "Failed to update file: " + filePath);
+    }
+}
+    
+    
+    
 private void generateProductId() {
     String prefix = "";
 

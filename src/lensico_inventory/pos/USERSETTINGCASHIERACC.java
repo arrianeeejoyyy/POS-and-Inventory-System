@@ -102,7 +102,7 @@ public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
                 deleteActionPerformed(evt);
             }
         });
-        getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(795, 640, 90, 40));
+        getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 630, 90, 30));
 
         back.setToolTipText("");
         back.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -123,17 +123,23 @@ public class USERSETTINGCASHIERACC extends javax.swing.JFrame {
         });
         getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(675, 640, 100, 40));
 
+        pass.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        pass.setForeground(new java.awt.Color(255, 255, 255));
         pass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pass.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         pass.setOpaque(false);
         getContentPane().add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 280, 280, 24));
 
         npass.setOpaque(false);
+        npass.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        npass.setForeground(new java.awt.Color(255, 255, 255));
         npass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         npass.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(npass, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 280, 24));
 
         rnpass.setOpaque(false);
+        rnpass.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        rnpass.setForeground(new java.awt.Color(255, 255, 255));
         rnpass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         rnpass.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         rnpass.addActionListener(new java.awt.event.ActionListener() {
@@ -323,7 +329,62 @@ int selectedRow = cashiersAccList.getSelectedRow();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButtonSAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSAVEActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = cashiersAccList.getSelectedRow();
+
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(null, "Please select a user from the table.");
+        return;
+    }
+
+    String currentPassInput = new String(pass.getPassword());
+    String newPassInput = new String(npass.getPassword());
+    String retypeNewPassInput = new String(rnpass.getPassword());
+
+    // Get the existing password from the table's selected row (column 2)
+    String existingPassword = cashiersAccList.getValueAt(selectedRow, 2).toString();
+
+    // Check if current pass input matches the existing password in the table
+    if (!currentPassInput.equals(existingPassword)) {
+        JOptionPane.showMessageDialog(null, "Current password does not match the selected user's password.");
+        pass.setText("");
+        return;
+    }
+
+    // Check if new password and re-typed new password match
+    if (!newPassInput.equals(retypeNewPassInput)) {
+        JOptionPane.showMessageDialog(null, "New password and re-typed password do not match.");
+        npass.setText("");
+        rnpass.setText("");
+        return;
+    }
+
+    // Confirm with user if they want to proceed
+    int confirm = JOptionPane.showConfirmDialog(null,
+        "Are you sure you want to change the password?",
+        "Confirm Password Change",
+        JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Update the password in the table model
+        DefaultTableModel model = (DefaultTableModel) cashiersAccList.getModel();
+        model.setValueAt(newPassInput, selectedRow, 2);
+
+        // Also update in userList
+        UserAccount user = userList.get(selectedRow);
+        user.setPassword(newPassInput);
+
+        // Save changes to file
+        saveTableToTextFile(cashiersAccList, FILE_PATH);
+
+        JOptionPane.showMessageDialog(null, "Password updated successfully.");
+
+        // Clear password fields
+        pass.setText("");
+        npass.setText("");
+        rnpass.setText("");
+    } else {
+        JOptionPane.showMessageDialog(null, "Password change cancelled.");
+    }
     }//GEN-LAST:event_jButtonSAVEActionPerformed
 
     private void jButtonCLEARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCLEARActionPerformed

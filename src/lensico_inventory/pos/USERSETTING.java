@@ -154,7 +154,7 @@ public class USERSETTING extends javax.swing.JFrame {
                 saveActionPerformed(evt);
             }
         });
-        getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 430, 90, 30));
+        getContentPane().add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 430, 90, 20));
 
         clear.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         clear.setContentAreaFilled(false);
@@ -283,13 +283,19 @@ public class USERSETTING extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-         String user = name.getText();
+            if (!jCheckBox1.isSelected()) {
+        JOptionPane.showMessageDialog(null, "You must agree to the terms to proceed.");
+        return;  // Stop further execution if not checked
+    }
+        
+        String user = name.getText();
     String pass = password.getText();
     String cpass = confirmpassword.getText();
     String id = eid.getText();
 
     if (!isEmployeeValid(id)) {
         JOptionPane.showMessageDialog(null, "Employee ID does not exist or is not a cashier.");
+        eid.setText("");
         return;
     }
 
