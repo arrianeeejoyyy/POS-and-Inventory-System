@@ -502,11 +502,13 @@ private void updateIdLabel() {
 
     if (!c.matches("^09\\d{9}$")) {
         JOptionPane.showMessageDialog(this, "Contact Number must start with 09 and be exactly 11 digits.");
+        contactnumber.setText("");
         return;
     }
 
     if (!e.contains("@gmail.com")) {
         JOptionPane.showMessageDialog(this, "Email must contain @gmail.com.");
+        email.setText("");
         return;
     }
 

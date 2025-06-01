@@ -189,8 +189,8 @@ Screen Monitor%%S202511%%Gaming Monitor AGON%%3129875665412%%18,399%%AOC%%10%%�
 	• Viewing Angle: 178° (H) / 178° (V) (CR > 10)
 
 	• Color Gamut: NTSC 106% (CIE1976) / sRGB 104% (CIE1931) / DCI-P3 97% (CIE1976)
-Mouse%%M202512%% M18 RGB Colorful Honeycomb%%1233455687609%%199%%Zeus%%20%%This gaming mouse has four adjustable DPI levels, 1200, 1800, 2400 and 3600, suitable for different scenarios. The 1.5-meter-long wired USB cable ensures stable connection and fast data transmission during use. The mouse supports four-level DPI instantaneous switching, which can easily cope with a variety of operation needs.
-KeyBoard %%K202513%%LIMEIDE V2%%234559876543%%399%%ZEUS%%12%%Anti-slip and sweat-proof design, smooth scrolling without lag, easier web page/document page turning, comfortable and long-lasting feel.
+Mouse %%M202512%% M18 RGB Colorful Honeycomb%%1233455687609%%199%%Zeus%%20%%This gaming mouse has four adjustable DPI levels, 1200, 1800, 2400 and 3600, suitable for different scenarios. The 1.5-meter-long wired USB cable ensures stable connection and fast data transmission during use. The mouse supports four-level DPI instantaneous switching, which can easily cope with a variety of operation needs.
+Mouse %%M202513%%LIMEIDE V2%%234559876543%%399%%ZEUS%%12%%Anti-slip and sweat-proof design, smooth scrolling without lag, easier web page/document page turning, comfortable and long-lasting feel.
 
 Click crisp rebound fast, no lag delay, combo operation is as stable as a rock, helping you control the whole scene.
 

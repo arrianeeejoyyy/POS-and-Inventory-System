@@ -9,8 +9,8 @@ C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\imag
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Apple MacBook Air (13-inch, M2).png%%MacBook Air M2%%49,990%%13%%L202509
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Apple MacBook Pro (14-inch, M3).png%%MacBook Pro  M3%%100,390%%5%%L202510
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Itw _ AOC Gaming Monitor AGON.png%%Gaming Monitor AGON%%18,399%%10%%S202511
-C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Zeus M-18 RGB Colorful Honeycomb Shell.png%% M18 RGB Colorful Honeycomb%%199%%20%%M202532
-C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\29.png%%LIMEIDE V2%%399%%12%%M202532
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Zeus M-18 RGB Colorful Honeycomb Shell.png%% M18 RGB Colorful Honeycomb%%199%%20%%M202512
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\29.png%%LIMEIDE V2%%399%%12%%M202513
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Zeus 35 Keys One-handed Gaming keyboard.png%%35 Keys One Handed%%249%%20%%K202514
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Zeus Slim Quiet Silent Keyboard Purplec.png%%Slim Quiet Silent Keyboard Purple%%487%%20%%K202515
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Zeus M-88 Silent Click Wired RGB Mouse.png%% M88 Silent Click Wired RGB Mouse%%287%%8%%M202516

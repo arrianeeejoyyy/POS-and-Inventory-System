@@ -14,9 +14,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
@@ -40,29 +42,52 @@ public class CASHIER_EMPLOYEE extends javax.swing.JFrame {
     searchProductById(searchId);
 });
         
-        
-       
         loadTableFromTextFile(productlist, FILE_PATH);
         
         generateReferenceNumber();
-updateDate();
-startClock();
-updateItemsCount();
+        updateDate();
+        startClock();
+        updateItemsCount();
         
-
-discount.addActionListener(e -> applyDiscount());
-
- 
-        
+        discount.addActionListener(e -> applyDiscount());
         productid.setOpaque(false);
         productid.setBackground(new Color (0,0,0,0));
-        
         quanti.setOpaque(false);
         quanti.setBackground(new Color (0,0,0,0));
         
-        
+        this.getRootPane().getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("SPACE"), "addAction");
+        this.getRootPane().getActionMap().put("addAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                add.doClick();
+            }
+        });
 
+        this.getRootPane().getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("BACK_SPACE"), "removeAction");
+        this.getRootPane().getActionMap().put("removeAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                remove.doClick();
+            }
+        });
 
+        this.getRootPane().getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "newTransactionAction");
+        this.getRootPane().getActionMap().put("newTransactionAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newtransaction.doClick();
+            }
+        });
+
+        // For Shift key — usually distinguish left/right Shift is complicated.
+        // Here I bind any Shift key press:
+        this.getRootPane().getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("shift pressed SHIFT"), "payAndPrintAction");
+        this.getRootPane().getActionMap().put("payAndPrintAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                payandprint.doClick();
+            }
+        });
     }
 
    
@@ -152,8 +177,12 @@ discount.addActionListener(e -> applyDiscount());
         jScrollPane3.setViewportView(productlist);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 410, 660));
-        getContentPane().add(referencenumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 60, 180, 20));
-        getContentPane().add(items, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 60, 150, 20));
+
+        referencenumber.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        getContentPane().add(referencenumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 57, 190, 20));
+
+        items.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        getContentPane().add(items, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 57, 150, 20));
         getContentPane().add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 60, 110, 20));
         getContentPane().add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(1350, 60, 100, 20));
 
@@ -537,6 +566,8 @@ discount.addActionListener(e -> applyDiscount());
     productn.setText("");
     value.setText("");
     quanti.setText("");
+    customerID.setText("");
+    customername.setText("");
         
     }//GEN-LAST:event_newtransactionActionPerformed
 

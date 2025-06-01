@@ -470,6 +470,11 @@ private void saveAllPanelQuantitiesToFile() {
 
         jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton2.setContentAreaFilled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 740, 120, 20));
 
         jPanel1.setAlignmentY(0.0F);
@@ -794,7 +799,7 @@ private void saveAllPanelQuantitiesToFile() {
                 loadIconPathToIcon(parts[2]);
 
                 // Editable settings
-                id.setEditable(false);
+                id.setEditable(true);
                 type.setEnabled(true);
                 quantity.setEditable(false);  // BLOCK quantity editing here
                 model.setEditable(true);
@@ -820,19 +825,77 @@ private void saveAllPanelQuantitiesToFile() {
     }//GEN-LAST:event_editActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-       
+       if (selectedPanel == null) {
+        JOptionPane.showMessageDialog(this, "Please select a product panel first.");
+        return;
+    }
+
+    String productIdToDelete = selectedPanel.proID.getText();
+
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Are you sure you want to delete the selected product?",
+        "Confirm Delete",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirm != JOptionPane.YES_OPTION) {
+        return; // User cancelled deletion
+    }
+
+    // Delete product from all files
+    deleteProductFromFile("src/file_storage/productstatus.txt", productIdToDelete, 4); // ProductID at index 4
+    deleteProductFromFile("src/file_storage/product.txt", productIdToDelete, 1);       // ProductID at index 1
+    deleteProductFromFile("src/file_storage/cashierproduct.txt", productIdToDelete, 0); // ProductID at index 0
+
+    // Reload UI panels
+    loadProductStatusPanels();
+
+    // Clear form and selection
+    clearForm();
+
+    JOptionPane.showMessageDialog(this, "Product deleted successfully.");
+}
+
+// Helper method to delete a product line from a file given productId and index of productId in line parts
+private void deleteProductFromFile(String filePath, String productId, int productIdIndex) {
+    File inputFile = new File(filePath);
+    File tempFile = new File(filePath + "_temp.txt");
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split("%%");
+
+            if (parts.length > productIdIndex && parts[productIdIndex].equals(productId)) {
+                // Skip writing this line => delete
+                continue;
+            }
+            writer.write(line);
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error deleting product from file: " + filePath);
+    }
+
+    if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
+        JOptionPane.showMessageDialog(null, "Failed to update file after deletion: " + filePath);
+    }
        
     }//GEN-LAST:event_deleteActionPerformed
 
     private void savetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savetypeActionPerformed
-         String newType = addtype.getText().trim();
+       String newType = addtype.getText().trim();
 
     if (newType.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please enter a type to add.");
         return;
     }
 
-    // Check if type already exists in combobox
+    // Check if type already exists in combobox (case-insensitive)
     for (int i = 0; i < type.getItemCount(); i++) {
         if (type.getItemAt(i).equalsIgnoreCase(newType)) {
             JOptionPane.showMessageDialog(this, "This type already exists.");
@@ -840,17 +903,22 @@ private void saveAllPanelQuantitiesToFile() {
         }
     }
 
-    // Generate new product ID for the type
-    char firstLetter = Character.toUpperCase(newType.charAt(0));
-    String newId = firstLetter + String.valueOf(baseProductId + ProductCounter);
-
     // Add new type to combobox
     type.addItem(newType);
 
     // Update ProductCounter and save it
     ProductCounter++;
     saveProductCounter();
-    generateProductId(); // Optional: regenerate ID on UI
+
+    // Set combo box selection to newly added type
+    type.setSelectedItem(newType);
+
+    // Generate new product ID using first letter of newType (uppercase)
+    char firstLetter = Character.toUpperCase(newType.charAt(0));
+    String newId = firstLetter + String.valueOf(baseProductId + ProductCounter);
+
+    // Update the ID JTextField with generated ID
+    id.setText(newId);
 
     // Optionally clear addtype field after adding
     addtype.setText("");
@@ -959,6 +1027,32 @@ private void saveAllPanelQuantitiesToFile() {
     JOptionPane.showMessageDialog(this, "Only quantity is editable now. Change it and click Save.");
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       model.setText("");
+       price.setText("");
+       code.setText("");
+       brand.setText("");
+       quantity.setText("");
+       description.setText("");
+       imagepath.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void generateProductId() {
+    String prefix = "";
+
+    Object selectedObj = type.getSelectedItem();
+    if (selectedObj != null) {
+        String selectedType = selectedObj.toString().trim();
+        if (!selectedType.isEmpty()) {
+            prefix = String.valueOf(Character.toUpperCase(selectedType.charAt(0)));
+        }
+    }
+
+    String generatedId = prefix + String.valueOf(baseProductId + ProductCounter);
+    id.setText(generatedId);
+}
+    
+    
     private void updatePanelByProductId(String productId, String newModel, String newPrice, String newBrand, String newQuantity) {
     for (int i = 0; i < jPanel1.getComponentCount(); i++) {
         java.awt.Component comp = jPanel1.getComponent(i);
@@ -1067,38 +1161,7 @@ private void saveAllPanelQuantitiesToFile() {
     
     
     
-private void generateProductId() {
-    String prefix = "";
 
-    Object selectedObj = type.getSelectedItem();
-    if (selectedObj != null) {
-        String selectedType = selectedObj.toString().trim().toLowerCase();
-
-        switch (selectedType) {
-            case "laptop":
-                prefix = "L";
-                break;
-            case "tablet":
-                prefix = "T";
-                break;
-            case "screen monitor":
-                prefix = "S";
-                break;
-            case "keyboard":
-                prefix = "K";
-                break;
-            case "mouse":
-                prefix = "M";
-                break;
-            default:
-                prefix = "";
-                break;
-        }
-    }
-
-    String generatedId = prefix + String.valueOf(baseProductId + ProductCounter);
-    id.setText(generatedId);
-}
 
    private void saveProductCounter() {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/file_storage/product_counter.txt"))) {
