@@ -309,7 +309,8 @@ private void setupTableModelListeners() {
 
         CASHIER1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         CASHIER1.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(CASHIER1, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 770, 190, 20));
+        CASHIER1.setText("airi");
+        getContentPane().add(CASHIER1, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 768, 190, 20));
 
         customername.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         customername.setForeground(new java.awt.Color(255, 255, 255));

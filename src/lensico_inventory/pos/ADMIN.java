@@ -29,8 +29,6 @@ public class ADMIN extends javax.swing.JFrame {
         accounthistory = new javax.swing.JButton();
         logout = new javax.swing.JButton();
         accounthistory1 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
         administrator = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -131,10 +129,6 @@ public class ADMIN extends javax.swing.JFrame {
             }
         });
         PANEL_LOAD.add(accounthistory1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 270, 40));
-
-        jScrollPane2.setViewportView(jPanel2);
-
-        PANEL_LOAD.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 900, 760));
 
         administrator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesss_panel/ADMIN.png"))); // NOI18N
         PANEL_LOAD.add(administrator, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -265,8 +259,6 @@ public class ADMIN extends javax.swing.JFrame {
     private javax.swing.JButton customer;
     private javax.swing.JButton employeee;
     private javax.swing.JButton invoice;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logout;
     private javax.swing.JButton product;
     private javax.swing.JButton stockmanagement;

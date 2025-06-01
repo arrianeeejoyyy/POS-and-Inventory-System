@@ -1,4 +1,4 @@
-C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\ASUS TUF Gaming A15.png%%TUF Gaming A15%%57,594%%9%%L202501
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\ASUS TUF Gaming A15.png%%TUF Gaming A15%%57,594%%16%%L202501
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\ASUS Vivobook S15 OLED.png%%Vivobook S15 OLED%%79,999%%15%%L202502
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\ASUS Vivobook Go 14.png%%Vivobook Go 14%%33,599%%10%%L202503
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\MSI Thin A15.png%%Thin A15 %%42,995%%5%%L202504
@@ -16,7 +16,7 @@ C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\imag
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Zeus M-88 Silent Click Wired RGB Mouse.png%% M88 Silent Click Wired RGB Mouse%%287%%8%%M202516
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Zeus Wired Gaming Keyboard Multi Colors.png%% Wired Gaming Keyboard Multi Colors%%687%%5%%K202517
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Zeus K-200 Slim 2.4GHz.png%%K200 Slim Wireless Keyboard And Mouse%%799%%7%%K202518
-C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Zeus x Raiku Wired Rainbow.png%% Raiku Wired Rainbow LED%%875%%12%%K202519
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Zeus x Raiku Wired Rainbow.png%% Raiku Wired Rainbow LED%%875%%11%%K202519
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\HUAWEI MatePad 11.5 New _ Tablet _ WiFi _ Standard 6GB+128GB.png%%MatePad 11 New%%17,699%%15%%T202520
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\HUAWEI MatePad 12 X Tablet _ WiFi _ 12GB+256GB.png%%MatePad 12 X Tablet%%31,999%%15%%T202521
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Apple Ipad 11th Gen A16 (Wifi).png%%Ipad 11th Gen A16%%24,990%%13%%T202522
@@ -27,5 +27,6 @@ C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\imag
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Xiaomi Gaming Monitor G27i.png%%Gaming Monitor G27i%%7,699%%6%%S202527
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Xiaomi Monitor A22i 21.45 inch.png%%A22i Monitor%%4,073%%15%%S202528
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 22 24 27 Inch IPS Monitor 100Hz Framless Flat.png%%IPS Monitor 100Hz Framless Flat%%3,559%%13%%S202529
-C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 27''_ 31.5'' Curved Gaming Monitor.png%% Curved Gaming Monitor 180HZ%%7,835%%7%%S202530
-C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 24 Inch Monitor.png%%24 Inch Monitor 100Hz Framless Flat%%4,079%%9%%S202531
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 27''_ 31.5'' Curved Gaming Monitor.png%% Curved Gaming Monitor 180HZ%%7,835%%15%%S202530
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 24 Inch Monitor.png%%24 Inch Monitor 100Hz Framless Flat%%4,079%%8%%S202531
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\ASUS TUF Gaming A15.png%%TUFFF%%20,000%%15%%L202536

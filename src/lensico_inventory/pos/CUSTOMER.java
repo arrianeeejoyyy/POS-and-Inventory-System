@@ -548,7 +548,11 @@ private void updateIdLabel() {
     }//GEN-LAST:event_saveActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
-        // TODO add your handling code here:
+      name.setText("");
+    contactnumber.setText("");
+    email.setText("");
+    address.setText("");
+    jCheckBox1.setSelected(false);
     }//GEN-LAST:event_clearActionPerformed
 
     

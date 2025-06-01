@@ -148,55 +148,64 @@ public class LOG_IN extends javax.swing.JFrame {
 
     private void enterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterActionPerformed
       String username = jTextField1.getText().trim();
-        String password = new String(pin.getPassword());
+    String password = new String(pin.getPassword());
 
-        DefaultTableModel model = (DefaultTableModel) cashierSettingsFrame.cashiersAccList.getModel();
+    // Validate PIN length here
+    if (password.length() < 3 || password.length() > 10) {
+        JOptionPane.showMessageDialog(null,
+            "PIN must be between 3 and 10 characters only.",
+            "Invalid PIN Length",
+            JOptionPane.WARNING_MESSAGE);
+        pin.setText(""); // clear the pin field if invalid
+        return; // stop login process
+    }
 
-        boolean userFound = false;
-        boolean passwordCorrect = false;
+    // Continue your existing login validation below...
+    DefaultTableModel model = (DefaultTableModel) cashierSettingsFrame.cashiersAccList.getModel();
 
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String tableUsername = model.getValueAt(i, 1).toString();
-            String tablePassword = model.getValueAt(i, 2).toString();
+    boolean userFound = false;
+    boolean passwordCorrect = false;
 
-            if (tableUsername.equals(username)) {
-                userFound = true;
-                if (tablePassword.equals(password)) {
-                    passwordCorrect = true;
-                }
-                break;
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String tableUsername = model.getValueAt(i, 1).toString();
+        String tablePassword = model.getValueAt(i, 2).toString();
+
+        if (tableUsername.equals(username)) {
+            userFound = true;
+            if (tablePassword.equals(password)) {
+                passwordCorrect = true;
             }
+            break;
         }
+    }
 
-        if (!userFound) {
-            JOptionPane.showMessageDialog(null, "Username not found.");
-            pin.setText("");
-            return;
-        }
+    if (!userFound) {
+        JOptionPane.showMessageDialog(null, "Username not found.");
+        pin.setText("");
+        return;
+    }
 
-        if (!passwordCorrect) {
-            loginAttempts++;
-            JOptionPane.showMessageDialog(null, "Incorrect password. Attempt " + loginAttempts + " of 3.");
-            pin.setText("");
-            if (loginAttempts >= 3) {
-                JOptionPane.showMessageDialog(null, "Too many failed attempts. System will exit.");
-                System.exit(0);
-            }
-            return;
+    if (!passwordCorrect) {
+        loginAttempts++;
+        JOptionPane.showMessageDialog(null, "Incorrect password. Attempt " + loginAttempts + " of 3.");
+        pin.setText("");
+        if (loginAttempts >= 3) {
+            JOptionPane.showMessageDialog(null, "Too many failed attempts. System will exit.");
+            System.exit(0);
         }
+        return;
+    }
 
-        loginAttempts = 0;
-        JOptionPane.showMessageDialog(null, "LOGIN SUCCESSFUL!");
-        this.setVisible(false);
-        if (username.equals("admin")) {
-            new ADMIN().setVisible(true);
-        } else {
-             CASHIER_EMPLOYEE cashierFrame = new CASHIER_EMPLOYEE(username);
-    cashierFrame.setVisible(true);
-    cashierFrame.refreshProductList();  
-    
-        }
-    
+    loginAttempts = 0;
+    JOptionPane.showMessageDialog(null, "LOGIN SUCCESSFUL!");
+    this.setVisible(false);
+    if (username.equals("admin")) {
+        new ADMIN().setVisible(true);
+    } else {
+        CASHIER_EMPLOYEE cashierFrame = new CASHIER_EMPLOYEE(username);
+        cashierFrame.setVisible(true);
+        cashierFrame.refreshProductList();  
+    }
     }//GEN-LAST:event_enterActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
