@@ -28,4 +28,4 @@ C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\imag
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Xiaomi Monitor A22i 21.45 inch.png%%A22i Monitor%%4,073%%15%%S202528
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 22 24 27 Inch IPS Monitor 100Hz Framless Flat.png%%IPS Monitor 100Hz Framless Flat%%3,559%%13%%S202529
 C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 27''_ 31.5'' Curved Gaming Monitor.png%% Curved Gaming Monitor 180HZ%%7,835%%7%%S202530
-C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 24 Inch Monitor.png%%24 Inch Monitor 100Hz Framless Flat%%4,079%%12%%S202531
+C:\Users\Airi\OneDrive\Documents\NetBeansProjects\Lensico_Inventory&POS\src\image_product\Nvision 24 Inch Monitor.png%%24 Inch Monitor 100Hz Framless Flat%%4,079%%9%%S202531

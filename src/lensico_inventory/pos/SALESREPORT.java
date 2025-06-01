@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package lensico_inventory.pos;
 
 import javax.swing.JOptionPane;
@@ -37,6 +34,7 @@ import com.itextpdf.layout.properties.TextAlignment;
 
 
 public class SALESREPORT extends javax.swing.JFrame {
+ public static SALESREPORT instance;
 
   private JDateChooser startDateChooser;
 private JDateChooser endDateChooser;
@@ -44,7 +42,9 @@ private JDateChooser endDateChooser;
     public SALESREPORT() {
         initComponents();
          loadSalesReportFromFile();
-         
+
+         instance = this; // assign instance on creation
+
          
          startDateChooser = new JDateChooser();
 endDateChooser = new JDateChooser();
@@ -54,6 +54,10 @@ startDateChooser.setDateFormatString("yyyy-MM-dd");
 endDateChooser.setDateFormatString("yyyy-MM-dd");
     }
 
+    
+
+
+    
  public void loadSalesReportFromFile() {
     DefaultTableModel model = (DefaultTableModel) salesreport.getModel();
     model.setRowCount(0); // Clear existing rows
@@ -209,7 +213,7 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
 
             },
             new String [] {
-                "Cashier Name", "Transaction Number", "Customer ID", "Product ID", "Price", "Quantity", "Total", "Date"
+                "Transaction Number", "Customer ID", "Product ID", "Price", "Quantity", "Total", "Date"
             }
         ));
         jScrollPane1.setViewportView(salesreport);
@@ -503,14 +507,14 @@ endDateChooser.setDateFormatString("yyyy-MM-dd");
             if ((rowDate.isEqual(startDate) || rowDate.isAfter(startDate)) &&
                 (rowDate.isEqual(endDate) || rowDate.isBefore(endDate))) {
 
-                doc.add(new Paragraph("Cashier Name: " + model.getValueAt(i, 0).toString()));
-                doc.add(new Paragraph("Transaction Number: " + model.getValueAt(i, 1).toString()));
-                doc.add(new Paragraph("Customer ID: " + model.getValueAt(i, 2).toString()));
-                doc.add(new Paragraph("Product ID: " + model.getValueAt(i, 3).toString()));
-                doc.add(new Paragraph("Price: " + model.getValueAt(i, 4).toString()));
-                doc.add(new Paragraph("Quantity: " + model.getValueAt(i, 5).toString()));
-                doc.add(new Paragraph("Total: " + model.getValueAt(i, 6).toString()));
-                doc.add(new Paragraph("Date: " + model.getValueAt(i, 7).toString()));
+                
+                doc.add(new Paragraph("Transaction Number: " + model.getValueAt(i, 0).toString()));
+                doc.add(new Paragraph("Customer ID: " + model.getValueAt(i, 1).toString()));
+                doc.add(new Paragraph("Product ID: " + model.getValueAt(i, 2).toString()));
+                doc.add(new Paragraph("Price: " + model.getValueAt(i, 3).toString()));
+                doc.add(new Paragraph("Quantity: " + model.getValueAt(i, 4).toString()));
+                doc.add(new Paragraph("Total: " + model.getValueAt(i, 5).toString()));
+                doc.add(new Paragraph("Date: " + model.getValueAt(i, 6).toString()));
 
                 doc.add(new Paragraph("----------------------------------------------------------------------------------------"));
                 doc.add(new Paragraph(" "));

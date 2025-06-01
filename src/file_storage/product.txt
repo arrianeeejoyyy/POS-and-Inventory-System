@@ -452,7 +452,7 @@ Interface：HDMI*1 DP*1 DVI*1,  DC input
 Power Adaptor: AC220V, DC 12V/3A
 
 Accessories:DP Cable *1, Metal Stand&Screw, Screw Driver, Instruction Manual, Warranty Card, Wall Bracket
-Screen Monitor%%S202531%%24 Inch Monitor 100Hz Framless Flat%%33245678%%4,079%%NVISION%%12%%Variation:
+Screen Monitor%%S202531%%24 Inch Monitor 100Hz Framless Flat%%33245678%%4,079%%NVISION%%9%%Variation:
 
 Brand: Nvision
 
